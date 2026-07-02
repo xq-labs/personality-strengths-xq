@@ -2229,8 +2229,8 @@ const APP_STYLES = `
 .welcome-main {
   display: grid;
   gap: 24px;
-  align-content: center;
-  align-items: center;
+  align-content: stretch;
+  align-items: stretch;
 }
 
 .kiosk-screen .welcome-copy,
@@ -2249,9 +2249,11 @@ const APP_STYLES = `
   color: #0A0A0A;
   border: 0;
   padding: 70px 42px;
-  max-width: 720px;
-  min-height: min(760px, calc(100vh - 132px));
-  justify-self: center;
+  width: 100%;
+  max-width: none;
+  min-height: 100%;
+  justify-self: stretch;
+  align-self: stretch;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -2950,6 +2952,169 @@ const APP_STYLES = `
   height: 100%;
   min-height: 100%;
 }
+
+.xq-quiz.quiz-kiosk-shell.screen-results {
+  overflow-y: auto;
+}
+
+.xq-quiz.quiz-kiosk-shell.screen-results .kiosk-screen {
+  height: auto;
+  min-height: 100%;
+}
+
+.screen-results .kiosk-main {
+  padding: 24px;
+}
+
+.screen-results .results-main {
+  gap: 12px;
+}
+
+.screen-results .results-chart-top {
+  padding: 18px;
+  margin-bottom: 0;
+}
+
+.screen-results .chart-heading-row {
+  margin-bottom: 8px;
+}
+
+.screen-results .chart-heading-row .headline {
+  font-size: 46px;
+  line-height: 0.9;
+  margin-top: 4px;
+}
+
+.screen-results .chart-kicker {
+  max-width: 210px;
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.screen-results .radar-wrap {
+  height: 315px;
+  margin: 8px 0;
+}
+
+.screen-results .outcome-legend {
+  gap: 6px;
+}
+
+.screen-results .legend-item {
+  min-height: 48px;
+  padding: 8px;
+}
+
+.screen-results .legend-score {
+  font-size: 22px;
+}
+
+.screen-results .results-hero {
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+.screen-results .results-copy {
+  padding: 12px;
+}
+
+.screen-results .results-copy-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.screen-results .results-copy-head .tiny-ticket {
+  margin-bottom: 0;
+}
+
+.screen-results .type-card-stack {
+  gap: 8px;
+  margin-top: 0;
+}
+
+.screen-results .type-card {
+  padding: 12px;
+}
+
+.screen-results .type-card .result-meta {
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.screen-results .top-outcome-name {
+  font-size: 32px;
+  line-height: 0.92;
+  margin-bottom: 6px;
+}
+
+.screen-results .type-card-copy {
+  font-size: 14px;
+  line-height: 1.3;
+  margin-bottom: 0;
+}
+
+.screen-results .score-note {
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+.screen-results .power-panel {
+  padding: 14px;
+}
+
+.screen-results .section-heading-row {
+  margin-bottom: 10px;
+}
+
+.screen-results .section-title {
+  font-size: 26px;
+}
+
+.screen-results .competency-list {
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-top: 0;
+}
+
+.screen-results .competency-card {
+  grid-template-columns: 76px minmax(0, 1fr);
+  align-items: center;
+}
+
+.screen-results .competency-card .competency-asset-frame,
+.screen-results .competency-card .competency-asset-frame img,
+.screen-results .competency-card .competency-asset-frame .inline-svg,
+.screen-results .competency-card .competency-asset-frame svg {
+  min-height: 76px;
+}
+
+.screen-results .competency-card .competency-heading {
+  padding: 10px;
+}
+
+.screen-results .competency-card .power-count {
+  font-size: 11px;
+  margin-bottom: 5px;
+  padding: 4px 6px;
+}
+
+.screen-results .competency-title {
+  font-size: 22px;
+  margin-bottom: 3px;
+}
+
+.screen-results .competency-description {
+  font-size: 13px;
+  line-height: 1.25;
+}
+
+.screen-results .results-actions {
+  margin-top: 0;
+  padding: 12px;
+}
 `;
 
 const createEmptyCompetencyScores = () =>
@@ -3493,24 +3658,6 @@ function CompetencyAsset({
   );
 }
 
-function OutcomeCharacter({ outcome, compact = false }) {
-  return (
-    <div
-      className={`character-placeholder${compact ? " compact" : ""}`}
-      role="img"
-      aria-label={`Placeholder for ${outcome.name} character illustration`}
-      style={{
-        "--accent": outcome.color,
-        "--pair": outcome.pairColor,
-        "--ink": outcome.inkColor,
-      }}
-    >
-      <span>Character illustration</span>
-      <strong>{outcome.name}</strong>
-    </div>
-  );
-}
-
 function KioskBrand() {
   return (
     <div className="kiosk-brand">
@@ -3537,13 +3684,19 @@ function SidebarSlot({ label, value, active = false, accent = "#1FCC38" }) {
   );
 }
 
-function MiniProgress({ selectedAnswers, currentIndex }) {
+function MiniProgress({
+  selectedAnswers,
+  selectedAnswerAccents,
+  currentIndex,
+}) {
   return (
     <ul className="mini-progress-grid" aria-label="Quiz progress">
       {QUESTIONS.map((question, index) => {
         const isAnswered = selectedAnswers[question.id] !== undefined;
         const isCurrent = index === currentIndex;
-        const accent = getKioskAccent(index * 3 + question.id);
+        const accent =
+          selectedAnswerAccents[question.id] ||
+          getKioskAccent(index * 3 + question.id);
 
         return (
           <li
@@ -3562,47 +3715,6 @@ function MiniProgress({ selectedAnswers, currentIndex }) {
   );
 }
 
-function ProfileDetail({ outcome, label, defaultOpen = false }) {
-  return (
-    <details className="profile-detail" open={defaultOpen}>
-      <summary>
-        <span
-          className="profile-detail-icon"
-          style={{
-            "--accent": outcome.color,
-            "--ink": outcome.inkColor,
-          }}
-          aria-hidden="true"
-        >
-          <IconGlyph name={outcome.icon} color={outcome.inkColor} size={22} />
-        </span>
-        <span>
-          <span className="profile-detail-label">{label}</span>
-          <span className="profile-detail-title">{outcome.archetype}</span>
-        </span>
-      </summary>
-      <div className="profile-detail-body">
-        <p>{outcome.deeper}</p>
-        <p>{outcome.growthMove}</p>
-        <ul
-          className="career-chip-row"
-          aria-label={`Career paths for ${outcome.archetype}`}
-        >
-          {outcome.careerPaths.map((path) => (
-            <li
-              className="career-chip"
-              key={path}
-              style={{ "--accent": outcome.color }}
-            >
-              {path}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </details>
-  );
-}
-
 function ResultCompetencyCard({ competency, index }) {
   const accent = getKioskAccent(
     index * 5 + competency.score + competency.code.length,
@@ -3615,13 +3727,6 @@ function ResultCompetencyCard({ competency, index }) {
         <span className="power-count">Strength {index + 1}</span>
         <h3 className="competency-title">{competency.label}</h3>
         <p className="competency-description">{competency.description}</p>
-        <details>
-          <summary>Explore where this shows up</summary>
-          <p>
-            This strength often supports work like{" "}
-            {formatList(competency.outcomeDetails.careerPaths.slice(0, 3))}.
-          </p>
-        </details>
       </div>
     </article>
   );
@@ -3661,6 +3766,7 @@ export default function App() {
   const [screen, setScreen] = useState("welcome");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState({});
+  const [selectedAnswerAccents, setSelectedAnswerAccents] = useState({});
   const [shuffleToken, setShuffleToken] = useState(0);
   const [pendingAdvance, setPendingAdvance] = useState(null);
 
@@ -3716,6 +3822,7 @@ export default function App() {
   const startQuiz = () => {
     setPendingAdvance(null);
     setSelectedAnswers({});
+    setSelectedAnswerAccents({});
     setCurrentIndex(0);
     setShuffleToken((token) => token + 1);
     setScreen("quiz");
@@ -3724,17 +3831,22 @@ export default function App() {
   const resetToWelcome = () => {
     setPendingAdvance(null);
     setSelectedAnswers({});
+    setSelectedAnswerAccents({});
     setCurrentIndex(0);
     setShuffleToken((token) => token + 1);
     setScreen("welcome");
   };
 
-  const selectAnswer = (originalIndex) => {
+  const selectAnswer = (originalIndex, accent) => {
     if (pendingAdvance) return;
 
     setSelectedAnswers((answers) => ({
       ...answers,
       [currentQuestion.id]: originalIndex,
+    }));
+    setSelectedAnswerAccents((accents) => ({
+      ...accents,
+      [currentQuestion.id]: accent,
     }));
     setPendingAdvance({
       questionId: currentQuestion.id,
@@ -3782,7 +3894,7 @@ export default function App() {
                 <section className="welcome-copy">
                   <span className="tiny-ticket">
                     <IconGlyph name="spark" size={18} />
-                    10 quick choices
+                    Your profile in under 5
                   </span>
                   <h1 className="headline" id="welcome-title">
                     Discover Your XQ Learner Profile
@@ -3794,20 +3906,6 @@ export default function App() {
                     This quiz identifies your strongest learning competencies
                     using the XQ Learner Outcomes framework.
                   </p>
-
-                  <ul className="audience-chips" aria-label="Quiz audiences">
-                    {[
-                      "Student",
-                      "Educator",
-                      "Parent",
-                      "Community",
-                      "Business",
-                    ].map((label) => (
-                      <li className="audience-chip" key={label}>
-                        {label}
-                      </li>
-                    ))}
-                  </ul>
 
                   <div className="welcome-actions">
                     <button
@@ -3856,6 +3954,7 @@ export default function App() {
                 </div>
                 <MiniProgress
                   selectedAnswers={selectedAnswers}
+                  selectedAnswerAccents={selectedAnswerAccents}
                   currentIndex={currentIndex}
                 />
                 <button
@@ -3935,7 +4034,9 @@ export default function App() {
                         }}
                         aria-pressed={isSelected}
                         disabled={isAutoAdvancing}
-                        onClick={() => selectAnswer(answer.originalIndex)}
+                        onClick={() =>
+                          selectAnswer(answer.originalIndex, accent)
+                        }
                       >
                         <span className="answer-letter" aria-hidden="true">
                           {String.fromCharCode(65 + orderIndex)}
@@ -4016,18 +4117,6 @@ export default function App() {
                     <IconGlyph name="refresh" size={18} />
                     Restart
                   </button>
-                  {results.topCompetencies.map((competency, index) => (
-                    <div className="sidebar-mini-card" key={competency.code}>
-                      <CompetencyAsset
-                        code={competency.code}
-                        shape="hexagon"
-                        accent={getKioskAccent(
-                          index * 6 + competency.code.length,
-                        )}
-                      />
-                      <span>{competency.label}</span>
-                    </div>
-                  ))}
                 </div>
               </aside>
 
@@ -4112,17 +4201,23 @@ export default function App() {
                     "--ink": primaryOutcome.inkColor,
                   }}
                 >
-                  <div className="results-character-panel">
-                    <OutcomeCharacter outcome={primaryOutcome} compact />
-                  </div>
-
                   <div className="results-copy">
-                    <span className="tiny-ticket">
-                      <IconGlyph name={primaryOutcome.icon} size={18} />
-                      Top learner outcome
-                    </span>
+                    <div className="results-copy-head">
+                      <span className="tiny-ticket">
+                        <IconGlyph name={primaryOutcome.icon} size={18} />
+                        Top learner outcome
+                      </span>
+                      <button
+                        className="button secondary restart-button"
+                        type="button"
+                        onClick={resetToWelcome}
+                      >
+                        <IconGlyph name="refresh" size={18} />
+                        Restart
+                      </button>
+                    </div>
 
-                    <div className="type-card-stack">
+                    <div className="type-card-stack compact">
                       {topOutcomes.map((outcome) => (
                         <article
                           className="type-card"
@@ -4156,28 +4251,6 @@ export default function App() {
                   </div>
                 </section>
 
-                <section className="profile-detail-list">
-                  {topOutcomes.map((outcome, index) => (
-                    <ProfileDetail
-                      outcome={outcome}
-                      label={
-                        topOutcomes.length > 1
-                          ? "Shared top learner outcome"
-                          : "Your strongest learner outcome"
-                      }
-                      defaultOpen={index === 0}
-                      key={`top-${outcome.id}`}
-                    />
-                  ))}
-                  {secondaryOutcome && (
-                    <ProfileDetail
-                      outcome={secondaryOutcome}
-                      label="Your second learner outcome"
-                      key={`second-${secondaryOutcome.id}`}
-                    />
-                  )}
-                </section>
-
                 <section className="power-panel">
                   <div className="section-heading-row">
                     <h2 className="section-title">
@@ -4194,30 +4267,6 @@ export default function App() {
                       />
                     ))}
                   </div>
-                </section>
-
-                <section
-                  className="also-section"
-                  style={{
-                    "--accent": secondOutcomes[0]?.color || "#1FCC38",
-                  }}
-                >
-                  <h2 className="section-title">
-                    You also showed strength in...
-                  </h2>
-                  {secondOutcomes.length > 0 ? (
-                    <p className="also-copy">
-                      <span className="also-name">
-                        {formatList(
-                          secondOutcomes.map((outcome) => outcome.archetype),
-                        )}
-                      </span>
-                    </p>
-                  ) : (
-                    <p className="also-copy">
-                      Your profile is balanced across all five types.
-                    </p>
-                  )}
                 </section>
 
                 <div className="results-actions">
