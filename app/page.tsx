@@ -2414,6 +2414,26 @@ const APP_STYLES = `
   min-width: 120px;
 }
 
+.auto-advance-pill {
+  min-height: 46px;
+  border: 3px solid #FFFFFF;
+  background: #FFFFFF;
+  color: #0A0A0A;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  font-size: 22px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.auto-advance-pill.active {
+  background: #1FCC38;
+  border-color: #1FCC38;
+}
+
 .progress-percent {
   margin-left: 0;
 }
@@ -2459,6 +2479,14 @@ const APP_STYLES = `
   transform: translateY(10px);
   animation: kioskCardIn 420ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   animation-delay: var(--stagger);
+}
+
+.quiz-main .answer-card:disabled {
+  cursor: default;
+}
+
+.quiz-main .answer-card:disabled:not(.selected) {
+  opacity: 0.74;
 }
 
 @keyframes kioskCardIn {
@@ -3634,6 +3662,7 @@ export default function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [shuffleToken, setShuffleToken] = useState(0);
+  const [pendingAdvance, setPendingAdvance] = useState(null);
 
   const currentQuestion = QUESTIONS[currentIndex];
   const selectedAnswerIndex = selectedAnswers[currentQuestion.id];
@@ -3648,8 +3677,11 @@ export default function App() {
   }, [selectedAnswers]);
 
   const progress = ((currentIndex + 1) / QUESTIONS.length) * 100;
-  const hasSelectedAnswer = selectedAnswerIndex !== undefined;
+  const isAutoAdvancing = pendingAdvance?.questionId === currentQuestion.id;
   const isLastQuestion = currentIndex === QUESTIONS.length - 1;
+  let advanceStatusText = "Pick one to continue";
+  if (isAutoAdvancing && isLastQuestion) advanceStatusText = "Building profile";
+  if (isAutoAdvancing && !isLastQuestion) advanceStatusText = "Next question";
   const topOutcomes = results.rankGroups[0]?.items || [];
   const secondOutcomes = results.rankGroups[1]?.items || [];
   const quizOutcome =
@@ -3664,7 +3696,25 @@ export default function App() {
     }
   }, [screen, currentIndex]);
 
+  useEffect(() => {
+    if (!pendingAdvance) return undefined;
+
+    const timeout = window.setTimeout(() => {
+      setPendingAdvance(null);
+
+      if (pendingAdvance.fromIndex >= QUESTIONS.length - 1) {
+        setScreen("results");
+        return;
+      }
+
+      setCurrentIndex(pendingAdvance.fromIndex + 1);
+    }, 520);
+
+    return () => window.clearTimeout(timeout);
+  }, [pendingAdvance]);
+
   const startQuiz = () => {
+    setPendingAdvance(null);
     setSelectedAnswers({});
     setCurrentIndex(0);
     setShuffleToken((token) => token + 1);
@@ -3672,6 +3722,7 @@ export default function App() {
   };
 
   const resetToWelcome = () => {
+    setPendingAdvance(null);
     setSelectedAnswers({});
     setCurrentIndex(0);
     setShuffleToken((token) => token + 1);
@@ -3679,27 +3730,24 @@ export default function App() {
   };
 
   const selectAnswer = (originalIndex) => {
+    if (pendingAdvance) return;
+
     setSelectedAnswers((answers) => ({
       ...answers,
       [currentQuestion.id]: originalIndex,
     }));
+    setPendingAdvance({
+      questionId: currentQuestion.id,
+      fromIndex: currentIndex,
+    });
   };
 
   const goBack = () => {
+    setPendingAdvance(null);
+
     if (currentIndex > 0) {
       setCurrentIndex((index) => index - 1);
     }
-  };
-
-  const goNext = () => {
-    if (!hasSelectedAnswer) return;
-
-    if (isLastQuestion) {
-      setScreen("results");
-      return;
-    }
-
-    setCurrentIndex((index) => index + 1);
   };
 
   return (
@@ -3802,8 +3850,8 @@ export default function App() {
                     value={`${Object.keys(selectedAnswers).length}/${QUESTIONS.length}`}
                   />
                   <SidebarSlot
-                    label="Next"
-                    value={isLastQuestion ? "Results" : "Keep going"}
+                    label="Continue"
+                    value={isAutoAdvancing ? "Advancing" : "Auto"}
                   />
                 </div>
                 <MiniProgress
@@ -3830,20 +3878,16 @@ export default function App() {
                       className="button secondary"
                       type="button"
                       onClick={goBack}
-                      disabled={currentIndex === 0}
+                      disabled={currentIndex === 0 || isAutoAdvancing}
                     >
                       <IconGlyph name="back" size={18} />
                       Back
                     </button>
-                    <button
-                      className="button primary"
-                      type="button"
-                      onClick={goNext}
-                      disabled={!hasSelectedAnswer}
+                    <span
+                      className={`auto-advance-pill${isAutoAdvancing ? " active" : ""}`}
                     >
-                      {isLastQuestion ? "See My Results" : "Next"}
-                      <IconGlyph name="arrow" color="#0A0A0A" size={18} />
-                    </button>
+                      {advanceStatusText}
+                    </span>
                   </nav>
                   <div className="question-meta">
                     <span className="progress-label">
@@ -3890,6 +3934,7 @@ export default function App() {
                           "--stagger": `${orderIndex * 85}ms`,
                         }}
                         aria-pressed={isSelected}
+                        disabled={isAutoAdvancing}
                         onClick={() => selectAnswer(answer.originalIndex)}
                       >
                         <span className="answer-letter" aria-hidden="true">
@@ -3914,20 +3959,16 @@ export default function App() {
                     className="button secondary"
                     type="button"
                     onClick={goBack}
-                    disabled={currentIndex === 0}
+                    disabled={currentIndex === 0 || isAutoAdvancing}
                   >
                     <IconGlyph name="back" size={18} />
                     Back
                   </button>
-                  <button
-                    className="button primary"
-                    type="button"
-                    onClick={goNext}
-                    disabled={!hasSelectedAnswer}
+                  <span
+                    className={`auto-advance-pill${isAutoAdvancing ? " active" : ""}`}
                   >
-                    {isLastQuestion ? "See My Results" : "Next"}
-                    <IconGlyph name="arrow" color="#0A0A0A" size={18} />
-                  </button>
+                    {advanceStatusText}
+                  </span>
                 </div>
               </div>
             </section>
