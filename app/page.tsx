@@ -681,6 +681,33 @@ function getAnswerAccent(questionId, orderIndex) {
   return KIOSK_ACCENTS[(questionId * 5 + orderIndex) % KIOSK_ACCENTS.length];
 }
 
+function getSoftAccent(hexColor) {
+  const clean = String(hexColor || "#1FCC38")
+    .replace("#", "")
+    .trim();
+  const normalized =
+    clean.length === 3
+      ? clean
+          .split("")
+          .map((character) => `${character}${character}`)
+          .join("")
+      : clean;
+
+  if (!/^[0-9a-fA-F]{6}$/.test(normalized)) {
+    return "#DDFBE3";
+  }
+
+  const mixWithWhite = 0.68;
+  const channels = [0, 2, 4].map((start) => {
+    const value = parseInt(normalized.slice(start, start + 2), 16);
+    return Math.round(value + (255 - value) * mixWithWhite)
+      .toString(16)
+      .padStart(2, "0");
+  });
+
+  return `#${channels.join("")}`;
+}
+
 const SVG_MARKUP_CACHE = new Map();
 
 function escapeRegExp(value) {
@@ -700,6 +727,13 @@ function scopeSvgMarkup(markup, scope) {
       .replace(new RegExp(`url\\(#${escapedId}\\)`, "g"), `url(#${scopedId})`)
       .replace(new RegExp(`#${escapedId}(?=["'])`, "g"), `#${scopedId}`);
   }, markup);
+}
+
+function applySvgAccent(markup, accent) {
+  return markup.replace(
+    /var\(--svg-accent(?:,\s*#[0-9a-fA-F]{3,6})?\)/g,
+    accent,
+  );
 }
 
 const APP_STYLES = `
@@ -2462,8 +2496,8 @@ const APP_STYLES = `
   align-items: center;
   justify-content: center;
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.34), transparent),
-    var(--tile-accent);
+    linear-gradient(135deg, rgba(255, 255, 255, 0.34), transparent 58%),
+    var(--tile-accent-soft, var(--tile-accent));
   border-bottom: 3px solid #0A0A0A;
   padding: 12px;
   box-sizing: border-box;
@@ -3339,12 +3373,17 @@ function CompetencyAsset({
 }) {
   const assetPath = getCompetencyAssetPath(code, shape);
   const competency = COMPETENCY_MAP[code];
+  const softAccent = getSoftAccent(accent);
   const [svgMarkup, setSvgMarkup] = useState(() => {
     return assetPath ? SVG_MARKUP_CACHE.get(assetPath) || "" : "";
   });
   const scopedSvgMarkup = useMemo(() => {
-    return svgMarkup ? scopeSvgMarkup(svgMarkup, `${shape}-${code}`) : "";
-  }, [code, shape, svgMarkup]);
+    if (!svgMarkup) return "";
+    return applySvgAccent(
+      scopeSvgMarkup(svgMarkup, `${shape}-${code}`),
+      softAccent,
+    );
+  }, [code, shape, softAccent, svgMarkup]);
 
   useEffect(() => {
     if (!assetPath) {
@@ -3384,7 +3423,11 @@ function CompetencyAsset({
     return (
       <span
         className={`competency-asset-frame missing ${className}`}
-        style={{ "--tile-accent": accent, "--svg-accent": accent }}
+        style={{
+          "--tile-accent": accent,
+          "--tile-accent-soft": softAccent,
+          "--svg-accent": softAccent,
+        }}
       >
         <span>Graphic needed</span>
       </span>
@@ -3393,25 +3436,31 @@ function CompetencyAsset({
 
   const imageSource = scopedSvgMarkup
     ? `data:image/svg+xml;utf8,${encodeURIComponent(scopedSvgMarkup)}`
-    : assetPath;
+    : "";
 
   return (
     <span
       className={`competency-asset-frame ${className}`}
-      style={{ "--tile-accent": accent, "--svg-accent": accent }}
+      style={{
+        "--tile-accent": accent,
+        "--tile-accent-soft": softAccent,
+        "--svg-accent": softAccent,
+      }}
       role="img"
       aria-label={`${competency?.label || code} illustration`}
     >
-      <Image
-        className="inline-svg"
-        src={imageSource}
-        alt=""
-        width={220}
-        height={220}
-        loading="lazy"
-        unoptimized
-        aria-hidden="true"
-      />
+      {imageSource ? (
+        <Image
+          className="inline-svg"
+          src={imageSource}
+          alt=""
+          width={220}
+          height={220}
+          loading="lazy"
+          unoptimized
+          aria-hidden="true"
+        />
+      ) : null}
     </span>
   );
 }
