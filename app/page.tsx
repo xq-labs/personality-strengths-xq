@@ -891,6 +891,78 @@ function getSoftAccent(hexColor) {
   return `#${channels.join("")}`;
 }
 
+function getMutedAccent(hexColor) {
+  const clean = String(hexColor || "#1FCC38")
+    .replace("#", "")
+    .trim();
+  const normalized =
+    clean.length === 3
+      ? clean
+          .split("")
+          .map((character) => `${character}${character}`)
+          .join("")
+      : clean;
+
+  if (!/^[0-9a-fA-F]{6}$/.test(normalized)) {
+    return "#255A2D";
+  }
+
+  const [red, green, blue] = [0, 2, 4].map((start) => {
+    return parseInt(normalized.slice(start, start + 2), 16) / 255;
+  });
+  const max = Math.max(red, green, blue);
+  const min = Math.min(red, green, blue);
+  const lightness = (max + min) / 2;
+  const delta = max - min;
+  let hue = 0;
+  let saturation = 0;
+
+  if (delta !== 0) {
+    saturation =
+      lightness > 0.5 ? delta / (2 - max - min) : delta / (max + min);
+
+    if (max === red) hue = (green - blue) / delta + (green < blue ? 6 : 0);
+    if (max === green) hue = (blue - red) / delta + 2;
+    if (max === blue) hue = (red - green) / delta + 4;
+    hue /= 6;
+  }
+
+  const mutedSaturation = saturation * 0.68;
+  const darkerLightness = Math.min(Math.max(lightness * 0.42, 0.2), 0.32);
+
+  const hueToRgb = (p, q, t) => {
+    let value = t;
+    if (value < 0) value += 1;
+    if (value > 1) value -= 1;
+    if (value < 1 / 6) return p + (q - p) * 6 * value;
+    if (value < 1 / 2) return q;
+    if (value < 2 / 3) return p + (q - p) * (2 / 3 - value) * 6;
+    return p;
+  };
+
+  const q =
+    darkerLightness < 0.5
+      ? darkerLightness * (1 + mutedSaturation)
+      : darkerLightness + mutedSaturation - darkerLightness * mutedSaturation;
+  const p = 2 * darkerLightness - q;
+  const channels =
+    mutedSaturation === 0
+      ? [darkerLightness, darkerLightness, darkerLightness]
+      : [
+          hueToRgb(p, q, hue + 1 / 3),
+          hueToRgb(p, q, hue),
+          hueToRgb(p, q, hue - 1 / 3),
+        ];
+
+  return `#${channels
+    .map((channel) =>
+      Math.round(channel * 255)
+        .toString(16)
+        .padStart(2, "0"),
+    )
+    .join("")}`;
+}
+
 const SVG_MARKUP_CACHE = new Map();
 
 function escapeRegExp(value) {
@@ -2156,6 +2228,14 @@ const APP_STYLES = `
   padding: 16px;
 }
 
+.results-restart-button {
+  width: 100%;
+  height: 46px;
+  min-height: 46px;
+  max-height: 46px;
+  align-self: start;
+}
+
 @media (max-width: 900px) {
   .welcome-grid,
   .question-layout,
@@ -2568,6 +2648,9 @@ const APP_STYLES = `
 .button {
   border-radius: 999px;
   box-shadow: none;
+  min-height: 46px;
+  padding-block: 0;
+  box-sizing: border-box;
 }
 
 .button.secondary {
@@ -2614,8 +2697,22 @@ const APP_STYLES = `
   margin-bottom: 16px;
 }
 
+.question-nav-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .question-nav-top .button {
   min-width: 120px;
+}
+
+.question-nav-top .theme-icon-toggle {
+  width: 46px;
+  min-width: 46px;
+  height: 46px;
+  min-height: 46px;
+  padding: 0;
 }
 
 .auto-advance-pill {
@@ -2656,8 +2753,11 @@ const APP_STYLES = `
 .scenario {
   max-width: 720px;
   margin: 28px 0 0;
-  font-size: 56px;
-  line-height: 0.9;
+  font-family: 'Inter', 'Helvetica Neue', sans-serif;
+  font-size: 43px;
+  font-weight: 500;
+  line-height: 1.1;
+  text-transform: none;
 }
 
 .quiz-main .answer-list {
@@ -2783,6 +2883,10 @@ const APP_STYLES = `
   text-transform: uppercase;
   opacity: 1;
   transform: none;
+}
+
+.answer-picked-check {
+  display: none;
 }
 
 .quiz-main .answer-card:hover,
@@ -3317,6 +3421,1050 @@ const APP_STYLES = `
   margin-top: 0;
   padding: 12px;
 }
+
+.screen-results .attribution {
+  max-width: none;
+}
+
+.screen-results .results-restart-button {
+  margin-top: 0;
+  height: 46px;
+  min-height: 46px;
+  max-height: 46px;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+}
+
+.theme-toggle svg {
+  flex: 0 0 auto;
+}
+
+.theme-icon-toggle {
+  width: 46px;
+  min-width: 46px;
+  height: 46px;
+  min-height: 46px;
+  padding: 0;
+}
+
+.theme-icon-toggle .theme-toggle-label {
+  display: none;
+}
+
+.theme-mode-switch {
+  appearance: none;
+  min-height: 66px;
+  margin: 0;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: #121212;
+  padding: 8px 12px 9px;
+  display: block;
+  box-sizing: border-box;
+}
+
+.theme-mode-label {
+  float: left;
+  width: 100%;
+  color: #C8C8C8;
+  font-size: 12px;
+  line-height: 1;
+  text-transform: uppercase;
+  padding: 0;
+  margin: 0 0 7px;
+}
+
+.theme-mode-switch::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.theme-mode-track {
+  clear: both;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  min-height: 34px;
+  padding: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: #050505;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.theme-mode-thumb {
+  position: absolute;
+  z-index: 0;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc((100% - 6px) / 2);
+  background: #1FCC38;
+  border: 1px solid #1FCC38;
+  box-sizing: border-box;
+  transition: transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1), background 160ms ease, border-color 160ms ease;
+}
+
+.theme-mode-switch[data-theme-mode="dark"] .theme-mode-thumb {
+  transform: translateX(100%);
+  background: #FFFFFF;
+  border-color: #FFFFFF;
+}
+
+.theme-mode-option {
+  position: relative;
+  z-index: 1;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: #C8C8C8;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 28px;
+  min-width: 0;
+  padding: 0 8px;
+  box-sizing: border-box;
+  font-family: 'Inter', 'Helvetica Neue', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  text-transform: uppercase;
+  transition: color 160ms ease, transform 160ms ease;
+}
+
+.theme-mode-option.active {
+  color: #0A0A0A;
+  transform: translateY(-1px);
+}
+
+.theme-mode-option:focus-visible {
+  outline: 2px solid #1FCC38;
+  outline-offset: -2px;
+}
+
+.mobile-screen-tools {
+  display: none;
+}
+
+.mobile-theme-toggle {
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  min-height: 40px;
+  padding: 0;
+  border-radius: 999px;
+}
+
+.mobile-theme-toggle .theme-toggle-label {
+  display: none;
+}
+
+.mobile-only {
+  display: none;
+}
+
+.preview-mode-toggle {
+  display: none;
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 50;
+  gap: 6px;
+  margin: 0;
+  padding: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(10, 10, 10, 0.88);
+  color: #FFFFFF;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(10px);
+}
+
+.preview-mode-toggle button {
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  background: transparent;
+  color: #FFFFFF;
+  cursor: pointer;
+  min-height: 34px;
+  padding: 0 12px;
+  font-family: 'Inter', 'Helvetica Neue', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.preview-mode-toggle button.active {
+  background: #1FCC38;
+  border-color: #1FCC38;
+  color: #0A0A0A;
+}
+
+.preview-mode-toggle legend {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (min-width: 701px) {
+  .preview-mode-toggle {
+    display: flex;
+  }
+}
+
+.xq-quiz-shell.preview-mobile {
+  align-items: center;
+  justify-content: center;
+  padding: 22px;
+  overflow: hidden;
+}
+
+.xq-quiz-shell.preview-mobile .xq-quiz.quiz-kiosk-shell {
+  width: min(390px, 100%);
+  max-width: 390px;
+  height: min(844px, 100%);
+  min-height: 0;
+  border: 8px solid #181818;
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.xq-quiz-shell.preview-mobile .kiosk-screen {
+  grid-template-columns: 1fr;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.xq-quiz-shell.preview-mobile .kiosk-sidebar {
+  display: none;
+}
+
+.xq-quiz-shell.preview-mobile .kiosk-main {
+  padding: 14px;
+}
+
+.xq-quiz-shell.preview-mobile .welcome-main {
+  align-content: stretch;
+}
+
+.xq-quiz-shell.preview-mobile .kiosk-screen .welcome-copy {
+  padding: 22px 18px;
+}
+
+.xq-quiz-shell.preview-mobile .kiosk-screen .welcome-copy .tiny-ticket {
+  margin-bottom: 12px;
+  font-size: 12px;
+}
+
+.xq-quiz-shell.preview-mobile .kiosk-screen .welcome-copy .headline {
+  font-size: 46px;
+  line-height: 0.86;
+  margin-bottom: 10px;
+}
+
+.xq-quiz-shell.preview-mobile .kiosk-screen .welcome-copy .subtitle {
+  font-size: 18px;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+
+.xq-quiz-shell.preview-mobile .kiosk-screen .welcome-copy .body-copy {
+  font-size: 13px;
+  line-height: 1.32;
+  max-width: none;
+}
+
+.xq-quiz-shell.preview-mobile .welcome-actions {
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.xq-quiz-shell.preview-mobile .start-card-button {
+  flex-basis: 100%;
+  min-height: 104px;
+}
+
+.xq-quiz-shell.preview-mobile .start-card-copy {
+  gap: 5px;
+  padding: 14px;
+}
+
+.xq-quiz-shell.preview-mobile .start-card-copy strong {
+  font-size: 31px;
+}
+
+.xq-quiz-shell.preview-mobile .start-card-copy span {
+  font-size: 13px;
+}
+
+.xq-quiz-shell.preview-mobile .start-card-pick {
+  min-height: 38px;
+  font-size: 20px;
+}
+
+.xq-quiz-shell.preview-mobile .quiz-main {
+  gap: 10px;
+}
+
+.xq-quiz-shell.preview-mobile .question-top {
+  margin-bottom: 10px;
+}
+
+.xq-quiz-shell.preview-mobile .question-nav-top {
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.xq-quiz-shell.preview-mobile .question-nav-top .button {
+  min-width: 0;
+  min-height: 36px;
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+.xq-quiz-shell.preview-mobile .mobile-only {
+  display: inline-flex;
+}
+
+.xq-quiz-shell.preview-mobile .auto-advance-pill {
+  min-height: 36px;
+  border-width: 2px;
+  padding: 0 9px;
+  font-size: 15px;
+}
+
+.xq-quiz-shell.preview-mobile .question-meta {
+  margin-bottom: 8px;
+}
+
+.xq-quiz-shell.preview-mobile .progress-label {
+  font-size: 11px;
+}
+
+.xq-quiz-shell.preview-mobile .scenario {
+  font-size: 28px;
+  line-height: 0.92;
+  margin: 14px 0 0;
+}
+
+.xq-quiz-shell.preview-mobile .quiz-main .answer-list {
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.xq-quiz-shell.preview-mobile .quiz-main .answer-card {
+  height: 90px;
+  min-height: 90px;
+  grid-template-columns: 90px minmax(0, 1fr) 38px;
+  grid-template-rows: 1fr;
+  animation-delay: calc(var(--stagger) / 2);
+}
+
+.xq-quiz-shell.preview-mobile .answer-letter {
+  top: 6px;
+  left: 6px;
+  width: 24px;
+  height: 24px;
+  font-size: 18px;
+}
+
+.xq-quiz-shell.preview-mobile .competency-asset-frame,
+.xq-quiz-shell.preview-mobile .competency-asset-frame img,
+.xq-quiz-shell.preview-mobile .competency-asset-frame .inline-svg,
+.xq-quiz-shell.preview-mobile .competency-asset-frame svg {
+  min-height: 90px;
+}
+
+.xq-quiz-shell.preview-mobile .competency-asset-frame {
+  width: 90px;
+  height: 90px;
+  aspect-ratio: 1;
+  border-right: 3px solid #0A0A0A;
+  border-bottom: 0;
+  padding: 0;
+}
+
+.xq-quiz-shell.preview-mobile .competency-asset-frame img,
+.xq-quiz-shell.preview-mobile .competency-asset-frame .inline-svg,
+.xq-quiz-shell.preview-mobile .competency-asset-frame svg {
+  width: 118%;
+  height: 118%;
+  min-height: 0;
+  object-fit: cover;
+  transform: scale(1.08);
+  transform-origin: center;
+}
+
+.xq-quiz-shell.preview-mobile .answer-copy {
+  padding: 9px;
+  font-size: 13px;
+  line-height: 1.14;
+  align-self: center;
+}
+
+.xq-quiz-shell.preview-mobile .answer-picked {
+  min-width: 38px;
+  min-height: 100%;
+  border-top: 0;
+  border-left: 3px solid #0A0A0A;
+  font-size: 14px;
+}
+
+.xq-quiz-shell.preview-mobile .answer-picked.is-selected .answer-picked-text {
+  display: none;
+}
+
+.xq-quiz-shell.preview-mobile .answer-picked.is-selected .answer-picked-check {
+  display: inline-flex;
+}
+
+.xq-quiz-shell.preview-mobile .quiz-actions {
+  display: none;
+}
+
+.xq-quiz-shell.preview-mobile .xq-quiz.quiz-kiosk-shell.screen-results {
+  overflow-y: auto;
+}
+
+.xq-quiz-shell.preview-mobile .xq-quiz.quiz-kiosk-shell.screen-results .kiosk-screen {
+  height: auto;
+  min-height: 100%;
+  overflow: visible;
+}
+
+.xq-quiz-shell.preview-mobile .screen-results .kiosk-main {
+  padding: 12px;
+}
+
+.xq-quiz-shell.preview-mobile .screen-results .chart-heading-row {
+  display: grid;
+  gap: 8px;
+}
+
+.xq-quiz-shell.preview-mobile .screen-results .chart-heading-row .headline {
+  font-size: 34px;
+}
+
+.xq-quiz-shell.preview-mobile .screen-results .radar-wrap {
+  height: 280px;
+}
+
+.xq-quiz-shell.preview-mobile .screen-results .outcome-legend {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 700px) {
+  html,
+  body {
+    width: 100%;
+    min-height: 100dvh;
+    overflow: hidden;
+  }
+
+  body,
+  .kiosk-shell {
+    display: block;
+  }
+
+  .kiosk-shell {
+    width: 100vw;
+    min-height: 100dvh;
+    padding: 0;
+  }
+
+  .kiosk-canvas {
+    width: 100vw;
+    height: 100dvh;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .xq-quiz-shell {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .xq-quiz.quiz-kiosk-shell {
+    width: 100%;
+    max-width: none;
+    height: 100dvh;
+    min-height: 0;
+    border: 0;
+    border-radius: 0;
+    overflow: hidden;
+  }
+
+  .kiosk-screen {
+    grid-template-columns: 1fr;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .kiosk-sidebar {
+    display: none;
+  }
+
+  .kiosk-main {
+    padding: 14px;
+  }
+
+  .kiosk-screen .welcome-copy {
+    padding: 22px 18px;
+  }
+
+  .kiosk-screen .welcome-copy .tiny-ticket {
+    margin-bottom: 12px;
+    font-size: 12px;
+  }
+
+  .kiosk-screen .welcome-copy .headline {
+    font-size: 46px;
+    line-height: 0.86;
+    margin-bottom: 10px;
+  }
+
+  .kiosk-screen .welcome-copy .subtitle {
+    font-size: 18px;
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+
+  .kiosk-screen .welcome-copy .body-copy {
+    font-size: 13px;
+    line-height: 1.32;
+    max-width: none;
+  }
+
+  .welcome-actions {
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .start-card-button {
+    flex-basis: 100%;
+    min-height: 104px;
+  }
+
+  .start-card-copy {
+    gap: 5px;
+    padding: 14px;
+  }
+
+  .start-card-copy strong {
+    font-size: 31px;
+  }
+
+  .start-card-copy span {
+    font-size: 13px;
+  }
+
+  .start-card-pick {
+    min-height: 38px;
+    font-size: 20px;
+  }
+
+  .question-top {
+    margin-bottom: 10px;
+  }
+
+  .question-nav-top {
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .question-nav-top .button {
+    flex: 0 1 auto;
+    min-width: 0;
+    min-height: 36px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+
+  .mobile-only {
+    display: inline-flex;
+  }
+
+  .auto-advance-pill {
+    min-height: 36px;
+    border-width: 2px;
+    padding: 0 9px;
+    font-size: 15px;
+  }
+
+  .question-meta {
+    margin-bottom: 8px;
+  }
+
+  .progress-label {
+    font-size: 11px;
+  }
+
+  .scenario {
+    font-size: 28px;
+    line-height: 0.92;
+    margin: 14px 0 0;
+  }
+
+  .quiz-main .answer-list {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .quiz-main .answer-card {
+    height: 90px;
+    min-height: 90px;
+    grid-template-columns: 90px minmax(0, 1fr) 38px;
+    grid-template-rows: 1fr;
+  }
+
+  .answer-letter {
+    top: 6px;
+    left: 6px;
+    width: 24px;
+    height: 24px;
+    font-size: 18px;
+  }
+
+  .quiz-main .competency-asset-frame,
+  .quiz-main .competency-asset-frame img,
+  .quiz-main .competency-asset-frame .inline-svg,
+  .quiz-main .competency-asset-frame svg {
+    min-height: 90px;
+  }
+
+  .quiz-main .competency-asset-frame {
+    width: 90px;
+    height: 90px;
+    aspect-ratio: 1;
+    border-right: 3px solid #0A0A0A;
+    border-bottom: 0;
+    padding: 0;
+  }
+
+  .quiz-main .competency-asset-frame img,
+  .quiz-main .competency-asset-frame .inline-svg,
+  .quiz-main .competency-asset-frame svg {
+    width: 118%;
+    height: 118%;
+    min-height: 0;
+    object-fit: cover;
+    transform: scale(1.08);
+    transform-origin: center;
+  }
+
+  .quiz-main .answer-copy {
+    padding: 9px;
+    font-size: 13px;
+    line-height: 1.14;
+    align-self: center;
+  }
+
+  .quiz-main .answer-picked {
+    min-width: 38px;
+    min-height: 100%;
+    border-top: 0;
+    border-left: 3px solid #0A0A0A;
+    font-size: 14px;
+  }
+
+  .quiz-main .answer-picked.is-selected .answer-picked-text {
+    display: none;
+  }
+
+  .quiz-main .answer-picked.is-selected .answer-picked-check {
+    display: inline-flex;
+  }
+
+  .quiz-actions {
+    display: none;
+  }
+
+  .xq-quiz.quiz-kiosk-shell.screen-results {
+    overflow-y: auto;
+  }
+
+  .xq-quiz.quiz-kiosk-shell.screen-results .kiosk-screen {
+    height: auto;
+    min-height: 100%;
+    overflow: visible;
+  }
+
+  .screen-results .kiosk-main {
+    padding: 12px;
+  }
+
+  .screen-results .chart-heading-row {
+    display: grid;
+    gap: 8px;
+  }
+
+  .screen-results .chart-heading-row .headline {
+    font-size: 34px;
+  }
+
+  .screen-results .radar-wrap {
+    height: 280px;
+  }
+
+  .screen-results .outcome-legend {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.theme-light {
+  background:
+    linear-gradient(rgba(10, 10, 10, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 10, 10, 0.05) 1px, transparent 1px),
+    #F7F3E8;
+  color: #0A0A0A;
+}
+
+.theme-light .xq-quiz.quiz-kiosk-shell,
+.theme-light .kiosk-screen {
+  background: #F7F3E8;
+  color: #0A0A0A;
+}
+
+.theme-light .kiosk-sidebar {
+  background: #FFFFFF;
+  border-color: rgba(10, 10, 10, 0.22);
+}
+
+.theme-light .kiosk-brand strong,
+.theme-light .sidebar-slot strong,
+.theme-light .sidebar-note strong,
+.theme-light .scenario,
+.theme-light .section-title,
+.theme-light .progress-label,
+.theme-light .attribution,
+.theme-light .chart-kicker,
+.theme-light .result-meta,
+.theme-light .headline,
+.theme-light .subtitle {
+  color: #0A0A0A;
+}
+
+.theme-light .kiosk-brand-small,
+.theme-light .sidebar-slot span,
+.theme-light .sidebar-note-label,
+.theme-light .sidebar-note p,
+.theme-light .body-copy,
+.theme-light .competency-description,
+.theme-light .type-card-copy,
+.theme-light .score-note {
+  color: #474747;
+}
+
+.theme-light .sidebar-slot,
+.theme-light .sidebar-note {
+  background: #FBFAF4;
+  border-color: rgba(10, 10, 10, 0.22);
+}
+
+.theme-light .sidebar-slot.active {
+  background: linear-gradient(90deg, var(--slot-accent) 0 9px, #FFFFFF 9px);
+}
+
+.theme-light .theme-mode-switch {
+  background: #FBFAF4;
+  border-color: rgba(10, 10, 10, 0.22);
+}
+
+.theme-light .theme-mode-label,
+.theme-light .theme-mode-option {
+  color: #474747;
+}
+
+.theme-light .theme-mode-track {
+  background: #FFFFFF;
+  border-color: rgba(10, 10, 10, 0.22);
+}
+
+.theme-light .theme-mode-switch[data-theme-mode="dark"] .theme-mode-thumb {
+  background: #0A0A0A;
+  border-color: #0A0A0A;
+}
+
+.theme-light .theme-mode-option.active {
+  color: #0A0A0A;
+}
+
+.theme-light .theme-mode-switch[data-theme-mode="dark"] .theme-mode-option.active {
+  color: #FFFFFF;
+}
+
+.theme-light .button.secondary,
+.theme-light .theme-toggle,
+.theme-light .auto-advance-pill {
+  background: #FFFFFF;
+  border-color: #0A0A0A;
+  color: #0A0A0A;
+}
+
+.theme-light .button.secondary:hover:not(:disabled),
+.theme-light .button.secondary:focus-visible:not(:disabled),
+.theme-light .theme-toggle:hover,
+.theme-light .theme-toggle:focus-visible {
+  background: #0A0A0A;
+  border-color: #0A0A0A;
+  color: #FFFFFF;
+}
+
+.theme-light .button.secondary:disabled {
+  background: #EFECE1;
+  border-color: rgba(10, 10, 10, 0.28);
+  color: #77736A;
+}
+
+.theme-light .progress-track {
+  background: #D8D4C7;
+}
+
+.theme-light .mini-progress-dot {
+  background: transparent;
+  border-color: #0A0A0A;
+  color: #0A0A0A;
+}
+
+.theme-light .mini-progress-dot.answered {
+  background: var(--dot-accent);
+  border-color: var(--dot-accent);
+  color: #0A0A0A;
+}
+
+.theme-light .mini-progress-dot.current {
+  outline-color: #0A0A0A;
+}
+
+.theme-light .results-copy,
+.theme-light .power-panel,
+.theme-light .results-actions,
+.theme-light .profile-detail {
+  background: #FFFFFF;
+  border-color: rgba(10, 10, 10, 0.22);
+}
+
+.theme-light .screen-results .results-copy {
+  border-color: var(--accent);
+}
+
+.theme-light .chart-surface.results-chart-top {
+  background:
+    radial-gradient(circle at 50% 45%, rgba(31, 204, 56, 0.32), transparent 34%),
+    linear-gradient(135deg, #FFFFFF, #FFF38F);
+  border-color: #0A0A0A;
+}
+
+.theme-light .legend-item {
+  background: linear-gradient(90deg, var(--legend-accent) 0 9px, #FFFFFF 9px);
+  color: #0A0A0A;
+  border: 1px solid var(--legend-accent);
+}
+
+.theme-light .legend-score,
+.theme-light .legend-label {
+  color: #0A0A0A;
+}
+
+.theme-light .competency-card,
+.theme-light .type-card {
+  background: #FFFFFF;
+  border-color: #0A0A0A;
+}
+
+.theme-light .screen-results .type-card {
+  background: var(--accent);
+  border-color: #0A0A0A;
+  color: var(--ink);
+}
+
+.theme-light .screen-results .type-card .result-meta,
+.theme-light .screen-results .top-outcome-name,
+.theme-light .screen-results .type-card-copy {
+  color: var(--ink);
+}
+
+.theme-light .screen-results .competency-card {
+  border-color: var(--tile-accent);
+}
+
+.theme-light .screen-results .competency-card .power-count {
+  background: var(--tile-accent);
+  border-color: var(--tile-accent);
+}
+
+.theme-light .answer-card {
+  background: #FFFFFF;
+  border-color: #0A0A0A;
+  color: #0A0A0A;
+}
+
+.theme-light .answer-card:hover,
+.theme-light .answer-card:focus-visible,
+.theme-light .answer-card.selected {
+  background: var(--tile-accent-deep);
+  border-color: var(--tile-accent-deep);
+  color: #FFFFFF;
+}
+
+.theme-light .answer-card:hover .answer-copy,
+.theme-light .answer-card:focus-visible .answer-copy,
+.theme-light .answer-card.selected .answer-copy {
+  color: #FFFFFF;
+}
+
+.theme-light .answer-card:hover .answer-letter,
+.theme-light .answer-card:focus-visible .answer-letter,
+.theme-light .answer-card.selected .answer-letter {
+  background: #FFFFFF;
+  color: #0A0A0A;
+}
+
+.theme-light .answer-picked {
+  background: var(--tile-accent);
+  color: #0A0A0A;
+}
+
+.theme-light .answer-card:hover .answer-picked,
+.theme-light .answer-card:focus-visible .answer-picked,
+.theme-light .answer-card.selected .answer-picked {
+  background: var(--tile-accent);
+  color: #0A0A0A;
+}
+
+.theme-light .preview-mode-toggle {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(10, 10, 10, 0.22);
+  color: #0A0A0A;
+}
+
+.theme-light .preview-mode-toggle button {
+  border-color: rgba(10, 10, 10, 0.32);
+  color: #0A0A0A;
+}
+
+.theme-light .preview-mode-toggle button.active {
+  background: #1FCC38;
+  border-color: #1FCC38;
+  color: #0A0A0A;
+}
+
+.xq-quiz-shell.preview-mobile .mobile-screen-tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.xq-quiz-shell.preview-mobile .question-nav-top {
+  justify-content: flex-end;
+}
+
+.xq-quiz-shell.preview-mobile .question-nav-left,
+.xq-quiz-shell.preview-mobile .top-back-button,
+.xq-quiz-shell.preview-mobile .desktop-status-pill {
+  display: none;
+}
+
+.xq-quiz-shell.preview-mobile .quiz-main {
+  position: relative;
+  padding-bottom: 62px;
+}
+
+.xq-quiz-shell.preview-mobile .quiz-actions {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  display: grid;
+  grid-template-columns: minmax(72px, 0.42fr) minmax(0, 1fr);
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+}
+
+.xq-quiz-shell.preview-mobile .quiz-actions .button,
+.xq-quiz-shell.preview-mobile .bottom-status-button {
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+.xq-quiz-shell.preview-mobile .bottom-status-button {
+  justify-content: center;
+  border-width: 2px;
+  cursor: default;
+}
+
+@media (max-width: 700px) {
+  .mobile-screen-tools {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .question-nav-top {
+    justify-content: flex-end;
+  }
+
+  .question-nav-left,
+  .top-back-button,
+  .desktop-status-pill {
+    display: none;
+  }
+
+  .quiz-main {
+    position: relative;
+    padding-bottom: 62px;
+  }
+
+  .quiz-actions {
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+    display: grid;
+    grid-template-columns: minmax(72px, 0.42fr) minmax(0, 1fr);
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .quiz-actions .button,
+  .bottom-status-button {
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+
+  .bottom-status-button {
+    justify-content: center;
+    border-width: 2px;
+    cursor: default;
+  }
+}
 `;
 
 const createEmptyCompetencyScores = () =>
@@ -3823,6 +4971,41 @@ function IconGlyph({ name, color = "currentColor", size = 24 }) {
     );
   }
 
+  if (name === "check") {
+    return (
+      <svg {...commonProps}>
+        <title>{name} icon</title>
+        <path d="M5 12.5l4.2 4.2L19 6.8" />
+      </svg>
+    );
+  }
+
+  if (name === "sun") {
+    return (
+      <svg {...commonProps}>
+        <title>{name} icon</title>
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="M4.93 4.93l1.41 1.41" />
+        <path d="M17.66 17.66l1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="M4.93 19.07l1.41-1.41" />
+        <path d="M17.66 6.34l1.41-1.41" />
+      </svg>
+    );
+  }
+
+  if (name === "moon") {
+    return (
+      <svg {...commonProps}>
+        <title>{name} icon</title>
+        <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a7 7 0 1 0 10.5 10.5z" />
+      </svg>
+    );
+  }
+
   return (
     <svg {...commonProps}>
       <title>{name} icon</title>
@@ -3958,6 +5141,55 @@ function SidebarSlot({ label, value, active = false, accent = "#1FCC38" }) {
   );
 }
 
+function ThemeToggle({ themeMode, onToggle, mobile = false, className = "" }) {
+  const isDark = themeMode === "dark";
+  const nextLabel = isDark ? "Light mode" : "Dark mode";
+  const iconName = isDark ? "sun" : "moon";
+
+  return (
+    <button
+      className={`button secondary theme-toggle theme-icon-toggle${mobile ? " mobile-theme-toggle" : ""}${className ? ` ${className}` : ""}`}
+      type="button"
+      onClick={onToggle}
+      aria-label={`Switch to ${nextLabel}`}
+      title={`Switch to ${nextLabel}`}
+    >
+      <IconGlyph name={iconName} size={18} />
+      <span className="theme-toggle-label">{nextLabel}</span>
+    </button>
+  );
+}
+
+function ThemeModeSwitch({ themeMode, onToggle }) {
+  const options = [
+    { id: "light", icon: "sun", label: "Light" },
+    { id: "dark", icon: "moon", label: "Dark" },
+  ];
+
+  return (
+    <fieldset className="theme-mode-switch" data-theme-mode={themeMode}>
+      <legend className="theme-mode-label">Display</legend>
+      <div className="theme-mode-track">
+        <span className="theme-mode-thumb" aria-hidden="true" />
+        {options.map((option) => (
+          <button
+            className={`theme-mode-option${themeMode === option.id ? " active" : ""}`}
+            type="button"
+            key={option.id}
+            onClick={() => {
+              if (themeMode !== option.id) onToggle();
+            }}
+            aria-pressed={themeMode === option.id}
+          >
+            <IconGlyph name={option.icon} size={16} />
+            <span>{option.label}</span>
+          </button>
+        ))}
+      </div>
+    </fieldset>
+  );
+}
+
 function MiniProgress({
   questions,
   selectedAnswers,
@@ -4038,6 +5270,8 @@ function renderRadarTick({ payload, x, y, textAnchor }) {
 }
 
 export default function App() {
+  const [previewMode, setPreviewMode] = useState("kiosk");
+  const [themeMode, setThemeMode] = useState("dark");
   const [screen, setScreen] = useState("welcome");
   const [quizMode, setQuizMode] = useState("detailed");
   const [activeQuestions, setActiveQuestions] = useState(QUESTIONS);
@@ -4074,6 +5308,9 @@ export default function App() {
   const primaryOutcome = topOutcomes[0] || OUTCOMES.FK;
   const secondaryOutcome = secondOutcomes[0];
   const modeMeta = QUIZ_MODES[quizMode] || QUIZ_MODES.detailed;
+  const toggleThemeMode = () => {
+    setThemeMode((mode) => (mode === "dark" ? "light" : "dark"));
+  };
 
   useEffect(() => {
     const scrollMoment = `${screen}-${currentIndex}`;
@@ -4154,7 +5391,9 @@ export default function App() {
     <>
       <style>{APP_STYLES}</style>
 
-      <main className="xq-quiz-shell">
+      <main
+        className={`xq-quiz-shell preview-${previewMode} theme-${themeMode}`}
+      >
         <div className={`xq-quiz quiz-kiosk-shell screen-${screen}`}>
           {screen === "welcome" && (
             <section
@@ -4170,6 +5409,10 @@ export default function App() {
                     value={`${QUIZ_MODES.fast.questionCount} or ${QUIZ_MODES.detailed.questionCount}`}
                   />
                   <SidebarSlot label="Result" value="Learner Profile" />
+                  <ThemeModeSwitch
+                    themeMode={themeMode}
+                    onToggle={toggleThemeMode}
+                  />
                 </div>
                 <div className="sidebar-note">
                   <span className="sidebar-note-label">Framework</span>
@@ -4179,6 +5422,13 @@ export default function App() {
               </aside>
 
               <div className="kiosk-main welcome-main">
+                <div className="mobile-screen-tools mobile-only">
+                  <ThemeToggle
+                    themeMode={themeMode}
+                    onToggle={toggleThemeMode}
+                    mobile
+                  />
+                </div>
                 <section className="welcome-copy">
                   <span className="tiny-ticket">
                     <IconGlyph name="spark" size={18} />
@@ -4255,6 +5505,10 @@ export default function App() {
                     label="Continue"
                     value={isAutoAdvancing ? "Advancing" : "Auto"}
                   />
+                  <ThemeModeSwitch
+                    themeMode={themeMode}
+                    onToggle={toggleThemeMode}
+                  />
                 </div>
                 <MiniProgress
                   questions={activeQuestions}
@@ -4278,17 +5532,39 @@ export default function App() {
                     className="question-nav-top"
                     aria-label="Question navigation"
                   >
+                    <div className="question-nav-left">
+                      <button
+                        className="button secondary top-back-button"
+                        type="button"
+                        onClick={goBack}
+                        disabled={currentIndex === 0 || isAutoAdvancing}
+                      >
+                        <IconGlyph name="back" size={18} />
+                        Back
+                      </button>
+                      <ThemeToggle
+                        themeMode={themeMode}
+                        onToggle={toggleThemeMode}
+                        className="desktop-question-theme-toggle"
+                      />
+                    </div>
                     <button
-                      className="button secondary"
+                      className="button secondary mobile-only"
                       type="button"
-                      onClick={goBack}
-                      disabled={currentIndex === 0 || isAutoAdvancing}
+                      onClick={resetToWelcome}
+                      disabled={isAutoAdvancing}
                     >
-                      <IconGlyph name="back" size={18} />
-                      Back
+                      <IconGlyph name="refresh" size={18} />
+                      Restart
                     </button>
+                    <ThemeToggle
+                      themeMode={themeMode}
+                      onToggle={toggleThemeMode}
+                      mobile
+                      className="mobile-only"
+                    />
                     <span
-                      className={`auto-advance-pill${isAutoAdvancing ? " active" : ""}`}
+                      className={`auto-advance-pill desktop-status-pill${isAutoAdvancing ? " active" : ""}`}
                     >
                       {advanceStatusText}
                     </span>
@@ -4327,6 +5603,7 @@ export default function App() {
                     const accent =
                       answer.displayAccent ||
                       getAnswerAccent(currentQuestion.id, orderIndex);
+                    const mutedAccent = getMutedAccent(accent);
 
                     return (
                       <button
@@ -4335,6 +5612,7 @@ export default function App() {
                         className={`answer-card${isSelected ? " selected" : ""}`}
                         style={{
                           "--tile-accent": accent,
+                          "--tile-accent-deep": mutedAccent,
                           "--stagger": `${orderIndex * 85}ms`,
                         }}
                         aria-pressed={isSelected}
@@ -4352,8 +5630,18 @@ export default function App() {
                           accent={accent}
                         />
                         <span className="answer-copy">{answer.text}</span>
-                        <span className="answer-picked" aria-hidden="true">
-                          {isSelected ? "Selected" : "Pick"}
+                        <span
+                          className={`answer-picked${isSelected ? " is-selected" : ""}`}
+                          aria-hidden="true"
+                        >
+                          <span className="answer-picked-text">
+                            {isSelected ? "Selected" : "Pick"}
+                          </span>
+                          {isSelected && (
+                            <span className="answer-picked-check">
+                              <IconGlyph name="check" size={20} />
+                            </span>
+                          )}
                         </span>
                       </button>
                     );
@@ -4370,11 +5658,15 @@ export default function App() {
                     <IconGlyph name="back" size={18} />
                     Back
                   </button>
-                  <span
-                    className={`auto-advance-pill${isAutoAdvancing ? " active" : ""}`}
+                  <button
+                    type="button"
+                    className={`auto-advance-pill bottom-status-button${isAutoAdvancing ? " active" : ""}`}
+                    aria-disabled="true"
+                    aria-live="polite"
+                    tabIndex={-1}
                   >
                     {advanceStatusText}
-                  </span>
+                  </button>
                 </div>
               </div>
             </section>
@@ -4412,6 +5704,10 @@ export default function App() {
                     }
                     accent={secondaryOutcome?.color || "#1FCC38"}
                   />
+                  <ThemeModeSwitch
+                    themeMode={themeMode}
+                    onToggle={toggleThemeMode}
+                  />
                 </div>
                 <div className="sidebar-mini-list">
                   <button
@@ -4426,13 +5722,19 @@ export default function App() {
               </aside>
 
               <div className="kiosk-main results-main">
+                <div className="mobile-screen-tools mobile-only">
+                  <ThemeToggle
+                    themeMode={themeMode}
+                    onToggle={toggleThemeMode}
+                    mobile
+                  />
+                </div>
                 <section
                   className="chart-surface results-chart-top"
                   aria-label="Radar chart of five XQ learner outcomes"
                 >
                   <div className="chart-heading-row">
                     <div>
-                      <span className="tiny-ticket">Profile web</span>
                       <h1 className="headline" id="results-title">
                         Your XQ Learner Profile
                       </h1>
@@ -4482,7 +5784,11 @@ export default function App() {
 
                   <div className="outcome-legend">
                     {results.outcomeScores.map((outcome) => (
-                      <div className="legend-item" key={outcome.id}>
+                      <div
+                        className="legend-item"
+                        key={outcome.id}
+                        style={{ "--legend-accent": outcome.color }}
+                      >
                         <span className="legend-label">
                           <span
                             className="legend-swatch"
@@ -4507,21 +5813,6 @@ export default function App() {
                   }}
                 >
                   <div className="results-copy">
-                    <div className="results-copy-head">
-                      <span className="tiny-ticket">
-                        <IconGlyph name={primaryOutcome.icon} size={18} />
-                        Top learner outcome
-                      </span>
-                      <button
-                        className="button secondary restart-button"
-                        type="button"
-                        onClick={resetToWelcome}
-                      >
-                        <IconGlyph name="refresh" size={18} />
-                        Restart
-                      </button>
-                    </div>
-
                     <div className="type-card-stack compact">
                       {topOutcomes.map((outcome) => (
                         <article
@@ -4561,7 +5852,6 @@ export default function App() {
                     <h2 className="section-title">
                       Your Strongest Competencies
                     </h2>
-                    <span className="tiny-ticket">Top 3</span>
                   </div>
                   <div className="competency-list">
                     {results.topCompetencies.map((competency, index) => (
@@ -4579,20 +5869,38 @@ export default function App() {
                     Based on the XQ Learner Outcomes framework -
                     xqsuperschool.org
                   </p>
-                  <button
-                    className="button primary"
-                    type="button"
-                    onClick={resetToWelcome}
-                  >
-                    <IconGlyph name="refresh" color="#0A0A0A" size={18} />
-                    Retake the Quiz
-                  </button>
                 </div>
+                <button
+                  className="button primary results-restart-button"
+                  type="button"
+                  onClick={resetToWelcome}
+                >
+                  <IconGlyph name="refresh" color="#0A0A0A" size={18} />
+                  Retake the Quiz
+                </button>
               </div>
             </section>
           )}
         </div>
       </main>
+
+      <fieldset className="preview-mode-toggle">
+        <legend>Preview layout</legend>
+        <button
+          className={previewMode === "kiosk" ? "active" : ""}
+          type="button"
+          onClick={() => setPreviewMode("kiosk")}
+        >
+          Kiosk
+        </button>
+        <button
+          className={previewMode === "mobile" ? "active" : ""}
+          type="button"
+          onClick={() => setPreviewMode("mobile")}
+        >
+          Mobile
+        </button>
+      </fieldset>
     </>
   );
 }
