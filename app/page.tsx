@@ -470,6 +470,189 @@ const QUESTIONS = [
   },
 ];
 
+const FAST_QUESTION_ANSWERS = {
+  1: [
+    {
+      text: "Check what history, rules, or context shaped the issue.",
+      competencies: ["FK.SS.2", "FK.SS.4", "FK.SS.1"],
+    },
+    {
+      text: "Compare the claims and evidence side by side.",
+      competencies: ["FL.ID.1", "FL.MST.3", "LL.SD.2"],
+    },
+    {
+      text: "Look for the assumption each article is building from.",
+      competencies: ["OT.Crit.1", "OT.Crit.2", "OT.Crit.3"],
+    },
+    {
+      text: "Ask people with different experiences how they read it.",
+      competencies: ["GC.SA.1", "GC.IS.3", "LL.SAw.3"],
+    },
+  ],
+  2: [
+    {
+      text: "Understand the local context and constraints first.",
+      competencies: ["FK.SS.1", "FK.SS.3", "LL.SAw.3"],
+    },
+    {
+      text: "Organize what is working and what is not.",
+      competencies: ["FL.ID.1", "FL.MST.3", "FL.ID.3"],
+    },
+    {
+      text: "Reframe the challenge before we keep pushing.",
+      competencies: ["OT.PS.1", "OT.PS.2", "LL.SM.3"],
+    },
+    {
+      text: "Bring everyone back to needs, roles, and trust.",
+      competencies: ["GC.IS.1", "GC.IS.4", "GC.IS.2"],
+    },
+  ],
+  3: [
+    {
+      text: "Build background through examples, culture, and context.",
+      competencies: ["FK.SS.4", "FK.AC.2", "FK.SS.3"],
+    },
+    {
+      text: "Break the topic into terms, patterns, and resources.",
+      competencies: ["FL.ID.1", "FL.MST.1", "GC.IS.3"],
+    },
+    {
+      text: "Try a small version, see what fails, and revise.",
+      competencies: ["OT.Creat.1", "OT.PS.2", "GC.SA.1"],
+    },
+    {
+      text: "Map what I know, what I need, and how I will keep going.",
+      competencies: ["LL.SD.2", "LL.SD.1", "LL.SM.2"],
+    },
+  ],
+  4: [
+    {
+      text: "Study the context before I decide what to emphasize.",
+      competencies: ["FK.SS.2", "FK.SS.1", "LL.SAw.1"],
+    },
+    {
+      text: "Shape the evidence into a clear, persuasive story.",
+      competencies: ["FL.ID.2", "FL.ID.3", "FL.MST.3"],
+    },
+    {
+      text: "Find the strongest counterargument and rethink my approach.",
+      competencies: ["OT.Crit.2", "OT.Crit.1", "OT.Crit.3"],
+    },
+    {
+      text: "Start from shared values and respect for the room.",
+      competencies: ["GC.IS.3", "GC.SA.1", "LL.SM.3"],
+    },
+  ],
+  5: [
+    {
+      text: "Learn what systems, money, or rules are shaping it.",
+      competencies: ["FK.SS.1", "FK.SS.3", "FK.SS.2"],
+    },
+    {
+      text: "Turn the facts into something clear and usable.",
+      competencies: ["FL.ID.1", "FL.ID.2", "LL.SAw.2"],
+    },
+    {
+      text: "Look for the root problem before jumping to a fix.",
+      competencies: ["OT.PS.1", "OT.PS.2", "LL.SD.3"],
+    },
+    {
+      text: "Connect them to people who can act together.",
+      competencies: ["GC.SAg.1", "GC.SAg.2", "GC.IS.4"],
+    },
+  ],
+  6: [
+    {
+      text: "Look at art, culture, and examples before making my move.",
+      competencies: ["FK.AC.2", "FK.AC.1", "FK.SS.4"],
+    },
+    {
+      text: "Turn the idea into a clear message someone can follow.",
+      competencies: ["FL.ID.2", "FL.ID.1", "LL.SD.2"],
+    },
+    {
+      text: "Generate a pile of possibilities before choosing one.",
+      competencies: ["OT.Creat.1", "OT.Creat.2", "OT.PS.2"],
+    },
+    {
+      text: "Share an early version and use reactions to shape it.",
+      competencies: ["GC.IS.3", "GC.IS.4", "LL.SM.1"],
+    },
+  ],
+  7: [
+    {
+      text: "Compare the feedback with the purpose of the work.",
+      competencies: ["FK.AC.2", "FK.AC.1", "GC.IS.1"],
+    },
+    {
+      text: "Ask clarifying questions until the feedback is specific.",
+      competencies: ["FL.ID.3", "FL.ID.1", "FL.ID.2"],
+    },
+    {
+      text: "Test whether the feedback points to a stronger idea.",
+      competencies: ["OT.Crit.2", "OT.Crit.3", "GC.IS.2"],
+    },
+    {
+      text: "Separate my reaction from what might help me grow.",
+      competencies: ["LL.SM.1", "LL.SM.3", "LL.SAw.3"],
+    },
+  ],
+  8: [
+    {
+      text: "Notice the history, rules, and culture under the disagreement.",
+      competencies: ["FK.SS.1", "FK.SS.2", "FK.SS.4"],
+    },
+    {
+      text: "Track the strongest evidence and what each claim means.",
+      competencies: ["FL.ID.1", "FL.ID.3", "LL.SD.2"],
+    },
+    {
+      text: "Combine the best parts into a better option.",
+      competencies: ["OT.Crit.3", "OT.Creat.1", "LL.SD.1"],
+    },
+    {
+      text: "Pay attention to power, voice, conflict, and trust.",
+      competencies: ["GC.SA.2", "GC.SA.1", "GC.IS.2"],
+    },
+  ],
+  9: [
+    {
+      text: "Explore a topic, place, or story I am curious about.",
+      competencies: ["FK.SS.4", "FK.AC.2", "GC.IS.1"],
+    },
+    {
+      text: "Read, watch, or listen until I can explain something new.",
+      competencies: ["FL.ID.1", "FL.ID.2", "GC.IS.3"],
+    },
+    {
+      text: "Make something just to see what happens.",
+      competencies: ["OT.Creat.1", "OT.Creat.2", "OT.PS.2"],
+    },
+    {
+      text: "Rest, reset, and check in with where I am headed.",
+      competencies: ["LL.SAw.1", "LL.SAw.3", "LL.SM.2"],
+    },
+  ],
+  10: [
+    {
+      text: "Ask what real-world context the numbers came from.",
+      competencies: ["FK.SS.3", "FK.SS.1", "LL.SD.2"],
+    },
+    {
+      text: "Chart it, model it, or break it into smaller pieces.",
+      competencies: ["FL.MST.3", "FL.MST.2", "FL.MST.1"],
+    },
+    {
+      text: "Question the frame and look for a different angle.",
+      competencies: ["OT.Crit.2", "OT.PS.1", "LL.SM.3"],
+    },
+    {
+      text: "Talk it through with someone who sees patterns differently.",
+      competencies: ["GC.SA.1", "GC.IS.3", "GC.IS.4"],
+    },
+  ],
+};
+
 const OUTCOME_ORDER = ["FK", "FL", "OT", "GC", "LL"];
 
 const OUTCOMES = {
@@ -1331,13 +1514,14 @@ const APP_STYLES = `
 .welcome-actions {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: stretch;
   gap: 12px;
 }
 
 .start-card-button {
   appearance: none;
-  width: min(100%, 380px);
+  flex: 1 1 260px;
+  min-width: min(100%, 260px);
   min-height: 132px;
   border: 3px solid #0A0A0A;
   border-radius: 0;
@@ -1393,6 +1577,14 @@ const APP_STYLES = `
   font-size: 26px;
   line-height: 1;
   text-transform: uppercase;
+}
+
+.start-card-button.fast-mode .start-card-pick {
+  background: #FFF38F;
+}
+
+.start-card-button.detailed-mode .start-card-pick {
+  background: #55B9DF;
 }
 
 .button {
@@ -3133,8 +3325,34 @@ const createEmptyCompetencyScores = () =>
     return scores;
   }, {});
 
-const MAX_OUTCOME_SCORES = QUESTIONS.reduce(
-  (totals, question) => {
+const createEmptyOutcomeTotals = () =>
+  OUTCOME_ORDER.reduce((totals, outcomeId) => {
+    totals[outcomeId] = 0;
+    return totals;
+  }, {});
+
+const FAST_QUESTION_COUNT = 5;
+
+const FAST_QUESTION_POOL = QUESTIONS.map((question) => ({
+  ...question,
+  answers: FAST_QUESTION_ANSWERS[question.id] || question.answers,
+}));
+
+const QUIZ_MODES = {
+  fast: {
+    label: "Fast Mode",
+    questionCount: FAST_QUESTION_COUNT,
+    sidebarLabel: "Fast",
+  },
+  detailed: {
+    label: "Detailed Mode",
+    questionCount: QUESTIONS.length,
+    sidebarLabel: "Detailed",
+  },
+};
+
+function getMaxOutcomeScores(questions) {
+  return questions.reduce((totals, question) => {
     OUTCOME_ORDER.forEach((outcomeId) => {
       const maxForQuestion = Math.max(
         ...question.answers.map((answer) =>
@@ -3149,12 +3367,60 @@ const MAX_OUTCOME_SCORES = QUESTIONS.reduce(
     });
 
     return totals;
-  },
-  OUTCOME_ORDER.reduce((totals, outcomeId) => {
-    totals[outcomeId] = 0;
-    return totals;
-  }, {}),
-);
+  }, createEmptyOutcomeTotals());
+}
+
+function scoreFastQuestionSet(questions) {
+  const outcomeCounts = createEmptyOutcomeTotals();
+  const competencyCounts = {};
+
+  questions.forEach((question) => {
+    question.answers.forEach((answer) => {
+      answer.competencies.forEach((code) => {
+        const outcomeId = COMPETENCY_MAP[code]?.outcome;
+        if (outcomeId) outcomeCounts[outcomeId] += 1;
+        competencyCounts[code] = (competencyCounts[code] || 0) + 1;
+      });
+    });
+  });
+
+  const outcomeValues = OUTCOME_ORDER.map(
+    (outcomeId) => outcomeCounts[outcomeId],
+  );
+  const outcomeSpread = Math.max(...outcomeValues) - Math.min(...outcomeValues);
+  const competencyPenalty = Object.values(competencyCounts).reduce(
+    (total, count) => {
+      return total + Math.max(0, count - 1) ** 2;
+    },
+    0,
+  );
+  const maxCompetencyRepeat = Math.max(...Object.values(competencyCounts), 1);
+
+  return outcomeSpread * 1000 + maxCompetencyRepeat * 10 + competencyPenalty;
+}
+
+function selectFastQuestions() {
+  let bestSet = null;
+  let bestScore = Number.POSITIVE_INFINITY;
+
+  Array.from({ length: 80 }).forEach(() => {
+    const candidate = FAST_QUESTION_POOL.map((question) => ({
+      question,
+      sort: Math.random(),
+    }))
+      .sort((a, b) => a.sort - b.sort)
+      .slice(0, FAST_QUESTION_COUNT)
+      .map(({ question }) => question);
+    const score = scoreFastQuestionSet(candidate) + Math.random() / 1000;
+
+    if (score < bestScore) {
+      bestScore = score;
+      bestSet = candidate;
+    }
+  });
+
+  return bestSet || FAST_QUESTION_POOL.slice(0, FAST_QUESTION_COUNT);
+}
 
 function shuffleAnswers(answers, shuffleKey = "") {
   const salt = Array.from(String(shuffleKey)).reduce((total, character) => {
@@ -3211,10 +3477,11 @@ function getRankGroups(outcomes) {
   }, []);
 }
 
-function calculateResults(selectedAnswers) {
+function calculateResults(selectedAnswers, questions = QUESTIONS) {
   const competencyScores = createEmptyCompetencyScores();
+  const maxOutcomeScores = getMaxOutcomeScores(questions);
 
-  QUESTIONS.forEach((question) => {
+  questions.forEach((question) => {
     const selectedIndex = selectedAnswers[question.id];
     const answer = question.answers[selectedIndex];
 
@@ -3225,10 +3492,7 @@ function calculateResults(selectedAnswers) {
     });
   });
 
-  const outcomeTotals = OUTCOME_ORDER.reduce((totals, outcomeId) => {
-    totals[outcomeId] = 0;
-    return totals;
-  }, {});
+  const outcomeTotals = createEmptyOutcomeTotals();
 
   Object.entries(competencyScores).forEach(([code, score]) => {
     const outcomeId = COMPETENCY_MAP[code].outcome;
@@ -3237,7 +3501,7 @@ function calculateResults(selectedAnswers) {
 
   const absoluteOutcomeScores = OUTCOME_ORDER.map((outcomeId) => {
     const raw = outcomeTotals[outcomeId];
-    const max = MAX_OUTCOME_SCORES[outcomeId] || 1;
+    const max = maxOutcomeScores[outcomeId] || 1;
     const score = Math.min((raw / max) * 10, 10);
 
     return {
@@ -3695,13 +3959,14 @@ function SidebarSlot({ label, value, active = false, accent = "#1FCC38" }) {
 }
 
 function MiniProgress({
+  questions,
   selectedAnswers,
   selectedAnswerAccents,
   currentIndex,
 }) {
   return (
     <ul className="mini-progress-grid" aria-label="Quiz progress">
-      {QUESTIONS.map((question, index) => {
+      {questions.map((question, index) => {
         const isAnswered = selectedAnswers[question.id] !== undefined;
         const isCurrent = index === currentIndex;
         const accent =
@@ -3717,7 +3982,7 @@ function MiniProgress({
             style={{ "--dot-accent": accent }}
             title={`Question ${question.id}${isAnswered ? " answered" : ""}`}
           >
-            {question.id}
+            {index + 1}
           </li>
         );
       })}
@@ -3774,13 +4039,17 @@ function renderRadarTick({ payload, x, y, textAnchor }) {
 
 export default function App() {
   const [screen, setScreen] = useState("welcome");
+  const [quizMode, setQuizMode] = useState("detailed");
+  const [activeQuestions, setActiveQuestions] = useState(QUESTIONS);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [selectedAnswerAccents, setSelectedAnswerAccents] = useState({});
   const [shuffleToken, setShuffleToken] = useState(0);
   const [pendingAdvance, setPendingAdvance] = useState(null);
 
-  const currentQuestion = QUESTIONS[currentIndex];
+  const totalQuestions = activeQuestions.length;
+  const currentQuestion =
+    activeQuestions[currentIndex] || activeQuestions[0] || QUESTIONS[0];
   const selectedAnswerIndex = selectedAnswers[currentQuestion.id];
 
   const shuffledAnswers = useMemo(() => {
@@ -3789,12 +4058,12 @@ export default function App() {
   }, [currentQuestion.answers, currentQuestion.id, shuffleToken]);
 
   const results = useMemo(() => {
-    return calculateResults(selectedAnswers);
-  }, [selectedAnswers]);
+    return calculateResults(selectedAnswers, activeQuestions);
+  }, [activeQuestions, selectedAnswers]);
 
-  const progress = ((currentIndex + 1) / QUESTIONS.length) * 100;
+  const progress = ((currentIndex + 1) / totalQuestions) * 100;
   const isAutoAdvancing = pendingAdvance?.questionId === currentQuestion.id;
-  const isLastQuestion = currentIndex === QUESTIONS.length - 1;
+  const isLastQuestion = currentIndex === totalQuestions - 1;
   let advanceStatusText = "Pick one to continue";
   if (isAutoAdvancing && isLastQuestion) advanceStatusText = "Building profile";
   if (isAutoAdvancing && !isLastQuestion) advanceStatusText = "Next question";
@@ -3804,6 +4073,7 @@ export default function App() {
     OUTCOMES[OUTCOME_ORDER[currentIndex % OUTCOME_ORDER.length]];
   const primaryOutcome = topOutcomes[0] || OUTCOMES.FK;
   const secondaryOutcome = secondOutcomes[0];
+  const modeMeta = QUIZ_MODES[quizMode] || QUIZ_MODES.detailed;
 
   useEffect(() => {
     const scrollMoment = `${screen}-${currentIndex}`;
@@ -3818,7 +4088,7 @@ export default function App() {
     const timeout = window.setTimeout(() => {
       setPendingAdvance(null);
 
-      if (pendingAdvance.fromIndex >= QUESTIONS.length - 1) {
+      if (pendingAdvance.fromIndex >= totalQuestions - 1) {
         setScreen("results");
         return;
       }
@@ -3827,10 +4097,16 @@ export default function App() {
     }, 520);
 
     return () => window.clearTimeout(timeout);
-  }, [pendingAdvance]);
+  }, [pendingAdvance, totalQuestions]);
 
-  const startQuiz = () => {
+  const startQuiz = (mode) => {
+    const nextMode = mode === "fast" ? "fast" : "detailed";
+    const nextQuestions =
+      nextMode === "fast" ? selectFastQuestions() : QUESTIONS;
+
     setPendingAdvance(null);
+    setQuizMode(nextMode);
+    setActiveQuestions(nextQuestions);
     setSelectedAnswers({});
     setSelectedAnswerAccents({});
     setCurrentIndex(0);
@@ -3840,6 +4116,8 @@ export default function App() {
 
   const resetToWelcome = () => {
     setPendingAdvance(null);
+    setQuizMode("detailed");
+    setActiveQuestions(QUESTIONS);
     setSelectedAnswers({});
     setSelectedAnswerAccents({});
     setCurrentIndex(0);
@@ -3889,7 +4167,7 @@ export default function App() {
                   <SidebarSlot label="Round" value="Welcome" active />
                   <SidebarSlot
                     label="Questions"
-                    value={`0/${QUESTIONS.length}`}
+                    value={`${QUIZ_MODES.fast.questionCount} or ${QUIZ_MODES.detailed.questionCount}`}
                   />
                   <SidebarSlot label="Result" value="Learner Profile" />
                 </div>
@@ -3920,16 +4198,31 @@ export default function App() {
 
                   <div className="welcome-actions">
                     <button
-                      className="start-card-button"
+                      className="start-card-button fast-mode"
                       type="button"
-                      onClick={startQuiz}
+                      onClick={() => startQuiz("fast")}
                     >
                       <span className="start-card-copy">
-                        <strong>Start the Quiz</strong>
-                        <span>Build my profile</span>
+                        <strong>Fast Mode</strong>
+                        <span>5 questions. Balanced and quick.</span>
                       </span>
                       <span className="start-card-pick" aria-hidden="true">
-                        Start
+                        Start fast
+                        <IconGlyph name="arrow" color="#0A0A0A" size={18} />
+                      </span>
+                    </button>
+
+                    <button
+                      className="start-card-button detailed-mode"
+                      type="button"
+                      onClick={() => startQuiz("detailed")}
+                    >
+                      <span className="start-card-copy">
+                        <strong>Detailed Mode</strong>
+                        <span>10 questions. More accurate.</span>
+                      </span>
+                      <span className="start-card-pick" aria-hidden="true">
+                        Go deeper
                         <IconGlyph name="arrow" color="#0A0A0A" size={18} />
                       </span>
                     </button>
@@ -3949,14 +4242,14 @@ export default function App() {
                 <KioskBrand />
                 <div className="sidebar-stack">
                   <SidebarSlot
-                    label="Question"
-                    value={`${currentIndex + 1}/${QUESTIONS.length}`}
+                    label={modeMeta.sidebarLabel}
+                    value={`${currentIndex + 1}/${totalQuestions}`}
                     active
                     accent={quizOutcome.color}
                   />
                   <SidebarSlot
                     label="Answered"
-                    value={`${Object.keys(selectedAnswers).length}/${QUESTIONS.length}`}
+                    value={`${Object.keys(selectedAnswers).length}/${totalQuestions}`}
                   />
                   <SidebarSlot
                     label="Continue"
@@ -3964,6 +4257,7 @@ export default function App() {
                   />
                 </div>
                 <MiniProgress
+                  questions={activeQuestions}
                   selectedAnswers={selectedAnswers}
                   selectedAnswerAccents={selectedAnswerAccents}
                   currentIndex={currentIndex}
@@ -4001,7 +4295,7 @@ export default function App() {
                   </nav>
                   <div className="question-meta">
                     <span className="progress-label">
-                      Question {currentIndex + 1} of {QUESTIONS.length}
+                      Question {currentIndex + 1} of {totalQuestions}
                     </span>
                     <span className="progress-label progress-percent">
                       {Math.round(progress)}%
