@@ -237,6 +237,272 @@ const COMPETENCY_MAP = {
   },
 };
 
+const COMPETENCY_DETAIL_MAP = {
+  "FK.AC.1": {
+    sourceShort: "Express myself artistically",
+    componentSkills: ["Power of art", "Making art", "Art and community"],
+  },
+  "FK.AC.2": {
+    sourceShort: "Appreciate art and art history",
+    componentSkills: ["Art history", "Trends in art", "Art and society"],
+  },
+  "FK.SS.1": {
+    sourceShort: "Understand governments",
+    componentSkills: [
+      "Role of government",
+      "Rights of individuals",
+      "Public policy",
+    ],
+  },
+  "FK.SS.2": {
+    sourceShort: "Understand political and social power",
+    componentSkills: [
+      "Influencing government",
+      "Social movements",
+      "Social equity",
+      "Economic equity",
+    ],
+  },
+  "FK.SS.3": {
+    sourceShort: "Understand economic forces",
+    componentSkills: [
+      "Economic behavior",
+      "Economic forces",
+      "Access to resources",
+      "Resource competition",
+    ],
+  },
+  "FK.SS.4": {
+    sourceShort: "Understand different cultures",
+    componentSkills: [
+      "Cultural difference",
+      "Social groupings",
+      "History and culture",
+      "Global connections",
+    ],
+  },
+  "FL.ID.1": {
+    sourceShort: "Interpret information from many sources",
+    componentSkills: [
+      "Synthesizing information",
+      "Formulating questions",
+      "Evaluating information",
+    ],
+  },
+  "FL.ID.2": {
+    sourceShort: "Inform and persuade others",
+    componentSkills: [
+      "Knowing my audience",
+      "Crafting narrative",
+      "Deploying communication media",
+    ],
+  },
+  "FL.ID.3": {
+    sourceShort: "Make and support arguments",
+    componentSkills: [
+      "Reasoning",
+      "Explaining my reasoning",
+      "Using evidence",
+      "Constructive critique",
+    ],
+  },
+  "FL.MST.1": {
+    sourceShort: "Use math to solve problems",
+    componentSkills: [
+      "Expressing equivalencies",
+      "Using computational tools",
+      "Stating and restating a problem",
+      "Analyzing patterns",
+      "Checking results",
+      "Using algorithms",
+    ],
+  },
+  "FL.MST.2": {
+    sourceShort: "Use math to make predictions",
+    componentSkills: [
+      "Modeling",
+      "Understanding models",
+      "Explaining models",
+      "Using models",
+    ],
+  },
+  "FL.MST.3": {
+    sourceShort: "Use data to explain relationships",
+    componentSkills: ["Data tools", "Data quality", "Data visualization"],
+  },
+  "FL.MST.4": {
+    sourceShort: "Explore questions using scientific concepts",
+    componentSkills: [
+      "Testing variables",
+      "Collecting data",
+      "Modeling systems",
+      "Understanding causality",
+    ],
+  },
+  "GC.IS.1": {
+    sourceShort: "Build and maintain healthy relationships",
+    componentSkills: [
+      "Personal needs and boundaries",
+      "Effective communication",
+    ],
+  },
+  "GC.IS.2": {
+    sourceShort: "Negotiate solutions to conflict",
+    componentSkills: [
+      "Managing disagreement",
+      "Maintaining or adjusting my viewpoint",
+    ],
+  },
+  "GC.IS.3": {
+    sourceShort: "Cultivate my understanding of others",
+    componentSkills: [
+      "Understanding others' viewpoints",
+      "Recognizing my impact",
+      "Showing understanding",
+    ],
+  },
+  "GC.IS.4": {
+    sourceShort: "Work productively with a group",
+    componentSkills: [
+      "Valuing others",
+      "Navigating roles",
+      "Reflecting on our work",
+    ],
+  },
+  "GC.SA.1": {
+    sourceShort: "Recognize the value of differences",
+    componentSkills: [
+      "Collaborating across difference",
+      "Situating my perspective",
+    ],
+  },
+  "GC.SA.2": {
+    sourceShort: "Read and manage social dynamics",
+    componentSkills: ["Holders of power", "Social Identities"],
+  },
+  "GC.SAg.1": {
+    sourceShort: "Advocate for myself and others",
+    componentSkills: ["Power dynamics", "Self and Community", "Case-making"],
+  },
+  "GC.SAg.2": {
+    sourceShort: "Inspire and organize others",
+    componentSkills: ["Effective advocacy", "Building relationships"],
+  },
+  "LL.SAw.1": {
+    sourceShort: "Understand my physical and emotional health",
+    componentSkills: [
+      "Thoughts and behavior",
+      "Meeting my needs",
+      "Group identity",
+    ],
+  },
+  "LL.SAw.2": {
+    sourceShort: "Cope constructively with conflict",
+    componentSkills: [
+      "Recognizing Conflict",
+      "Reacting to conflict",
+      "Drivers of conflict",
+    ],
+  },
+  "LL.SAw.3": {
+    sourceShort: "Know my strengths and areas for growth",
+    componentSkills: ["Academic strengths", "Skills and mindsets"],
+  },
+  "LL.SD.1": {
+    sourceShort: "Nurture a sense of purpose",
+    componentSkills: [
+      "Creating conditions for learning",
+      "Making learning relevant",
+      "Making learning joyful",
+    ],
+  },
+  "LL.SD.2": {
+    sourceShort: "Navigate my learning path",
+    componentSkills: ["Weighing options", "Iterative thinking"],
+  },
+  "LL.SD.3": {
+    sourceShort: "Seek out the support I need",
+    componentSkills: ["Identifying allies", "Visioning success"],
+  },
+  "LL.SM.1": {
+    sourceShort: "Seek and act on feedback from others",
+    componentSkills: ["Absorbing feedback", "Evaluating feedback"],
+  },
+  "LL.SM.2": {
+    sourceShort: "Set goals and work to achieve them",
+    componentSkills: [
+      "Resource management",
+      "Action planning",
+      "Adapting my approach",
+      "Planning for postsecondary",
+    ],
+  },
+  "LL.SM.3": {
+    sourceShort: "Manage emotions and behavior",
+    componentSkills: ["Self-Management", "Self-Monitoring"],
+  },
+  "OT.Creat.1": {
+    sourceShort: "Seek and develop new concepts",
+    componentSkills: [
+      "Asking questions",
+      "Connecting relevant ideas",
+      "Innovative thinking",
+      "Creating original works",
+    ],
+  },
+  "OT.Creat.2": {
+    sourceShort: "Put forward new concepts",
+    componentSkills: [
+      "Seeking feedback",
+      "Ideas for impact",
+      "Ideas in context",
+    ],
+  },
+  "OT.Crit.1": {
+    sourceShort: "Understand and assess evidence",
+    componentSkills: [
+      "Extracting ideas",
+      "Relevance",
+      "Information management",
+    ],
+  },
+  "OT.Crit.2": {
+    sourceShort: "Analyze assumptions and reasoning",
+    componentSkills: [
+      "Language and evidence",
+      "Identifying bias",
+      "Contextualizing my perspective",
+      "Testing my perspective",
+      "Recognizing patterns",
+    ],
+  },
+  "OT.Crit.3": {
+    sourceShort: "See and make connections",
+    componentSkills: [
+      "Making connections",
+      "Analyzing contradiction",
+      "Understanding relationships",
+    ],
+  },
+  "OT.PS.1": {
+    sourceShort: "Identify and define a problem",
+    componentSkills: [
+      "Problem diagnosis",
+      "Empathic Problem Analysis",
+      "Responsible engagement",
+    ],
+  },
+  "OT.PS.2": {
+    sourceShort: "Generate creative solutions",
+    componentSkills: [
+      "Creating solutions",
+      "Managing constraints",
+      "Using design techniques",
+      "Proposing improvements",
+    ],
+  },
+};
+
 const QUESTIONS = [
   {
     id: 1,
@@ -680,6 +946,11 @@ const OUTCOMES = {
     ],
     growthMove:
       "Pair your context instincts with one fast experiment so your insight becomes visible.",
+    strengths: [
+      "See broad context and connections others miss.",
+      "Translate history, systems, and culture into actionable insight.",
+      "Spot long-term patterns that improve decisions.",
+    ],
   },
   FL: {
     id: "FL",
@@ -705,6 +976,11 @@ const OUTCOMES = {
     ],
     growthMove:
       "Bring your audience in earlier so your clear explanation answers the questions they actually have.",
+    strengths: [
+      "Turn complex information into clear, usable ideas.",
+      "Make evidence and data meaningful for different audiences.",
+      "Explain findings so others can act on them.",
+    ],
   },
   OT: {
     id: "OT",
@@ -730,6 +1006,11 @@ const OUTCOMES = {
     ],
     growthMove:
       "Name the smallest testable version of your idea so others can join you sooner.",
+    strengths: [
+      "Generate bold ideas and move from concept to prototype.",
+      "Experiment quickly to learn what works.",
+      "Embrace uncertainty and adapt fast.",
+    ],
   },
   GC: {
     id: "GC",
@@ -755,6 +1036,11 @@ const OUTCOMES = {
     ],
     growthMove:
       "Protect your own energy while you are holding space for everyone else.",
+    strengths: [
+      "Bring people together and build trust across differences.",
+      "Facilitate productive teamwork under pressure.",
+      "Design fair processes that help groups act effectively.",
+    ],
   },
   LL: {
     id: "LL",
@@ -763,8 +1049,8 @@ const OUTCOMES = {
     archetype: "Learners for Life",
     chartLabel: "Learners for Life",
     icon: "compass",
-    color: "#F03040",
-    pairColor: "#FF253A",
+    color: "#1FCC38",
+    pairColor: "#0FAF2E",
     inkColor: "#0A0A0A",
     quickTake: "You keep finding your way.",
     prompt: "Reflect, reset, keep going.",
@@ -775,7 +1061,20 @@ const OUTCOMES = {
     careerPaths: ["Coach", "Program manager", "Counselor", "Learning designer"],
     growthMove:
       "Let people see your process, not just your progress, so they can support the journey.",
+    strengths: [
+      "Reflect and adapt to grow continuously.",
+      "Set goals, iterate, and sustain momentum.",
+      "Ask for and use feedback to improve.",
+    ],
   },
+};
+
+const PROFILE_CHARACTER_ASSETS = {
+  FK: "/xq-profile-characters/foundational-knowledge.svg",
+  FL: "/xq-profile-characters/fundamental-literacies.svg",
+  OT: "/xq-profile-characters/original-thinkers.svg",
+  GC: "/xq-profile-characters/generous-collaborators.svg",
+  LL: "/xq-profile-characters/learners-for-life.svg",
 };
 
 const COMPETENCY_ASSET_FILES = {
@@ -964,6 +1263,7 @@ function getMutedAccent(hexColor) {
 }
 
 const SVG_MARKUP_CACHE = new Map();
+const COMPETENCY_ASSET_COLOR_CACHE = {};
 
 function escapeRegExp(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -989,6 +1289,55 @@ function applySvgAccent(markup, accent) {
     /var\(--svg-accent(?:,\s*#[0-9a-fA-F]{3,6})?\)/g,
     accent,
   );
+}
+
+function getOriginalSvgAccent(markup) {
+  const match = markup.match(/var\(--svg-accent,\s*(#[0-9a-fA-F]{3,6})\)/);
+  return match?.[1] || "#1FCC38";
+}
+
+function applyOriginalSvgAccent(markup) {
+  return markup.replace(/var\(--svg-accent,\s*(#[0-9a-fA-F]{3,6})\)/g, "$1");
+}
+
+function normalizeHex(hex) {
+  if (!hex) return null;
+  let cleaned = hex.replace('#', '').trim();
+  if (cleaned.length === 3) cleaned = cleaned.split('').map(c => c + c).join('');
+  if (!/^[0-9a-fA-F]{6}$/.test(cleaned)) return null;
+  return `#${cleaned.toUpperCase()}`;
+}
+
+function hexToRgb(hex) {
+  const h = normalizeHex(hex);
+  if (!h) return null;
+  return [0,2,4].map(i => parseInt(h.slice(1+i, 1+i+2), 16));
+}
+
+function luminanceOf(hex) {
+  const rgb = hexToRgb(hex);
+  if (!rgb) return 1;
+  const [r,g,b] = rgb.map(v => v / 255).map(v => (v <= 0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055, 2.4)));
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+function extractCandidateHexesFromSvg(markup) {
+  if (!markup) return [];
+  const matches = [...markup.matchAll(/(?:fill|stroke)=["']\s*(#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}))\s*["']/g)];
+  const seen = new Map();
+  for (const m of matches) {
+    const raw = m[1];
+    const hex = normalizeHex(raw);
+    if (!hex) continue;
+    // skip transparent-like
+    if (hex === '#000000' || hex === '#FFFFFF') continue;
+    // skip extremes by luminance
+    const lum = luminanceOf(hex);
+    if (lum > 0.94 || lum < 0.06) continue;
+    seen.set(hex, (seen.get(hex) || 0) + 1);
+  }
+  // sort by frequency
+  return [...seen.entries()].sort((a,b) => b[1]-a[1]).map(e => e[0]);
 }
 
 const APP_STYLES = `
@@ -2823,7 +3172,7 @@ const APP_STYLES = `
 
 .competency-asset-frame {
   width: 100%;
-  min-height: 178px;
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2839,11 +3188,12 @@ const APP_STYLES = `
 .competency-asset-frame img,
 .competency-asset-frame .inline-svg,
 .competency-asset-frame svg {
-  width: 96%;
-  height: 96%;
-  min-height: 178px;
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  max-height: 100%;
   display: block;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .competency-asset-frame .inline-svg {
@@ -3067,7 +3417,7 @@ const APP_STYLES = `
   grid-template-columns: 1fr;
   align-items: stretch;
   gap: 0;
-  background: #FFFFFF;
+  background: var(--tile-accent-soft, #FFFFFF);
   color: #0A0A0A;
   border: 3px solid var(--tile-accent);
   border-radius: 0;
@@ -3625,17 +3975,19 @@ const APP_STYLES = `
 }
 
 .xq-quiz-shell.preview-mobile {
+  --phone-preview-height: 844px;
   align-items: center;
   justify-content: center;
   padding: 22px;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .xq-quiz-shell.preview-mobile .xq-quiz.quiz-kiosk-shell {
-  width: min(390px, 100%);
-  max-width: 390px;
-  height: min(844px, 100%);
+  width: 390px;
+  max-width: calc(100vw - 44px);
+  height: var(--phone-preview-height);
   min-height: 0;
+  flex: 0 0 auto;
   border: 8px solid #181818;
   border-radius: 30px;
   overflow: hidden;
@@ -3789,23 +4141,37 @@ const APP_STYLES = `
 }
 
 .xq-quiz-shell.preview-mobile .competency-asset-frame {
-  width: 90px;
-  height: 90px;
-  aspect-ratio: 1;
-  border-right: 3px solid #0A0A0A;
+  /* Fill available width of the host column and clip overflow so
+     artwork can be cropped with object-fit:cover without showing
+     stray bars. */
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  border-right: 0; /* remove preview right border to avoid thin black bar */
   border-bottom: 0;
   padding: 0;
+  margin: 0 auto; /* center horizontally inside its grid cell */
+  display: block;
+  align-self: center; /* center vertically in the grid row */
+  overflow: hidden; /* ensure no black bars from underlying background */
+  position: relative; /* allow absolute-fill child */
 }
 
 .xq-quiz-shell.preview-mobile .competency-asset-frame img,
 .xq-quiz-shell.preview-mobile .competency-asset-frame .inline-svg,
 .xq-quiz-shell.preview-mobile .competency-asset-frame svg {
-  width: 118%;
-  height: 118%;
+  /* Make the graphic fill and crop the frame to avoid gaps */
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
   min-height: 0;
-  object-fit: cover;
-  transform: scale(1.08);
+  object-fit: cover !important;
+  transform: none !important;
   transform-origin: center;
+  display: block;
+  margin: 0;
+  object-position: center center;
 }
 
 .xq-quiz-shell.preview-mobile .answer-copy {
@@ -4465,6 +4831,897 @@ const APP_STYLES = `
     cursor: default;
   }
 }
+
+.kiosk-results-content {
+  display: grid;
+  gap: 12px;
+}
+
+.mobile-results-flow {
+  display: none;
+}
+
+.profile-character-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  min-height: 156px;
+  border: 3px solid #0A0A0A;
+  background:
+    radial-gradient(circle at 24% 18%, rgba(255, 255, 255, 0.55), transparent 24%),
+    linear-gradient(135deg, var(--accent), var(--pair));
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.profile-character-image {
+  width: 86%;
+  height: 86%;
+  max-width: 86%;
+  max-height: 86%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.profile-character-frame.no-overlay {
+  border: none;
+  background: transparent;
+}
+
+.profile-character-frame.no-overlay .profile-character-image {
+  mix-blend-mode: normal;
+}
+
+.profile-character-frame span {
+  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  font-size: 42px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.mobile-result-page {
+  flex: 1 1 auto;
+  height: 100%;
+  min-height: 0;
+  width: 100%;
+  border: 2px solid var(--mobile-border, #0A0A0A);
+  background: var(--mobile-surface, #FFFFFF);
+  color: var(--mobile-ink, #0A0A0A);
+  padding: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  overflow: visible;
+}
+
+.mobile-result-topbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
+
+.mobile-result-kicker {
+  margin: 0 0 8px;
+  color: var(--mobile-muted, #555555);
+  font-size: 12px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.mobile-result-title {
+  color: var(--mobile-ink, #0A0A0A);
+  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  font-size: 42px;
+  line-height: 0.88;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.mobile-radar-page {
+  justify-content: flex-start;
+}
+
+.mobile-radar-card {
+  width: 100%;
+  height: min(310px, 43vh);
+  min-height: 250px;
+  margin: 16px 0 10px;
+  border: 3px solid #0A0A0A;
+  background:
+    linear-gradient(rgba(10, 10, 10, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 10, 10, 0.08) 1px, transparent 1px),
+    linear-gradient(135deg, #FFFFFF, #FFF38F);
+  background-size: 24px 24px, 24px 24px, auto;
+}
+
+.mobile-radar-legend {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: auto;
+}
+
+.mobile-radar-legend span {
+  min-height: 32px;
+  border: 2px solid #0A0A0A;
+  background: #FFFFFF;
+  color: #0A0A0A;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 8px;
+  font-size: 11px;
+  line-height: 1;
+  text-align: left;
+}
+
+.mobile-radar-legend i {
+  width: 11px;
+  height: 11px;
+  flex: 0 0 auto;
+  border: 1px solid #0A0A0A;
+}
+
+.mobile-result-nav {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(76px, 0.42fr) minmax(0, 1fr);
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.mobile-result-nav .button {
+  min-width: 0;
+  width: 100%;
+  min-height: 44px;
+  height: 44px;
+  border: 2px solid #0A0A0A;
+  border-radius: 999px;
+  box-shadow: none;
+  font-size: 13px;
+}
+
+.mobile-result-nav .button.secondary {
+  background: #FFFFFF;
+  color: #0A0A0A;
+}
+
+.mobile-result-nav .button.primary {
+  background: #1FCC38;
+  border-color: #0A0A0A;
+  color: #0A0A0A;
+}
+
+.mobile-profile-page {
+  justify-content: center;
+  background: var(--mobile-surface, #FFFFFF);
+  color: var(--mobile-ink, #0A0A0A);
+}
+
+.mobile-profile-page .mobile-result-kicker,
+.mobile-profile-page .mobile-result-title {
+  color: var(--ink);
+}
+
+.mobile-profile-character {
+  width: min(230px, 72%);
+  min-height: 0;
+  margin: 16px auto 18px;
+  border-radius: 999px;
+  background: #FFFFFF;
+}
+
+.mobile-profile-subtitle {
+  color: var(--ink, #0A0A0A);
+  font-size: 16px;
+  line-height: 1.2;
+  margin: 8px 0 22px;
+}
+
+.mobile-profile-points {
+  width: min(300px, 100%);
+  margin: 0 auto 18px;
+  color: var(--ink, #0A0A0A);
+  text-align: left;
+  list-style-type: disc;
+  list-style-position: outside;
+  padding-left: 20px;
+}
+
+.mobile-profile-points li {
+  margin: 6px 0;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.mobile-competencies-page {
+  justify-content: center;
+}
+
+.mobile-stamp-carousel,
+.mobile-profile-carousel {
+  position: relative;
+  width: 100%;
+  height: min(345px, 48vh);
+  min-height: 300px;
+  margin: 14px 0 8px;
+  overflow: hidden;
+}
+
+.mobile-stamp-slide,
+.mobile-profile-card {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: min(230px, 70%);
+  height: 100%;
+  transition: transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 220ms ease;
+}
+
+.mobile-stamp-slide[data-offset="0"],
+.mobile-profile-card[data-offset="0"] {
+  opacity: 1;
+  z-index: 3;
+  transform: translateX(-50%) scale(1) rotate(0);
+  pointer-events: auto;
+}
+
+.mobile-stamp-slide[data-offset="1"],
+.mobile-profile-card[data-offset="1"] {
+  opacity: 0.72;
+  z-index: 2;
+  transform: translateX(14%) scale(0.82) rotate(7deg);
+  pointer-events: none;
+}
+
+.mobile-stamp-slide[data-offset="-1"],
+.mobile-profile-card[data-offset="-1"] {
+  opacity: 0.72;
+  z-index: 2;
+  transform: translateX(-114%) scale(0.82) rotate(-7deg);
+  pointer-events: none;
+}
+
+.mobile-stamp-slide:not([data-offset="-1"]):not([data-offset="0"]):not([data-offset="1"]),
+.mobile-profile-card:not([data-offset="-1"]):not([data-offset="0"]):not([data-offset="1"]) {
+  opacity: 0;
+  z-index: 1;
+  transform: translateX(-50%) scale(0.68);
+  pointer-events: none;
+}
+
+.mobile-competency-stamp {
+  position: relative;
+  appearance: none;
+  width: 100%;
+  height: 100%;
+  border: 3px solid var(--tile-accent);
+  background: #FFFFFF;
+  color: #0A0A0A;
+  cursor: pointer;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto auto;
+  gap: 9px;
+  padding: 18px 12px 12px;
+  text-align: center;
+  box-sizing: border-box;
+  box-shadow: 0 12px 0 rgba(10, 10, 10, 0.12);
+  justify-items: center; /* center grid children horizontally */
+}
+
+.mobile-competency-stamp .competency-asset-frame {
+  justify-self: center; /* ensure the asset frame centers inside the grid cell */
+}
+
+
+.mobile-competency-stamp::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 2px dashed rgba(10, 10, 10, 0.18);
+  pointer-events: none;
+}
+
+.mobile-competency-stamp .mobile-stamp-art {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  min-height: 0;
+  height: 100%;
+  width: 100%;
+  margin: 6px auto 0;
+  border: 0;
+  border-bottom: 3px solid #0A0A0A;
+  padding: 6px 0 0;
+  background: var(--tile-accent-soft);
+  position: relative;
+  overflow: hidden;
+}
+
+.mobile-competency-stamp .mobile-stamp-art img,
+.mobile-competency-stamp .mobile-stamp-art .inline-svg,
+.mobile-competency-stamp .mobile-stamp-art svg {
+  min-height: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  object-fit: cover;
+  transform: none;
+  transform-origin: center;
+  display: block;
+}
+
+/* Force inline SVG/img to absolutely fill the stamp art container */
+.mobile-competency-stamp .mobile-stamp-art > img.inline-svg,
+.mobile-competency-stamp .mobile-stamp-art > .inline-svg {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+/* For cases where we want the illustration to fill the container width
+   while preserving aspect ratio, use a non-absolute image that scales
+   to 100% width and lets the height auto-adjust. This overrides the
+   absolute-fill rule above when present. */
+.mobile-competency-stamp .mobile-stamp-art > img.inline-svg.fill-width {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+.mobile-competency-stamp > strong {
+  position: relative;
+  z-index: 1;
+  color: #0A0A0A;
+  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  font-size: 30px;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.mobile-competency-stamp > span:not(.competency-asset-frame) {
+  position: relative;
+  z-index: 1;
+  color: #333333;
+  font-size: 12px;
+  line-height: 1.2;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.mobile-carousel-controls {
+  display: inline-grid;
+  grid-template-columns: 40px auto 40px;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  color: var(--mobile-ink, #0A0A0A);
+}
+
+.mobile-carousel-legend {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.mobile-carousel-controls button {
+  appearance: none;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #0A0A0A;
+  border-radius: 999px;
+  background: #FFFFFF;
+  color: #0A0A0A;
+  cursor: pointer;
+}
+
+.mobile-carousel-controls span {
+  font-size: 12px;
+  line-height: 1;
+}
+
+.mobile-competency-hint {
+  color: var(--mobile-muted, #555555);
+  font-size: 12px;
+  line-height: 1.3;
+  margin: 10px 0 0;
+}
+
+.mobile-detail-page,
+.mobile-profile-detail-page,
+.mobile-summary-page,
+.mobile-explore-page,
+.mobile-profiles-page,
+.mobile-under-construction-page {
+  align-items: stretch;
+  text-align: left;
+  overflow-y: auto;
+}
+
+.mobile-detail-art {
+  width: 100%;
+  min-height: 210px;
+  border: 3px solid #0A0A0A;
+  margin-bottom: 14px;
+}
+
+.mobile-detail-copy {
+  color: var(--mobile-muted, #555555);
+  font-size: 15px;
+  line-height: 1.42;
+  margin: 12px 0 14px;
+}
+
+.mobile-detail-skills {
+  border: 2px solid #0A0A0A;
+  background: #FFFFFF;
+  color: #0A0A0A;
+  padding: 14px;
+  margin-top: 4px;
+}
+
+.mobile-detail-skills h2 {
+  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  font-size: 28px;
+  line-height: 0.95;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+}
+
+.mobile-detail-skills ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 18px;
+}
+
+.mobile-detail-skills li {
+  font-size: 14px;
+  line-height: 1.24;
+}
+
+.mobile-token-page {
+  justify-content: center;
+  background:
+    radial-gradient(circle at 50% 52%, rgba(232, 200, 50, 0.36), transparent 32%),
+    #FFFFFF;
+  color: #0A0A0A;
+}
+
+.token-burst {
+  position: relative;
+  width: 220px;
+  height: 250px;
+  margin: 10px auto 12px;
+}
+
+.gold-token {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  width: 132px;
+  height: 132px;
+  border-radius: 999px;
+  border: 8px solid #FFFFFF;
+  background:
+    radial-gradient(circle at 34% 28%, #FFF38F, transparent 30%),
+    linear-gradient(135deg, #E8C832, #FF9F1C);
+  color: #0A0A0A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 18px 0 rgba(10, 10, 10, 0.12);
+  animation: tokenFly 900ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.token-spark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  background: #F03040;
+  animation: sparkleBurst 900ms ease-out both;
+}
+
+.token-spark.two {
+  background: #3DBFB8;
+  animation-delay: 80ms;
+}
+
+.token-spark.three {
+  background: #E040A0;
+  animation-delay: 130ms;
+}
+
+.token-spark.four {
+  background: #6B5BEB;
+  animation-delay: 170ms;
+}
+
+@keyframes tokenFly {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 55%) scale(0.48) rotate(-16deg);
+  }
+  72% {
+    opacity: 1;
+    transform: translate(-50%, -58%) scale(1.08) rotate(8deg);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(0);
+  }
+}
+
+@keyframes sparkleBurst {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3) rotate(0);
+  }
+  to {
+    opacity: 1;
+    transform: translate(calc(-50% + var(--spark-x, 70px)), calc(-50% + var(--spark-y, -70px))) scale(1) rotate(35deg);
+  }
+}
+
+.token-spark.one {
+  --spark-x: -76px;
+  --spark-y: -84px;
+}
+
+.token-spark.two {
+  --spark-x: 88px;
+  --spark-y: -72px;
+}
+
+.token-spark.three {
+  --spark-x: -62px;
+  --spark-y: 76px;
+}
+
+.token-spark.four {
+  --spark-x: 78px;
+  --spark-y: 82px;
+}
+
+.mobile-summary-header {
+  display: grid;
+  grid-template-columns: 86px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+}
+
+.summary-character {
+  min-height: 86px;
+  border-radius: 999px;
+}
+
+.mobile-summary-stamps {
+  display: flex;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.mobile-summary-stamps .mobile-competency-stamp {
+  flex: 1 1 0;
+  min-width: 0; /* allow items to shrink evenly and avoid content-driven expansion */
+}
+
+.mobile-summary-stamps .competency-asset-frame {
+  width: 100%;
+  display: block;
+}
+
+.mobile-summary-stamps .mobile-competency-stamp {
+  min-height: 166px;
+  padding: 0; /* remove inner padding so art fills the stamp uniformly */
+  box-shadow: none;
+  position: relative; /* allow child art to absolutely fill this slot */
+}
+
+.mobile-summary-stamps .mobile-competency-stamp .mobile-stamp-art {
+  /* Absolutely fill the stamp slot so artwork matches the parent's
+     computed width exactly and crops consistently. */
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.mobile-summary-stamps .mobile-competency-stamp .mobile-stamp-art img,
+.mobile-summary-stamps .mobile-competency-stamp .mobile-stamp-art .inline-svg,
+.mobile-summary-stamps .mobile-competency-stamp .mobile-stamp-art svg {
+  /* Ensure summary thumbnails fill their art container and crop consistently */
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  transform: none;
+}
+
+.mobile-summary-stamps .mobile-competency-stamp > strong {
+  font-size: 17px;
+}
+
+.mobile-summary-stamps .mobile-competency-stamp > span:not(.competency-asset-frame) {
+  display: none;
+}
+
+.mobile-explore-buttons {
+  display: grid;
+  gap: 8px;
+  margin: 8px 0 12px;
+}
+
+.mobile-explore-buttons button,
+.mobile-mini-stamp,
+.mobile-profile-card {
+  appearance: none;
+  border: 2px solid #0A0A0A;
+  background: #FFFFFF;
+  color: #0A0A0A;
+  cursor: pointer;
+  font-family: 'Inter', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+}
+
+.mobile-explore-buttons button {
+  min-height: 46px;
+  border-radius: 999px;
+  padding: 0 14px;
+  text-align: left;
+}
+
+.mobile-summary-attribution {
+  color: var(--mobile-muted, #555555);
+  margin: 0 0 8px;
+}
+
+.mobile-summary-page .results-restart-button {
+  width: 100%;
+  min-height: 44px;
+  height: 44px;
+  margin: 0 0 8px;
+  border: 2px solid #0A0A0A;
+  box-shadow: none;
+}
+
+.mobile-outcome-groups {
+  display: grid;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.mobile-outcome-group {
+  border: 2px solid var(--accent);
+  background: #FFFFFF;
+  padding: 10px;
+}
+
+.mobile-outcome-group h2 {
+  color: #0A0A0A;
+  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  font-size: 30px;
+  line-height: 0.9;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+}
+
+.mobile-competency-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.mobile-mini-stamp {
+  min-height: 134px;
+  padding: 6px;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: 6px;
+}
+
+.mobile-mini-stamp-art {
+  min-height: 82px;
+  border: 0;
+}
+
+.mobile-mini-stamp span {
+  color: #0A0A0A;
+  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  font-size: 18px;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.mobile-profiles-page {
+  text-align: center;
+}
+
+.mobile-profile-card {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: 10px;
+  padding: 12px;
+  height: 100%;
+}
+
+.mobile-profile-card .profile-character-frame {
+  min-height: 0;
+  height: 100%;
+}
+
+.mobile-profile-card strong {
+  color: #0A0A0A;
+  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  font-size: 26px;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.mobile-profile-detail-page .mobile-profile-character {
+  width: min(230px, 74%);
+  align-self: center;
+  background: linear-gradient(135deg, var(--accent), var(--pair));
+}
+
+.mobile-under-construction-page {
+  justify-content: center;
+  text-align: center;
+}
+
+.construction-token {
+  width: 112px;
+  height: 112px;
+  margin: 0 auto 20px;
+  border-radius: 999px;
+  background: #FFF38F;
+  border: 3px solid #0A0A0A;
+  color: #0A0A0A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.xq-quiz-shell.preview-mobile .kiosk-results-content {
+  display: none;
+}
+
+.xq-quiz-shell.preview-mobile .screen-results .kiosk-main.results-main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.xq-quiz-shell.preview-mobile .xq-quiz.quiz-kiosk-shell.screen-results {
+  height: var(--phone-preview-height);
+  min-height: 0;
+  overflow: hidden;
+}
+
+.xq-quiz-shell.preview-mobile .xq-quiz.quiz-kiosk-shell.screen-results .kiosk-screen {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.xq-quiz-shell.preview-mobile .mobile-results-flow {
+  --mobile-bg: #FBFAF4;
+  --mobile-surface: #FFFFFF;
+  --mobile-ink: #0A0A0A;
+  --mobile-muted: #555555;
+  --mobile-border: #0A0A0A;
+  display: flex;
+  flex: 1 1 auto;
+  height: 100%;
+  max-height: 100%;
+  min-height: 0;
+  width: 100%;
+  flex-direction: column;
+  background: var(--mobile-bg);
+  overflow: hidden;
+}
+
+.xq-quiz-shell.preview-mobile.theme-dark .mobile-results-flow {
+  --mobile-bg: #0A0A0A;
+  --mobile-surface: #101010;
+  --mobile-ink: #FFFFFF;
+  --mobile-muted: #D8D8D8;
+  --mobile-border: #FFFFFF;
+}
+
+.xq-quiz-shell.preview-mobile.theme-dark .mobile-radar-card,
+.xq-quiz-shell.preview-mobile.theme-dark .mobile-detail-skills,
+.xq-quiz-shell.preview-mobile.theme-dark .mobile-token-page,
+.xq-quiz-shell.preview-mobile.theme-dark .mobile-outcome-group,
+.xq-quiz-shell.preview-mobile.theme-dark .mobile-profile-card,
+.xq-quiz-shell.preview-mobile.theme-dark .mobile-mini-stamp,
+.xq-quiz-shell.preview-mobile.theme-dark .mobile-explore-buttons button {
+  background: #FFFFFF;
+  color: #0A0A0A;
+}
+
+@media (max-width: 700px) {
+  .kiosk-results-content {
+    display: none;
+  }
+
+  .screen-results .kiosk-main.results-main {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    padding: 10px;
+    overflow: hidden;
+  }
+
+  .xq-quiz.quiz-kiosk-shell.screen-results,
+  .xq-quiz.quiz-kiosk-shell.screen-results .kiosk-screen {
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .mobile-results-flow {
+    --mobile-bg: #FBFAF4;
+    --mobile-surface: #FFFFFF;
+    --mobile-ink: #0A0A0A;
+    --mobile-muted: #555555;
+    --mobile-border: #0A0A0A;
+    display: flex;
+    flex: 1 1 auto;
+    height: 100%;
+    max-height: 100%;
+    min-height: 0;
+    width: 100%;
+    flex-direction: column;
+    background: var(--mobile-bg);
+    overflow: hidden;
+  }
+
+  .theme-dark .mobile-results-flow {
+    --mobile-bg: #0A0A0A;
+    --mobile-surface: #101010;
+    --mobile-ink: #FFFFFF;
+    --mobile-muted: #D8D8D8;
+    --mobile-border: #FFFFFF;
+  }
+
+  .theme-dark .mobile-radar-card,
+  .theme-dark .mobile-detail-skills,
+  .theme-dark .mobile-token-page,
+  .theme-dark .mobile-outcome-group,
+  .theme-dark .mobile-profile-card,
+  .theme-dark .mobile-mini-stamp,
+  .theme-dark .mobile-explore-buttons button {
+    background: #FFFFFF;
+    color: #0A0A0A;
+  }
+}
 `;
 
 const createEmptyCompetencyScores = () =>
@@ -5020,6 +6277,7 @@ function CompetencyAsset({
   shape = "square",
   accent = "#1FCC38",
   className = "",
+  preserveSvgAccent = false,
 }) {
   const assetPath = getCompetencyAssetPath(code, shape);
   const competency = COMPETENCY_MAP[code];
@@ -5029,11 +6287,30 @@ function CompetencyAsset({
   });
   const scopedSvgMarkup = useMemo(() => {
     if (!svgMarkup) return "";
-    return applySvgAccent(
-      scopeSvgMarkup(svgMarkup, `${shape}-${code}`),
-      softAccent,
-    );
-  }, [code, shape, softAccent, svgMarkup]);
+    const scopedMarkup = scopeSvgMarkup(svgMarkup, `${shape}-${code}`);
+    if (preserveSvgAccent) return applyOriginalSvgAccent(scopedMarkup);
+
+    // try to detect the primary hex used in the original asset and replace
+    // its explicit fill/stroke occurrences with the softened accent so the
+    // background/hue matches the competency color without preserving neon greens
+    try {
+      const candidates = extractCandidateHexesFromSvg(svgMarkup);
+      const primary = candidates[0] || getOriginalSvgAccent(svgMarkup) || null;
+      let replaced = scopedMarkup;
+      if (primary) {
+        const p = primary.replace('#', '');
+        const re = new RegExp(`(fill|stroke)=(\\\"|\\\')#${p}(\\\"|\\\')`, 'ig');
+        replaced = replaced.replace(re, `$1=$2${softAccent}$3`);
+      }
+
+      return applySvgAccent(replaced, softAccent);
+    } catch (e) {
+      return applySvgAccent(scopedMarkup, softAccent);
+    }
+  }, [code, preserveSvgAccent, shape, softAccent, svgMarkup]);
+  const frameAccent = preserveSvgAccent
+    ? getOriginalSvgAccent(svgMarkup)
+    : softAccent;
 
   useEffect(() => {
     if (!assetPath) {
@@ -5075,8 +6352,8 @@ function CompetencyAsset({
         className={`competency-asset-frame missing ${className}`}
         style={{
           "--tile-accent": accent,
-          "--tile-accent-soft": softAccent,
-          "--svg-accent": softAccent,
+          "--tile-accent-soft": frameAccent,
+          "--svg-accent": frameAccent,
         }}
       >
         <span>Graphic needed</span>
@@ -5093,21 +6370,18 @@ function CompetencyAsset({
       className={`competency-asset-frame ${className}`}
       style={{
         "--tile-accent": accent,
-        "--tile-accent-soft": softAccent,
-        "--svg-accent": softAccent,
+        "--tile-accent-soft": frameAccent,
+        "--svg-accent": frameAccent,
       }}
       role="img"
       aria-label={`${competency?.label || code} illustration`}
     >
       {imageSource ? (
-        <Image
-          className="inline-svg"
+        <img
+          className={`inline-svg ${String(className || "").includes("mobile-stamp-art") ? "fill-width" : ""}`}
           src={imageSource}
           alt=""
-          width={220}
-          height={220}
           loading="lazy"
-          unoptimized
           aria-hidden="true"
         />
       ) : null}
@@ -5223,12 +6497,19 @@ function MiniProgress({
 }
 
 function ResultCompetencyCard({ competency, index }) {
-  const accent = getKioskAccent(
+  const fallback = getKioskAccent(
     index * 5 + competency.score + competency.code.length,
   );
+  const assetPrimary = COMPETENCY_ASSET_COLOR_CACHE[competency.code];
+  const outcomeColor = (competency.outcome && OUTCOMES[competency.outcome]?.color) || null;
+  const accent = assetPrimary || competency.outcomeDetails?.color || outcomeColor || fallback;
+  const tileAccentSoft = getSoftAccent(accent);
 
   return (
-    <article className="competency-card" style={{ "--tile-accent": accent }}>
+    <article
+      className="competency-card"
+      style={{ "--tile-accent": accent, "--tile-accent-soft": tileAccentSoft }}
+    >
       <CompetencyAsset code={competency.code} shape="hexagon" accent={accent} />
       <div className="competency-heading">
         <span className="power-count">Strength {index + 1}</span>
@@ -5236,6 +6517,687 @@ function ResultCompetencyCard({ competency, index }) {
         <p className="competency-description">{competency.description}</p>
       </div>
     </article>
+  );
+}
+
+function getCircularOffset(index, activeIndex, length) {
+  if (!length) return 0;
+  let offset = index - activeIndex;
+  const halfway = length / 2;
+
+  if (offset > halfway) offset -= length;
+  if (offset < -halfway) offset += length;
+
+  return offset;
+}
+
+function ProfileCharacter({ outcome, className = "" }) {
+  const src = PROFILE_CHARACTER_ASSETS[outcome.id];
+  const extraClass = outcome.id === 'LL' ? 'no-overlay' : '';
+
+  return (
+    <div
+      className={`profile-character-frame ${extraClass} ${className}`}
+      style={{
+        "--accent": outcome.color,
+        "--pair": outcome.pairColor,
+        "--ink": outcome.inkColor,
+      }}
+    >
+      {src ? (
+        <Image
+          className="profile-character-image"
+          src={src}
+          alt=""
+          width={320}
+          height={320}
+          unoptimized
+          aria-hidden="true"
+        />
+      ) : (
+        <span>{outcome.shortName}</span>
+      )}
+    </div>
+  );
+}
+
+function MobileResultNav({
+  onBack,
+  onNext,
+  backLabel = "Back",
+  nextLabel = "Next",
+  hideBack = false,
+  hideNext = false,
+}) {
+  return (
+    <div className="mobile-result-nav">
+      {hideBack ? (
+        <span aria-hidden="true" />
+      ) : (
+        <button className="button secondary" type="button" onClick={onBack}>
+          <IconGlyph name="back" size={18} />
+          {backLabel}
+        </button>
+      )}
+      {hideNext ? (
+        <span aria-hidden="true" />
+      ) : (
+        <button className="button primary" type="button" onClick={onNext}>
+          {nextLabel}
+          <IconGlyph name="arrow" color="#0A0A0A" size={18} />
+        </button>
+      )}
+    </div>
+  );
+}
+
+function ProfileRadarChart({ results, primaryOutcome }) {
+  return (
+    <section className="mobile-result-page mobile-radar-page">
+      <div className="mobile-result-kicker">Your top learner profile</div>
+      <h1 className="mobile-result-title">{primaryOutcome.archetype}</h1>
+      <div className="mobile-radar-card">
+        <ResponsiveContainer width="100%" height="100%">
+          <RadarChart data={results.outcomeScores} outerRadius="72%">
+            <PolarGrid stroke="#0A0A0A" radialLines />
+            <PolarAngleAxis dataKey="chartLabel" tick={renderRadarTick} />
+            <PolarRadiusAxis
+              angle={90}
+              domain={[0, 10]}
+              tickCount={6}
+              axisLine={false}
+              tick={false}
+            />
+            <Radar
+              name="Profile shadow"
+              dataKey="value"
+              stroke="#0A0A0A"
+              fill="transparent"
+              strokeWidth={8}
+            />
+            <Radar
+              name="XQ Learner Profile"
+              dataKey="value"
+              stroke={primaryOutcome.color}
+              fill={primaryOutcome.color}
+              fillOpacity={0.5}
+              strokeWidth={4}
+            />
+          </RadarChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="mobile-radar-legend">
+        {results.outcomeScores.map((outcome) => (
+          <span key={outcome.id}>
+            <i style={{ background: outcome.color }} />
+            {outcome.shortName}
+          </span>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function MobileProfileResult({ outcome }) {
+  return (
+    <section
+      className="mobile-result-page mobile-profile-page"
+      style={{
+        "--accent": outcome.color,
+        "--pair": outcome.pairColor,
+        "--ink": outcome.inkColor,
+      }}
+    >
+      <p className="mobile-result-kicker">Congratulations!</p>
+      <ProfileCharacter
+        outcome={outcome}
+        className="mobile-profile-character"
+      />
+      <h1 className="mobile-result-title">{outcome.archetype}</h1>
+      <p className="mobile-profile-subtitle">New profile unlocked</p>
+      <ul className="mobile-profile-points">
+            {(
+              outcome.strengths || [outcome.quickTake, outcome.prompt, outcome.growthMove]
+            ).map((line, idx) => (
+              <li key={idx}>{line}</li>
+            ))}
+      </ul>
+    </section>
+  );
+}
+
+function CompetencyStampCard({ competency, index, active = false, onClick }) {
+  const assetPrimary = COMPETENCY_ASSET_COLOR_CACHE[competency.code];
+  const outcomeColor = (competency.outcome && OUTCOMES[competency.outcome]?.color) || null;
+  const accent = assetPrimary || competency.outcomeDetails?.color || outcomeColor || getKioskAccent(index);
+  const tileAccentSoft = getSoftAccent(accent);
+  const detail = COMPETENCY_DETAIL_MAP[competency.code] || {};
+
+  return (
+    <button
+      className={`mobile-competency-stamp${active ? " active" : ""}`}
+      type="button"
+      onClick={onClick}
+      style={{ "--tile-accent": accent, "--tile-accent-soft": tileAccentSoft }}
+    >
+      <CompetencyAsset
+        code={competency.code}
+        shape="square"
+        accent={accent}
+        className="mobile-stamp-art"
+      />
+      <strong>{competency.label}</strong>
+      <span>{detail.sourceShort || competency.description}</span>
+    </button>
+  );
+}
+
+function MobileCompetencyCarousel({
+  competencies,
+  activeIndex,
+  setActiveIndex,
+  onOpenDetail,
+}) {
+  const [touchStart, setTouchStart] = useState(null);
+  const activeCompetency = competencies[activeIndex] || competencies[0];
+
+  const rotate = (direction) => {
+    if (!competencies.length) return;
+    setActiveIndex((index) => {
+      return (index + direction + competencies.length) % competencies.length;
+    });
+  };
+
+  const finishSwipe = (clientX) => {
+    if (touchStart === null) return;
+    const delta = clientX - touchStart;
+    if (Math.abs(delta) > 36) rotate(delta < 0 ? 1 : -1);
+    setTouchStart(null);
+  };
+
+  return (
+    <section className="mobile-result-page mobile-competencies-page">
+      <p className="mobile-result-kicker">Your strongest competencies</p>
+      <h1 className="mobile-result-title">Your top three strengths</h1>
+      <div
+        className="mobile-stamp-carousel"
+        onTouchStart={(event) => setTouchStart(event.touches[0].clientX)}
+        onTouchEnd={(event) =>
+          finishSwipe(event.changedTouches[0]?.clientX || touchStart)
+        }
+      >
+        {competencies.map((competency, index) => {
+          const offset = getCircularOffset(
+            index,
+            activeIndex,
+            competencies.length,
+          );
+          return (
+            <div
+              className="mobile-stamp-slide"
+              data-offset={offset}
+              key={competency.code}
+              style={{ "--offset": offset }}
+            >
+              <CompetencyStampCard
+                competency={competency}
+                index={index}
+                active={index === activeIndex}
+                onClick={() => onOpenDetail(competency.code)}
+              />
+            </div>
+          );
+        })}
+      </div>
+      <fieldset className="mobile-carousel-controls">
+        <legend className="mobile-carousel-legend">Competency cards</legend>
+        <button
+          type="button"
+          onClick={() => rotate(-1)}
+          aria-label="Previous competency"
+        >
+          <IconGlyph name="back" size={18} />
+        </button>
+        <span>
+          {activeIndex + 1}/{competencies.length}
+        </span>
+        <button
+          type="button"
+          onClick={() => rotate(1)}
+          aria-label="Next competency"
+        >
+          <IconGlyph name="arrow" size={18} />
+        </button>
+      </fieldset>
+      {activeCompetency && (
+        <p className="mobile-competency-hint">Tap the card to learn more!</p>
+      )}
+    </section>
+  );
+}
+
+function CompetencyDetailPanel({ competency, onBack, onNext, nextLabel }) {
+  const detail = COMPETENCY_DETAIL_MAP[competency?.code] || {};
+  const outcome =
+    competency?.outcomeDetails || OUTCOMES[competency?.outcome] || OUTCOMES.FK;
+  const accent = outcome.color;
+
+  if (!competency) return null;
+
+  return (
+    <section
+      className="mobile-result-page mobile-detail-page"
+      style={{ "--tile-accent": accent }}
+    >
+      <CompetencyAsset
+        code={competency.code}
+        shape="hexagon"
+        accent={accent}
+        className="mobile-detail-art"
+      />
+      <p className="mobile-result-kicker">{outcome.shortName}</p>
+      <h1 className="mobile-result-title">{competency.label}</h1>
+      <p className="mobile-detail-copy">{competency.description}</p>
+      <div className="mobile-detail-skills">
+        <h2>Component skills</h2>
+        <ul>
+          {(detail.componentSkills || []).map((skill) => (
+            <li key={skill}>{skill}</li>
+          ))}
+        </ul>
+      </div>
+      <MobileResultNav
+        onBack={onBack}
+        onNext={onNext}
+        nextLabel={nextLabel}
+        hideNext={!onNext}
+      />
+    </section>
+  );
+}
+
+function MobileTokenEarned({ onBack, onNext }) {
+  return (
+    <section className="mobile-result-page mobile-token-page">
+      <h1 className="mobile-result-title">Token earned</h1>
+      <div className="token-burst" aria-hidden="true">
+        <span className="token-spark one" />
+        <span className="token-spark two" />
+        <span className="token-spark three" />
+        <span className="token-spark four" />
+        <div className="gold-token">
+          <IconGlyph name="spark" size={44} />
+        </div>
+      </div>
+      <p className="mobile-profile-subtitle">Your XQ strengths are unlocked.</p>
+      <MobileResultNav onBack={onBack} onNext={onNext} nextLabel="Summary" />
+    </section>
+  );
+}
+
+function MobileSummary({
+  primaryOutcome,
+  topCompetencies,
+  onOpenCompetency,
+  onExploreCompetencies,
+  onExploreProfiles,
+  onWhy,
+  onBack,
+  onRetake,
+}) {
+  return (
+    <section className="mobile-result-page mobile-summary-page">
+      <div className="mobile-summary-header">
+        <ProfileCharacter
+          outcome={primaryOutcome}
+          className="summary-character"
+        />
+        <div>
+          <p className="mobile-result-kicker">Summary</p>
+          <h1 className="mobile-result-title">{primaryOutcome.shortName}</h1>
+        </div>
+      </div>
+      <p className="mobile-detail-copy">{primaryOutcome.description}</p>
+      <div className="mobile-summary-stamps">
+        {topCompetencies.map((competency, index) => (
+          <CompetencyStampCard
+            competency={competency}
+            index={index}
+            key={competency.code}
+            onClick={() => onOpenCompetency(competency.code)}
+          />
+        ))}
+      </div>
+      <div className="mobile-explore-buttons">
+        <button type="button" onClick={onExploreCompetencies}>
+          Explore all XQ competencies
+        </button>
+        <button type="button" onClick={onExploreProfiles}>
+          Explore all learner profiles
+        </button>
+        <button type="button" onClick={onWhy}>
+          Why XQ competencies?
+        </button>
+      </div>
+      <p className="attribution mobile-summary-attribution">
+        Based on the XQ Learner Outcomes framework - xqsuperschool.org
+      </p>
+      <button
+        className="button primary results-restart-button"
+        type="button"
+        onClick={onRetake}
+      >
+        <IconGlyph name="refresh" color="#0A0A0A" size={18} />
+        Retake the Quiz
+      </button>
+      <MobileResultNav onBack={onBack} hideNext />
+    </section>
+  );
+}
+
+function MobileAllCompetencies({ onOpenCompetency, onBack }) {
+  return (
+    <section className="mobile-result-page mobile-explore-page">
+      <p className="mobile-result-kicker">Explore</p>
+      <h1 className="mobile-result-title">All XQ competencies</h1>
+      <div className="mobile-outcome-groups">
+        {OUTCOME_ORDER.map((outcomeId) => {
+          const outcome = OUTCOMES[outcomeId];
+          const competencies = Object.entries(COMPETENCY_MAP).filter(
+            ([, item]) => {
+              return item.outcome === outcomeId;
+            },
+          );
+
+          return (
+            <section
+              className="mobile-outcome-group"
+              key={outcomeId}
+              style={{ "--accent": outcome.color }}
+            >
+              <h2>{outcome.shortName}</h2>
+              <div className="mobile-competency-grid">
+                {competencies.map(([code, competency]) => (
+                  <button
+                    className="mobile-mini-stamp"
+                    type="button"
+                    key={code}
+                    onClick={() => onOpenCompetency(code)}
+                  >
+                    <CompetencyAsset
+                      code={code}
+                      shape="square"
+                      accent={outcome.color}
+                      className="mobile-mini-stamp-art"
+                    />
+                    <span>{competency.label}</span>
+                  </button>
+                ))}
+              </div>
+            </section>
+          );
+        })}
+      </div>
+      <MobileResultNav onBack={onBack} hideNext />
+    </section>
+  );
+}
+
+function MobileAllProfiles({
+  profileIndex,
+  setProfileIndex,
+  onOpenProfile,
+  onBack,
+}) {
+  const [touchStart, setTouchStart] = useState(null);
+
+  const rotate = (direction) => {
+    setProfileIndex((index) => {
+      return (index + direction + OUTCOME_ORDER.length) % OUTCOME_ORDER.length;
+    });
+  };
+
+  const finishSwipe = (clientX) => {
+    if (touchStart === null) return;
+    const delta = clientX - touchStart;
+    if (Math.abs(delta) > 36) rotate(delta < 0 ? 1 : -1);
+    setTouchStart(null);
+  };
+
+  return (
+    <section className="mobile-result-page mobile-profiles-page">
+      <p className="mobile-result-kicker">Explore</p>
+      <h1 className="mobile-result-title">All learner profiles</h1>
+      <div
+        className="mobile-profile-carousel"
+        onTouchStart={(event) => setTouchStart(event.touches[0].clientX)}
+        onTouchEnd={(event) =>
+          finishSwipe(event.changedTouches[0]?.clientX || touchStart)
+        }
+      >
+        {OUTCOME_ORDER.map((outcomeId, index) => {
+          const outcome = OUTCOMES[outcomeId];
+          const offset = getCircularOffset(
+            index,
+            profileIndex,
+            OUTCOME_ORDER.length,
+          );
+          return (
+            <button
+              className="mobile-profile-card"
+              data-offset={offset}
+              type="button"
+              key={outcomeId}
+              onClick={() => onOpenProfile(outcomeId)}
+              style={{ "--accent": outcome.color, "--offset": offset }}
+            >
+              <ProfileCharacter outcome={outcome} />
+              <strong>{outcome.archetype}</strong>
+            </button>
+          );
+        })}
+      </div>
+      <fieldset className="mobile-carousel-controls">
+        <legend className="mobile-carousel-legend">Learner profiles</legend>
+        <button
+          type="button"
+          onClick={() => rotate(-1)}
+          aria-label="Previous profile"
+        >
+          <IconGlyph name="back" size={18} />
+        </button>
+        <span>
+          {profileIndex + 1}/{OUTCOME_ORDER.length}
+        </span>
+        <button
+          type="button"
+          onClick={() => rotate(1)}
+          aria-label="Next profile"
+        >
+          <IconGlyph name="arrow" size={18} />
+        </button>
+      </fieldset>
+      <MobileResultNav onBack={onBack} hideNext />
+    </section>
+  );
+}
+
+function ProfileDetailPanel({ outcome, onBack }) {
+  return (
+    <section
+      className="mobile-result-page mobile-profile-detail-page"
+      style={{
+        "--accent": outcome.color,
+        "--pair": outcome.pairColor,
+        "--ink": outcome.inkColor,
+      }}
+    >
+      <ProfileCharacter
+        outcome={outcome}
+        className="mobile-profile-character"
+      />
+      <p className="mobile-result-kicker">{outcome.shortName}</p>
+      <h1 className="mobile-result-title">{outcome.archetype}</h1>
+      <p className="mobile-detail-copy">{outcome.deeper}</p>
+      <div className="mobile-detail-skills">
+        <h2>Where this strength shows up</h2>
+        <ul>
+          {outcome.careerPaths.map((path) => (
+            <li key={path}>{path}</li>
+          ))}
+        </ul>
+      </div>
+      <MobileResultNav onBack={onBack} hideNext />
+    </section>
+  );
+}
+
+function MobileWhyXQ({ onBack }) {
+  return (
+    <section className="mobile-result-page mobile-under-construction-page">
+      <div className="construction-token">
+        <IconGlyph name="spark" size={44} />
+      </div>
+      <h1 className="mobile-result-title">Under construction</h1>
+      <p className="mobile-detail-copy">Check back soon.</p>
+      <MobileResultNav onBack={onBack} hideNext />
+    </section>
+  );
+}
+
+function MobileResultsFlow({
+  resultStep,
+  setResultStep,
+  results,
+  primaryOutcome,
+  topCompetencies,
+  activeCompetencyIndex,
+  setActiveCompetencyIndex,
+  detailCompetencyCode,
+  detailReturnStep,
+  openCompetencyDetail,
+  profileBrowseIndex,
+  setProfileBrowseIndex,
+  profileDetailId,
+  openProfileDetail,
+  resetToWelcome,
+  themeMode,
+  toggleThemeMode,
+}) {
+  const topCompetency =
+    topCompetencies.find((item) => item.code === detailCompetencyCode) ||
+    Object.entries(COMPETENCY_MAP)
+      .map(([code, competency]) => ({
+        code,
+        ...competency,
+        outcomeDetails: OUTCOMES[competency.outcome],
+      }))
+      .find((item) => item.code === detailCompetencyCode);
+  const profileDetail = profileDetailId ? OUTCOMES[profileDetailId] : null;
+
+  return (
+    <div className={`mobile-results-flow result-step-${resultStep}`}>
+      <div className="mobile-result-topbar">
+        <ThemeToggle themeMode={themeMode} onToggle={toggleThemeMode} mobile />
+      </div>
+
+      {resultStep === "radar" && (
+        <>
+          <ProfileRadarChart
+            results={results}
+            primaryOutcome={primaryOutcome}
+          />
+          <MobileResultNav hideBack onNext={() => setResultStep("profile")} />
+        </>
+      )}
+
+      {resultStep === "profile" && (
+        <>
+          <MobileProfileResult outcome={primaryOutcome} />
+          <MobileResultNav
+            onBack={() => setResultStep("radar")}
+            onNext={() => setResultStep("competencies")}
+          />
+        </>
+      )}
+
+      {resultStep === "competencies" && (
+        <>
+          <MobileCompetencyCarousel
+            competencies={topCompetencies}
+            activeIndex={activeCompetencyIndex}
+            setActiveIndex={setActiveCompetencyIndex}
+            onOpenDetail={(code) => openCompetencyDetail(code, "competencies")}
+          />
+          <MobileResultNav
+            onBack={() => setResultStep("profile")}
+            onNext={() => setResultStep("token")}
+          />
+        </>
+      )}
+
+      {resultStep === "competencyDetail" && (
+        <CompetencyDetailPanel
+          competency={topCompetency}
+          onBack={() => setResultStep(detailReturnStep)}
+          onNext={
+            detailReturnStep === "competencies"
+              ? () => setResultStep("token")
+              : undefined
+          }
+          nextLabel="Continue"
+        />
+      )}
+
+      {resultStep === "token" && (
+        <MobileTokenEarned
+          onBack={() => setResultStep("competencies")}
+          onNext={() => setResultStep("summary")}
+        />
+      )}
+
+      {resultStep === "summary" && (
+        <MobileSummary
+          primaryOutcome={primaryOutcome}
+          topCompetencies={topCompetencies}
+          onOpenCompetency={(code) => openCompetencyDetail(code, "summary")}
+          onExploreCompetencies={() => setResultStep("allCompetencies")}
+          onExploreProfiles={() => setResultStep("allProfiles")}
+          onWhy={() => setResultStep("why")}
+          onBack={() => setResultStep("token")}
+          onRetake={resetToWelcome}
+        />
+      )}
+
+      {resultStep === "allCompetencies" && (
+        <MobileAllCompetencies
+          onOpenCompetency={(code) =>
+            openCompetencyDetail(code, "allCompetencies")
+          }
+          onBack={() => setResultStep("summary")}
+        />
+      )}
+
+      {resultStep === "allProfiles" && (
+        <MobileAllProfiles
+          profileIndex={profileBrowseIndex}
+          setProfileIndex={setProfileBrowseIndex}
+          onOpenProfile={(outcomeId) => openProfileDetail(outcomeId)}
+          onBack={() => setResultStep("summary")}
+        />
+      )}
+
+      {resultStep === "profileDetail" && profileDetail && (
+        <ProfileDetailPanel
+          outcome={profileDetail}
+          onBack={() => setResultStep("allProfiles")}
+        />
+      )}
+
+      {resultStep === "why" && (
+        <MobileWhyXQ onBack={() => setResultStep("summary")} />
+      )}
+    </div>
   );
 }
 
@@ -5270,8 +7232,9 @@ function renderRadarTick({ payload, x, y, textAnchor }) {
 }
 
 export default function App() {
+  const [svgColorVersion, setSvgColorVersion] = useState(0);
   const [previewMode, setPreviewMode] = useState("kiosk");
-  const [themeMode, setThemeMode] = useState("dark");
+  const [themeMode, setThemeMode] = useState("light");
   const [screen, setScreen] = useState("welcome");
   const [quizMode, setQuizMode] = useState("detailed");
   const [activeQuestions, setActiveQuestions] = useState(QUESTIONS);
@@ -5280,6 +7243,12 @@ export default function App() {
   const [selectedAnswerAccents, setSelectedAnswerAccents] = useState({});
   const [shuffleToken, setShuffleToken] = useState(0);
   const [pendingAdvance, setPendingAdvance] = useState(null);
+  const [resultStep, setResultStep] = useState("radar");
+  const [activeCompetencyIndex, setActiveCompetencyIndex] = useState(0);
+  const [detailCompetencyCode, setDetailCompetencyCode] = useState(null);
+  const [detailReturnStep, setDetailReturnStep] = useState("competencies");
+  const [profileBrowseIndex, setProfileBrowseIndex] = useState(0);
+  const [profileDetailId, setProfileDetailId] = useState(null);
 
   const totalQuestions = activeQuestions.length;
   const currentQuestion =
@@ -5294,6 +7263,61 @@ export default function App() {
   const results = useMemo(() => {
     return calculateResults(selectedAnswers, activeQuestions);
   }, [activeQuestions, selectedAnswers]);
+
+  useEffect(() => {
+    // Programmatically fetch profile SVGs, extract primary hex colors,
+    // and apply them to the OUTCOMES object so UI uses original XQ colors.
+    async function fetchAndApply() {
+      try {
+        await Promise.all(
+          Object.entries(PROFILE_CHARACTER_ASSETS).map(async ([id, path]) => {
+            try {
+              const res = await fetch(path);
+              if (!res.ok) return;
+              const text = await res.text();
+              const candidates = extractCandidateHexesFromSvg(text);
+              const primary = candidates[0] || getOriginalSvgAccent(text) || OUTCOMES[id]?.color;
+              const secondary = candidates[1] || getSoftAccent(primary) || OUTCOMES[id]?.pairColor;
+              if (primary && OUTCOMES[id]) {
+                OUTCOMES[id].color = primary;
+                OUTCOMES[id].pairColor = secondary;
+              }
+            } catch (err) {
+              // ignore individual asset failures
+            }
+          }),
+        );
+        // also fetch competency asset primary colors and cache them
+        try {
+          await Promise.all(
+            Object.entries(COMPETENCY_ASSET_FILES).map(async ([code, filename]) => {
+              try {
+                const path = `${ASSET_BASE_PATH}/square/${filename}`;
+                const res = await fetch(path);
+                if (!res.ok) return;
+                const text = await res.text();
+                const candidates = extractCandidateHexesFromSvg(text);
+                const primary = candidates[0] || getOriginalSvgAccent(text) || null;
+                if (primary) COMPETENCY_ASSET_COLOR_CACHE[code] = primary;
+              } catch (e) {
+                // ignore
+              }
+            }),
+          );
+        } catch (e) {
+          // ignore
+        }
+
+        // trigger re-render so components pick up updated OUTCOMES and asset colors
+        setSvgColorVersion((v) => v + 1);
+      } catch (err) {
+        // swallow
+      }
+    }
+
+    if (typeof window !== "undefined") fetchAndApply();
+    // run once on mount
+  }, []);
 
   const progress = ((currentIndex + 1) / totalQuestions) * 100;
   const isAutoAdvancing = pendingAdvance?.questionId === currentQuestion.id;
@@ -5310,6 +7334,17 @@ export default function App() {
   const modeMeta = QUIZ_MODES[quizMode] || QUIZ_MODES.detailed;
   const toggleThemeMode = () => {
     setThemeMode((mode) => (mode === "dark" ? "light" : "dark"));
+  };
+
+  const resetResultFlow = () => {
+    setResultStep("radar");
+    setActiveCompetencyIndex(0);
+    setDetailCompetencyCode(null);
+    setDetailReturnStep("competencies");
+    setProfileBrowseIndex(
+      Math.max(0, OUTCOME_ORDER.indexOf(primaryOutcome.id)),
+    );
+    setProfileDetailId(null);
   };
 
   useEffect(() => {
@@ -5336,6 +7371,19 @@ export default function App() {
     return () => window.clearTimeout(timeout);
   }, [pendingAdvance, totalQuestions]);
 
+  useEffect(() => {
+    if (screen !== "results") return;
+
+    setResultStep("radar");
+    setActiveCompetencyIndex(0);
+    setDetailCompetencyCode(null);
+    setDetailReturnStep("competencies");
+    setProfileBrowseIndex(
+      Math.max(0, OUTCOME_ORDER.indexOf(primaryOutcome.id)),
+    );
+    setProfileDetailId(null);
+  }, [screen, primaryOutcome.id]);
+
   const startQuiz = (mode) => {
     const nextMode = mode === "fast" ? "fast" : "detailed";
     const nextQuestions =
@@ -5348,6 +7396,7 @@ export default function App() {
     setSelectedAnswerAccents({});
     setCurrentIndex(0);
     setShuffleToken((token) => token + 1);
+    resetResultFlow();
     setScreen("quiz");
   };
 
@@ -5359,6 +7408,7 @@ export default function App() {
     setSelectedAnswerAccents({});
     setCurrentIndex(0);
     setShuffleToken((token) => token + 1);
+    resetResultFlow();
     setScreen("welcome");
   };
 
@@ -5385,6 +7435,17 @@ export default function App() {
     if (currentIndex > 0) {
       setCurrentIndex((index) => index - 1);
     }
+  };
+
+  const openCompetencyDetail = (code, returnStep = "competencies") => {
+    setDetailCompetencyCode(code);
+    setDetailReturnStep(returnStep);
+    setResultStep("competencyDetail");
+  };
+
+  const openProfileDetail = (outcomeId) => {
+    setProfileDetailId(outcomeId);
+    setResultStep("profileDetail");
   };
 
   return (
@@ -5722,162 +7783,181 @@ export default function App() {
               </aside>
 
               <div className="kiosk-main results-main">
-                <div className="mobile-screen-tools mobile-only">
-                  <ThemeToggle
-                    themeMode={themeMode}
-                    onToggle={toggleThemeMode}
-                    mobile
-                  />
-                </div>
-                <section
-                  className="chart-surface results-chart-top"
-                  aria-label="Radar chart of five XQ learner outcomes"
-                >
-                  <div className="chart-heading-row">
-                    <div>
-                      <h1 className="headline" id="results-title">
-                        Your XQ Learner Profile
-                      </h1>
-                    </div>
-                    <p className="chart-kicker">
-                      Scaled to your strongest learner outcome, so the web shows
-                      your shape.
-                    </p>
-                  </div>
+                <MobileResultsFlow
+                  resultStep={resultStep}
+                  setResultStep={setResultStep}
+                  results={results}
+                  primaryOutcome={primaryOutcome}
+                  topCompetencies={results.topCompetencies}
+                  activeCompetencyIndex={activeCompetencyIndex}
+                  setActiveCompetencyIndex={setActiveCompetencyIndex}
+                  detailCompetencyCode={detailCompetencyCode}
+                  detailReturnStep={detailReturnStep}
+                  openCompetencyDetail={openCompetencyDetail}
+                  profileBrowseIndex={profileBrowseIndex}
+                  setProfileBrowseIndex={setProfileBrowseIndex}
+                  profileDetailId={profileDetailId}
+                  openProfileDetail={openProfileDetail}
+                  resetToWelcome={resetToWelcome}
+                  themeMode={themeMode}
+                  toggleThemeMode={toggleThemeMode}
+                />
 
-                  <div className="radar-wrap">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <RadarChart
-                        data={results.outcomeScores}
-                        outerRadius="72%"
-                      >
-                        <PolarGrid stroke="#0A0A0A" radialLines />
-                        <PolarAngleAxis
-                          dataKey="chartLabel"
-                          tick={renderRadarTick}
-                        />
-                        <PolarRadiusAxis
-                          angle={90}
-                          domain={[0, 10]}
-                          tickCount={6}
-                          axisLine={false}
-                          tick={{ fill: "#0A0A0A", fontSize: 11 }}
-                        />
-                        <Radar
-                          name="Profile shadow"
-                          dataKey="value"
-                          stroke="#0A0A0A"
-                          fill="transparent"
-                          strokeWidth={10}
-                        />
-                        <Radar
-                          name="XQ Learner Profile"
-                          dataKey="value"
-                          stroke={primaryOutcome.color}
-                          fill={primaryOutcome.color}
-                          fillOpacity={0.5}
-                          strokeWidth={5}
-                        />
-                      </RadarChart>
-                    </ResponsiveContainer>
+                <div className="kiosk-results-content">
+                  <div className="mobile-screen-tools mobile-only">
+                    <ThemeToggle
+                      themeMode={themeMode}
+                      onToggle={toggleThemeMode}
+                      mobile
+                    />
                   </div>
-
-                  <div className="outcome-legend">
-                    {results.outcomeScores.map((outcome) => (
-                      <div
-                        className="legend-item"
-                        key={outcome.id}
-                        style={{ "--legend-accent": outcome.color }}
-                      >
-                        <span className="legend-label">
-                          <span
-                            className="legend-swatch"
-                            style={{ background: outcome.color }}
-                            aria-hidden="true"
-                          />
-                          {outcome.chartLabel}
-                        </span>
-                        <strong className="legend-score">
-                          {outcome.value.toFixed(1)}
-                        </strong>
+                  <section
+                    className="chart-surface results-chart-top"
+                    aria-label="Radar chart of five XQ learner outcomes"
+                  >
+                    <div className="chart-heading-row">
+                      <div>
+                        <h1 className="headline" id="results-title">
+                          Your XQ Learner Profile
+                        </h1>
                       </div>
-                    ))}
-                  </div>
-                </section>
+                      <p className="chart-kicker">
+                        Scaled to your strongest learner outcome, so the web
+                        shows your shape.
+                      </p>
+                    </div>
 
-                <section
-                  className="results-hero"
-                  style={{
-                    "--accent": primaryOutcome.color,
-                    "--ink": primaryOutcome.inkColor,
-                  }}
-                >
-                  <div className="results-copy">
-                    <div className="type-card-stack compact">
-                      {topOutcomes.map((outcome) => (
-                        <article
-                          className="type-card"
-                          key={outcome.id}
-                          style={{
-                            "--accent": outcome.color,
-                            "--ink": outcome.inkColor,
-                          }}
+                    <div className="radar-wrap">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <RadarChart
+                          data={results.outcomeScores}
+                          outerRadius="72%"
                         >
-                          <p className="result-meta">
-                            {topOutcomes.length > 1
-                              ? "Top score tie"
-                              : outcome.quickTake}
-                          </p>
-                          <h2 className="top-outcome-name">
-                            {outcome.archetype}
-                          </h2>
-                          <p className="type-card-copy">
-                            {outcome.description}
-                          </p>
-                        </article>
+                          <PolarGrid stroke="#0A0A0A" radialLines />
+                          <PolarAngleAxis
+                            dataKey="chartLabel"
+                            tick={renderRadarTick}
+                          />
+                          <PolarRadiusAxis
+                            angle={90}
+                            domain={[0, 10]}
+                            tickCount={6}
+                            axisLine={false}
+                            tick={{ fill: "#0A0A0A", fontSize: 11 }}
+                          />
+                          <Radar
+                            name="Profile shadow"
+                            dataKey="value"
+                            stroke="#0A0A0A"
+                            fill="transparent"
+                            strokeWidth={10}
+                          />
+                          <Radar
+                            name="XQ Learner Profile"
+                            dataKey="value"
+                            stroke={primaryOutcome.color}
+                            fill={primaryOutcome.color}
+                            fillOpacity={0.5}
+                            strokeWidth={5}
+                          />
+                        </RadarChart>
+                      </ResponsiveContainer>
+                    </div>
+
+                    <div className="outcome-legend">
+                      {results.outcomeScores.map((outcome) => (
+                        <div
+                          className="legend-item"
+                          key={outcome.id}
+                          style={{ "--legend-accent": outcome.color }}
+                        >
+                          <span className="legend-label">
+                            <span
+                              className="legend-swatch"
+                              style={{ background: outcome.color }}
+                              aria-hidden="true"
+                            />
+                            {outcome.chartLabel}
+                          </span>
+                        </div>
                       ))}
                     </div>
+                  </section>
 
-                    {topOutcomes.length > 1 && (
-                      <p className="score-note">
-                        Your highest score is shared by{" "}
-                        {formatList(topOutcomes.map((item) => item.name))}.
-                      </p>
-                    )}
-                  </div>
-                </section>
+                  <section
+                    className="results-hero"
+                    style={{
+                      "--accent": primaryOutcome.color,
+                      "--ink": primaryOutcome.inkColor,
+                    }}
+                  >
+                    <div className="results-copy">
+                      <div className="type-card-stack compact">
+                        {topOutcomes.map((outcome) => (
+                          <article
+                            className="type-card"
+                            key={outcome.id}
+                            style={{
+                              "--accent": outcome.color,
+                              "--ink": outcome.inkColor,
+                            }}
+                          >
+                            <p className="result-meta">
+                              {topOutcomes.length > 1
+                                ? "Top score tie"
+                                : outcome.quickTake}
+                            </p>
+                            <h2 className="top-outcome-name">
+                              {outcome.archetype}
+                            </h2>
+                            <p className="type-card-copy">
+                              {outcome.description}
+                            </p>
+                          </article>
+                        ))}
+                      </div>
 
-                <section className="power-panel">
-                  <div className="section-heading-row">
-                    <h2 className="section-title">
-                      Your Strongest Competencies
-                    </h2>
-                  </div>
-                  <div className="competency-list">
-                    {results.topCompetencies.map((competency, index) => (
-                      <ResultCompetencyCard
-                        competency={competency}
-                        index={index}
-                        key={competency.code}
-                      />
-                    ))}
-                  </div>
-                </section>
+                      {topOutcomes.length > 1 && (
+                        <p className="score-note">
+                          Your highest score is shared by{" "}
+                          {formatList(topOutcomes.map((item) => item.name))}.
+                        </p>
+                      )}
+                    </div>
+                  </section>
 
-                <div className="results-actions">
-                  <p className="attribution">
-                    Based on the XQ Learner Outcomes framework -
-                    xqsuperschool.org
-                  </p>
+                  <section className="power-panel">
+                    <div className="section-heading-row">
+                      <h2 className="section-title">
+                        Your Strongest Competencies
+                      </h2>
+                    </div>
+                    <div className="competency-list">
+                      {results.topCompetencies.map((competency, index) => (
+                        <ResultCompetencyCard
+                          competency={competency}
+                          index={index}
+                          key={competency.code}
+                        />
+                      ))}
+                    </div>
+                  </section>
+
+                  <div className="results-actions">
+                    <p className="attribution">
+                      Based on the XQ Learner Outcomes framework -
+                      xqsuperschool.org
+                    </p>
+                  </div>
+                  <button
+                    className="button primary results-restart-button"
+                    type="button"
+                    onClick={resetToWelcome}
+                  >
+                    <IconGlyph name="refresh" color="#0A0A0A" size={18} />
+                    Retake the Quiz
+                  </button>
                 </div>
-                <button
-                  className="button primary results-restart-button"
-                  type="button"
-                  onClick={resetToWelcome}
-                >
-                  <IconGlyph name="refresh" color="#0A0A0A" size={18} />
-                  Retake the Quiz
-                </button>
               </div>
             </section>
           )}
