@@ -2276,6 +2276,16 @@ const APP_STYLES = `
   max-width: 620px;
 }
 
+.kiosk-screen .welcome-copy .tiny-ticket {
+  align-self: flex-start;
+  width: fit-content;
+  border: 0;
+  background: transparent;
+  color: #0A0A0A;
+  padding: 0;
+  margin-bottom: 16px;
+}
+
 .tiny-ticket,
 .audience-chip {
   border-radius: 999px;
@@ -3894,7 +3904,7 @@ export default function App() {
                 <section className="welcome-copy">
                   <span className="tiny-ticket">
                     <IconGlyph name="spark" size={18} />
-                    Your profile in under 5
+                    Your profile under 5
                   </span>
                   <h1 className="headline" id="welcome-title">
                     Discover Your XQ Learner Profile
@@ -3903,8 +3913,9 @@ export default function App() {
                     Real-world scenarios. No right answers.
                   </p>
                   <p className="body-copy">
-                    This quiz identifies your strongest learning competencies
-                    using the XQ Learner Outcomes framework.
+                    Find your strongest learning competencies through fast,
+                    real-world choices built around the XQ Learner Outcomes
+                    framework.
                   </p>
 
                   <div className="welcome-actions">
