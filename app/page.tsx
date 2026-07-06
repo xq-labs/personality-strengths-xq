@@ -3427,6 +3427,8 @@ const APP_STYLES = `
 
 .competency-card .competency-asset-frame {
   min-height: 150px;
+  padding-top: 18px;
+  box-sizing: border-box;
 }
 
 .competency-card .competency-asset-frame img,
@@ -4916,8 +4918,8 @@ const APP_STYLES = `
 .mobile-result-title {
   color: var(--mobile-ink, #0A0A0A);
   font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
-  font-size: 42px;
-  line-height: 0.88;
+  font-size: clamp(22px, 6.5vw, 42px);
+  line-height: 0.95;
   text-transform: uppercase;
   margin: 0;
 }
@@ -5143,6 +5145,36 @@ const APP_STYLES = `
   background: var(--tile-accent-soft);
   position: relative;
   overflow: hidden;
+}
+
+/* Summary page specific: remove fills/outlines around primary outcome illustrations */
+.mobile-summary-page .mobile-competency-stamp::before {
+  display: none;
+}
+
+.mobile-summary-page .mobile-competency-stamp {
+  border: none;
+  box-shadow: none;
+}
+
+.mobile-summary-page .mobile-competency-stamp .mobile-stamp-art {
+  background: transparent !important;
+  border-bottom: none !important;
+}
+
+.mobile-summary-header .summary-character,
+.mobile-summary-page .summary-character {
+  background: transparent !important;
+  border: none !important;
+}
+
+.mobile-summary-header .summary-character .profile-character-image,
+.mobile-summary-page .summary-character .profile-character-image {
+  mix-blend-mode: normal !important;
+  width: 86% !important;
+  height: 86% !important;
+  max-width: 86% !important;
+  max-height: 86% !important;
 }
 
 .mobile-competency-stamp .mobile-stamp-art img,
