@@ -1302,8 +1302,12 @@ function applyOriginalSvgAccent(markup) {
 
 function normalizeHex(hex) {
   if (!hex) return null;
-  let cleaned = hex.replace('#', '').trim();
-  if (cleaned.length === 3) cleaned = cleaned.split('').map(c => c + c).join('');
+  let cleaned = hex.replace("#", "").trim();
+  if (cleaned.length === 3)
+    cleaned = cleaned
+      .split("")
+      .map((c) => c + c)
+      .join("");
   if (!/^[0-9a-fA-F]{6}$/.test(cleaned)) return null;
   return `#${cleaned.toUpperCase()}`;
 }
@@ -1311,33 +1315,39 @@ function normalizeHex(hex) {
 function hexToRgb(hex) {
   const h = normalizeHex(hex);
   if (!h) return null;
-  return [0,2,4].map(i => parseInt(h.slice(1+i, 1+i+2), 16));
+  return [0, 2, 4].map((i) => parseInt(h.slice(1 + i, 1 + i + 2), 16));
 }
 
 function luminanceOf(hex) {
   const rgb = hexToRgb(hex);
   if (!rgb) return 1;
-  const [r,g,b] = rgb.map(v => v / 255).map(v => (v <= 0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055, 2.4)));
+  const [r, g, b] = rgb
+    .map((v) => v / 255)
+    .map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4));
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
 
 function extractCandidateHexesFromSvg(markup) {
   if (!markup) return [];
-  const matches = [...markup.matchAll(/(?:fill|stroke)=["']\s*(#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}))\s*["']/g)];
+  const matches = [
+    ...markup.matchAll(
+      /(?:fill|stroke)=["']\s*(#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}))\s*["']/g,
+    ),
+  ];
   const seen = new Map();
   for (const m of matches) {
     const raw = m[1];
     const hex = normalizeHex(raw);
     if (!hex) continue;
     // skip transparent-like
-    if (hex === '#000000' || hex === '#FFFFFF') continue;
+    if (hex === "#000000" || hex === "#FFFFFF") continue;
     // skip extremes by luminance
     const lum = luminanceOf(hex);
     if (lum > 0.94 || lum < 0.06) continue;
     seen.set(hex, (seen.get(hex) || 0) + 1);
   }
   // sort by frequency
-  return [...seen.entries()].sort((a,b) => b[1]-a[1]).map(e => e[0]);
+  return [...seen.entries()].sort((a, b) => b[1] - a[1]).map((e) => e[0]);
 }
 
 const APP_STYLES = `
@@ -2866,8 +2876,10 @@ const APP_STYLES = `
 }
 
 .kiosk-screen .welcome-copy {
-  background: #1FCC38;
-  color: #0A0A0A;
+  --welcome-ink: #FFFFFF;
+  --welcome-muted: #C8C8C8;
+  background: transparent;
+  color: var(--welcome-ink);
   border: 0;
   padding: 70px 42px;
   width: 100%;
@@ -2882,9 +2894,12 @@ const APP_STYLES = `
 }
 
 .kiosk-screen .welcome-copy .headline,
-.kiosk-screen .welcome-copy .subtitle,
+.kiosk-screen .welcome-copy .subtitle {
+  color: var(--welcome-ink);
+}
+
 .kiosk-screen .welcome-copy .body-copy {
-  color: #0A0A0A;
+  color: var(--welcome-muted);
 }
 
 .kiosk-screen .welcome-copy .headline {
@@ -2902,7 +2917,7 @@ const APP_STYLES = `
   width: fit-content;
   border: 0;
   background: transparent;
-  color: #0A0A0A;
+  color: var(--welcome-ink);
   padding: 0;
   margin-bottom: 16px;
 }
@@ -3052,36 +3067,8 @@ const APP_STYLES = `
   gap: 10px;
 }
 
-.question-nav-top .button {
+.question-nav-top .pill-button {
   min-width: 120px;
-}
-
-.question-nav-top .theme-icon-toggle {
-  width: 46px;
-  min-width: 46px;
-  height: 46px;
-  min-height: 46px;
-  padding: 0;
-}
-
-.auto-advance-pill {
-  min-height: 46px;
-  border: 3px solid #FFFFFF;
-  background: #FFFFFF;
-  color: #0A0A0A;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 16px;
-  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
-  font-size: 22px;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
-.auto-advance-pill.active {
-  background: #1FCC38;
-  border-color: #1FCC38;
 }
 
 .progress-percent {
@@ -3531,7 +3518,7 @@ const APP_STYLES = `
     width: 100%;
   }
 
-  .question-nav-top .button {
+  .question-nav-top .pill-button {
     flex: 1;
   }
 
@@ -3796,14 +3783,6 @@ const APP_STYLES = `
 
 .theme-toggle svg {
   flex: 0 0 auto;
-}
-
-.theme-icon-toggle {
-  width: 46px;
-  min-width: 46px;
-  height: 46px;
-  min-height: 46px;
-  padding: 0;
 }
 
 .theme-icon-toggle .theme-toggle-label {
@@ -4082,22 +4061,13 @@ const APP_STYLES = `
   margin-bottom: 8px;
 }
 
-.xq-quiz-shell.preview-mobile .question-nav-top .button {
+.xq-quiz-shell.preview-mobile .question-nav-top .pill-button {
   min-width: 0;
-  min-height: 36px;
   padding: 0 10px;
-  font-size: 12px;
 }
 
 .xq-quiz-shell.preview-mobile .mobile-only {
   display: inline-flex;
-}
-
-.xq-quiz-shell.preview-mobile .auto-advance-pill {
-  min-height: 36px;
-  border-width: 2px;
-  padding: 0 9px;
-  font-size: 15px;
 }
 
 .xq-quiz-shell.preview-mobile .question-meta {
@@ -4355,23 +4325,14 @@ const APP_STYLES = `
     margin-bottom: 8px;
   }
 
-  .question-nav-top .button {
+  .question-nav-top .pill-button {
     flex: 0 1 auto;
     min-width: 0;
-    min-height: 36px;
     padding: 0 10px;
-    font-size: 12px;
   }
 
   .mobile-only {
     display: inline-flex;
-  }
-
-  .auto-advance-pill {
-    min-height: 36px;
-    border-width: 2px;
-    padding: 0 9px;
-    font-size: 15px;
   }
 
   .question-meta {
@@ -4508,6 +4469,11 @@ const APP_STYLES = `
   color: #0A0A0A;
 }
 
+.theme-light .kiosk-screen .welcome-copy {
+  --welcome-ink: #0A0A0A;
+  --welcome-muted: #474747;
+}
+
 .theme-light .kiosk-sidebar {
   background: #FFFFFF;
   border-color: rgba(10, 10, 10, 0.22);
@@ -4577,8 +4543,7 @@ const APP_STYLES = `
 }
 
 .theme-light .button.secondary,
-.theme-light .theme-toggle,
-.theme-light .auto-advance-pill {
+.theme-light .theme-toggle {
   background: #FFFFFF;
   border-color: #0A0A0A;
   color: #0A0A0A;
@@ -4771,9 +4736,7 @@ const APP_STYLES = `
 .xq-quiz-shell.preview-mobile .bottom-status-button {
   width: 100%;
   min-width: 0;
-  min-height: 42px;
   padding: 0 10px;
-  font-size: 12px;
 }
 
 .xq-quiz-shell.preview-mobile .bottom-status-button {
@@ -4822,9 +4785,7 @@ const APP_STYLES = `
   .bottom-status-button {
     width: 100%;
     min-width: 0;
-    min-height: 42px;
     padding: 0 10px;
-    font-size: 12px;
   }
 
   .bottom-status-button {
@@ -4885,8 +4846,8 @@ const APP_STYLES = `
 }
 
 .mobile-result-page {
-  flex: 1 1 auto;
-  height: 100%;
+  flex: 1 1 0;
+  height: auto;
   min-height: 0;
   width: 100%;
   border: 2px solid var(--mobile-border, #0A0A0A);
@@ -4971,6 +4932,7 @@ const APP_STYLES = `
 }
 
 .mobile-result-nav {
+  flex: 0 0 auto;
   width: 100%;
   display: grid;
   grid-template-columns: minmax(76px, 0.42fr) minmax(0, 1fr);
@@ -4978,23 +4940,20 @@ const APP_STYLES = `
   margin-top: 8px;
 }
 
-.mobile-result-nav .button {
+.mobile-result-nav .pill-button {
   min-width: 0;
   width: 100%;
-  min-height: 44px;
-  height: 44px;
   border: 2px solid #0A0A0A;
   border-radius: 999px;
   box-shadow: none;
-  font-size: 13px;
 }
 
-.mobile-result-nav .button.secondary {
+.mobile-result-nav .pill-button.secondary {
   background: #FFFFFF;
   color: #0A0A0A;
 }
 
-.mobile-result-nav .button.primary {
+.mobile-result-nav .pill-button.primary {
   background: #1FCC38;
   border-color: #0A0A0A;
   color: #0A0A0A;
@@ -5017,6 +4976,16 @@ const APP_STYLES = `
   margin: 16px auto 18px;
   border-radius: 999px;
   background: #FFFFFF;
+}
+
+.mobile-profile-page .mobile-profile-character {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.mobile-profile-page .mobile-profile-character .profile-character-image {
+  mix-blend-mode: normal;
 }
 
 .mobile-profile-subtitle {
@@ -5098,31 +5067,23 @@ const APP_STYLES = `
   pointer-events: none;
 }
 
-.mobile-competency-stamp {
+.xq-competency-card {
   position: relative;
   appearance: none;
   width: 100%;
-  height: 100%;
   border: 3px solid var(--tile-accent);
-  background: #FFFFFF;
+  background: var(--tile-accent-soft, #FFFFFF);
   color: #0A0A0A;
   cursor: pointer;
   display: grid;
-  grid-template-rows: minmax(0, 1fr) auto auto;
-  gap: 9px;
-  padding: 18px 12px 12px;
   text-align: center;
   box-sizing: border-box;
   box-shadow: 0 12px 0 rgba(10, 10, 10, 0.12);
-  justify-items: center; /* center grid children horizontally */
+  justify-items: center;
+  overflow: hidden;
 }
 
-.mobile-competency-stamp .competency-asset-frame {
-  justify-self: center; /* ensure the asset frame centers inside the grid cell */
-}
-
-
-.mobile-competency-stamp::before {
+.xq-competency-card::before {
   content: "";
   position: absolute;
   inset: 8px;
@@ -5130,36 +5091,122 @@ const APP_STYLES = `
   pointer-events: none;
 }
 
-.mobile-competency-stamp .mobile-stamp-art {
+.xq-competency-card-art {
+  position: relative;
+  width: 100%;
+  min-height: 0;
+  border: 0;
+  background: var(--tile-accent-soft);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.xq-competency-card-art img,
+.xq-competency-card-art .inline-svg,
+.xq-competency-card-art svg {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0;
+  max-width: none;
+  object-fit: cover;
+  transform: none;
+  transform-origin: center 56%;
+  display: block;
+}
+
+.xq-competency-card-title {
+  position: relative;
+  z-index: 1;
+  color: #0A0A0A;
+  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  text-transform: uppercase;
+}
+
+.xq-competency-card-copy {
+  position: relative;
+  z-index: 1;
+  color: #333333;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+}
+
+.xq-competency-card.feature {
+  height: 100%;
+  grid-template-rows: minmax(0, 1fr) auto auto;
+  gap: 9px;
+  padding: 18px 12px 14px;
+}
+
+.xq-competency-card.feature .xq-competency-card-art {
   display: flex;
   justify-content: center;
   align-items: center;
   align-self: stretch;
-  min-height: 0;
   height: 100%;
-  width: 100%;
   margin: 6px auto 0;
-  border: 0;
   border-bottom: 3px solid #0A0A0A;
-  padding: 6px 0 0;
-  background: var(--tile-accent-soft);
-  position: relative;
-  overflow: hidden;
+  padding: 8px 0 0;
 }
 
-/* Summary page specific: remove fills/outlines around primary outcome illustrations */
-.mobile-summary-page .mobile-competency-stamp::before {
-  display: none;
+.xq-competency-card.feature .xq-competency-card-art img,
+.xq-competency-card.feature .xq-competency-card-art .inline-svg,
+.xq-competency-card.feature .xq-competency-card-art svg {
+  object-position: center 58%;
 }
 
-.mobile-summary-page .mobile-competency-stamp {
-  border: none;
+.xq-competency-card.feature .xq-competency-card-title {
+  font-size: 30px;
+  line-height: 0.9;
+}
+
+.xq-competency-card.feature .xq-competency-card-copy {
+  font-size: 12px;
+  line-height: 1.2;
+  -webkit-line-clamp: 2;
+}
+
+.xq-competency-card.compact {
+  min-height: 166px;
+  grid-template-rows: auto minmax(82px, 1fr);
+  gap: 7px;
+  padding: 15px 7px 10px;
   box-shadow: none;
 }
 
-.mobile-summary-page .mobile-competency-stamp .mobile-stamp-art {
-  background: transparent !important;
-  border-bottom: none !important;
+.xq-competency-card.compact::before {
+  inset: 7px;
+  border-width: 1px;
+}
+
+.xq-competency-card.compact .xq-competency-card-art {
+  align-self: stretch;
+  min-height: 88px;
+  margin-top: 2px;
+  background: transparent;
+}
+
+.xq-competency-card.compact .xq-competency-card-art img,
+.xq-competency-card.compact .xq-competency-card-art .inline-svg,
+.xq-competency-card.compact .xq-competency-card-art svg {
+  object-position: center 58%;
+}
+
+.xq-competency-card.compact .xq-competency-card-title {
+  width: 100%;
+  min-height: 34px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0 1px;
+  font-size: clamp(15px, 4.3vw, 19px);
+  line-height: 0.9;
+}
+
+.xq-competency-card.compact .xq-competency-card-copy {
+  display: none;
 }
 
 .mobile-summary-header .summary-character,
@@ -5175,61 +5222,6 @@ const APP_STYLES = `
   height: 86% !important;
   max-width: 86% !important;
   max-height: 86% !important;
-}
-
-.mobile-competency-stamp .mobile-stamp-art img,
-.mobile-competency-stamp .mobile-stamp-art .inline-svg,
-.mobile-competency-stamp .mobile-stamp-art svg {
-  min-height: 0;
-  width: 100%;
-  max-width: none;
-  height: 100%;
-  object-fit: cover;
-  transform: none;
-  transform-origin: center;
-  display: block;
-}
-
-/* Force inline SVG/img to absolutely fill the stamp art container */
-.mobile-competency-stamp .mobile-stamp-art > img.inline-svg,
-.mobile-competency-stamp .mobile-stamp-art > .inline-svg {
-  position: absolute;
-  inset: 0;
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-}
-
-/* For cases where we want the illustration to fill the container width
-   while preserving aspect ratio, use a non-absolute image that scales
-   to 100% width and lets the height auto-adjust. This overrides the
-   absolute-fill rule above when present. */
-.mobile-competency-stamp .mobile-stamp-art > img.inline-svg.fill-width {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  display: block !important;
-}
-.mobile-competency-stamp > strong {
-  position: relative;
-  z-index: 1;
-  color: #0A0A0A;
-  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
-  font-size: 30px;
-  line-height: 0.9;
-  text-transform: uppercase;
-}
-
-.mobile-competency-stamp > span:not(.competency-asset-frame) {
-  position: relative;
-  z-index: 1;
-  color: #333333;
-  font-size: 12px;
-  line-height: 1.2;
-  display: -webkit-box;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
 }
 
 .mobile-carousel-controls {
@@ -5447,67 +5439,28 @@ const APP_STYLES = `
 }
 
 .mobile-summary-stamps {
-  display: flex;
-  gap: 8px;
-  margin: 12px 0;
-}
-
-.mobile-summary-stamps .mobile-competency-stamp {
-  flex: 1 1 0;
-  min-width: 0; /* allow items to shrink evenly and avoid content-driven expansion */
-}
-
-.mobile-summary-stamps .competency-asset-frame {
-  width: 100%;
-  display: block;
-}
-
-.mobile-summary-stamps .mobile-competency-stamp {
-  min-height: 166px;
-  padding: 0; /* remove inner padding so art fills the stamp uniformly */
-  box-shadow: none;
-  position: relative; /* allow child art to absolutely fill this slot */
-}
-
-.mobile-summary-stamps .mobile-competency-stamp .mobile-stamp-art {
-  /* Absolutely fill the stamp slot so artwork matches the parent's
-     computed width exactly and crops consistently. */
-  position: absolute;
-  inset: 0;
-  width: 100% !important;
-  height: 100% !important;
-  margin: 0;
-  box-sizing: border-box;
-}
-
-.mobile-summary-stamps .mobile-competency-stamp .mobile-stamp-art img,
-.mobile-summary-stamps .mobile-competency-stamp .mobile-stamp-art .inline-svg,
-.mobile-summary-stamps .mobile-competency-stamp .mobile-stamp-art svg {
-  /* Ensure summary thumbnails fill their art container and crop consistently */
-  position: absolute;
-  inset: 0;
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover;
-  transform: none;
-}
-
-.mobile-summary-stamps .mobile-competency-stamp > strong {
-  font-size: 17px;
-}
-
-.mobile-summary-stamps .mobile-competency-stamp > span:not(.competency-asset-frame) {
-  display: none;
-}
-
-.mobile-explore-buttons {
   display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
-  margin: 8px 0 12px;
+  margin: 12px 0 8px;
 }
 
-.mobile-explore-buttons button,
-.mobile-mini-stamp,
+.mobile-summary-see-more {
+  justify-self: start;
+  width: auto;
+  min-height: 32px;
+  border: 2px solid #0A0A0A;
+  border-radius: 0;
+  background: #FFFFFF;
+  color: #0A0A0A;
+  padding: 0 12px;
+  font-family: 'Inter', 'Helvetica Neue', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  margin: 0 0 12px;
+}
+
 .mobile-profile-card {
   appearance: none;
   border: 2px solid #0A0A0A;
@@ -5518,13 +5471,6 @@ const APP_STYLES = `
   font-weight: 500;
 }
 
-.mobile-explore-buttons button {
-  min-height: 46px;
-  border-radius: 999px;
-  padding: 0 14px;
-  text-align: left;
-}
-
 .mobile-summary-attribution {
   color: var(--mobile-muted, #555555);
   margin: 0 0 8px;
@@ -5532,8 +5478,6 @@ const APP_STYLES = `
 
 .mobile-summary-page .results-restart-button {
   width: 100%;
-  min-height: 44px;
-  height: 44px;
   margin: 0 0 8px;
   border: 2px solid #0A0A0A;
   box-shadow: none;
@@ -5562,29 +5506,8 @@ const APP_STYLES = `
 
 .mobile-competency-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
-}
-
-.mobile-mini-stamp {
-  min-height: 134px;
-  padding: 6px;
-  display: grid;
-  grid-template-rows: 1fr auto;
-  gap: 6px;
-}
-
-.mobile-mini-stamp-art {
-  min-height: 82px;
-  border: 0;
-}
-
-.mobile-mini-stamp span {
-  color: #0A0A0A;
-  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
-  font-size: 18px;
-  line-height: 0.95;
-  text-transform: uppercase;
 }
 
 .mobile-profiles-page {
@@ -5691,9 +5614,12 @@ const APP_STYLES = `
 .xq-quiz-shell.preview-mobile.theme-dark .mobile-token-page,
 .xq-quiz-shell.preview-mobile.theme-dark .mobile-outcome-group,
 .xq-quiz-shell.preview-mobile.theme-dark .mobile-profile-card,
-.xq-quiz-shell.preview-mobile.theme-dark .mobile-mini-stamp,
-.xq-quiz-shell.preview-mobile.theme-dark .mobile-explore-buttons button {
+.xq-quiz-shell.preview-mobile.theme-dark .mobile-summary-see-more {
   background: #FFFFFF;
+  color: #0A0A0A;
+}
+
+.xq-quiz-shell.preview-mobile.theme-dark .xq-competency-card {
   color: #0A0A0A;
 }
 
@@ -5748,10 +5674,109 @@ const APP_STYLES = `
   .theme-dark .mobile-token-page,
   .theme-dark .mobile-outcome-group,
   .theme-dark .mobile-profile-card,
-  .theme-dark .mobile-mini-stamp,
-  .theme-dark .mobile-explore-buttons button {
+  .theme-dark .mobile-summary-see-more {
     background: #FFFFFF;
     color: #0A0A0A;
+  }
+
+  .theme-dark .xq-competency-card {
+    color: #0A0A0A;
+  }
+}
+
+/* Explicit button utilities */
+.xq-quiz-shell {
+  --pill-button-height: 46px;
+  --icon-button-size: 46px;
+}
+
+.kiosk-screen .welcome-copy {
+  justify-content: flex-start;
+  padding: 42px;
+}
+
+.pill-button {
+  min-height: var(--pill-button-height);
+  height: var(--pill-button-height);
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  font-family: 'Inter', 'Helvetica Neue', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+  text-transform: none;
+}
+
+.status-pill {
+  min-height: var(--pill-button-height);
+  height: var(--pill-button-height);
+  border: 2px solid #FFFFFF;
+  border-radius: 999px;
+  background: #FFFFFF;
+  color: #0A0A0A;
+  cursor: default;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  box-sizing: border-box;
+  font-family: 'Inter', 'Helvetica Neue', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+  text-transform: none;
+}
+
+.status-pill.active {
+  background: #1FCC38;
+  border-color: #1FCC38;
+  color: #0A0A0A;
+}
+
+.theme-light .status-pill {
+  background: #FFFFFF;
+  border-color: #0A0A0A;
+  color: #0A0A0A;
+}
+
+.theme-light .status-pill.active {
+  background: #1FCC38;
+  border-color: #1FCC38;
+  color: #0A0A0A;
+}
+
+.icon-button {
+  width: var(--icon-button-size);
+  min-width: var(--icon-button-size);
+  height: var(--icon-button-size);
+  min-height: var(--icon-button-size);
+  aspect-ratio: 1 / 1;
+  padding: 0;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.icon-button svg {
+  display: block;
+  flex: 0 0 auto;
+  margin: auto;
+}
+
+.xq-quiz-shell.preview-mobile .kiosk-screen .welcome-copy {
+  justify-content: flex-start;
+  padding: 14px;
+}
+
+@media (max-width: 700px) {
+  .kiosk-screen .welcome-copy {
+    justify-content: flex-start;
+    padding: 14px;
   }
 }
 `;
@@ -6330,13 +6355,13 @@ function CompetencyAsset({
       const primary = candidates[0] || getOriginalSvgAccent(svgMarkup) || null;
       let replaced = scopedMarkup;
       if (primary) {
-        const p = primary.replace('#', '');
-        const re = new RegExp(`(fill|stroke)=(\\\"|\\\')#${p}(\\\"|\\\')`, 'ig');
+        const p = primary.replace("#", "");
+        const re = new RegExp(`(fill|stroke)=(\\"|\\')#${p}(\\"|\\')`, "ig");
         replaced = replaced.replace(re, `$1=$2${softAccent}$3`);
       }
 
       return applySvgAccent(replaced, softAccent);
-    } catch (e) {
+    } catch (_e) {
       return applySvgAccent(scopedMarkup, softAccent);
     }
   }, [code, preserveSvgAccent, shape, softAccent, svgMarkup]);
@@ -6454,7 +6479,7 @@ function ThemeToggle({ themeMode, onToggle, mobile = false, className = "" }) {
 
   return (
     <button
-      className={`button secondary theme-toggle theme-icon-toggle${mobile ? " mobile-theme-toggle" : ""}${className ? ` ${className}` : ""}`}
+      className={`button secondary icon-button theme-toggle theme-icon-toggle${mobile ? " mobile-theme-toggle" : ""}${className ? ` ${className}` : ""}`}
       type="button"
       onClick={onToggle}
       aria-label={`Switch to ${nextLabel}`}
@@ -6533,8 +6558,13 @@ function ResultCompetencyCard({ competency, index }) {
     index * 5 + competency.score + competency.code.length,
   );
   const assetPrimary = COMPETENCY_ASSET_COLOR_CACHE[competency.code];
-  const outcomeColor = (competency.outcome && OUTCOMES[competency.outcome]?.color) || null;
-  const accent = assetPrimary || competency.outcomeDetails?.color || outcomeColor || fallback;
+  const outcomeColor =
+    (competency.outcome && OUTCOMES[competency.outcome]?.color) || null;
+  const accent =
+    assetPrimary ||
+    competency.outcomeDetails?.color ||
+    outcomeColor ||
+    fallback;
   const tileAccentSoft = getSoftAccent(accent);
 
   return (
@@ -6565,7 +6595,7 @@ function getCircularOffset(index, activeIndex, length) {
 
 function ProfileCharacter({ outcome, className = "" }) {
   const src = PROFILE_CHARACTER_ASSETS[outcome.id];
-  const extraClass = outcome.id === 'LL' ? 'no-overlay' : '';
+  const extraClass = outcome.id === "LL" ? "no-overlay" : "";
 
   return (
     <div
@@ -6606,7 +6636,11 @@ function MobileResultNav({
       {hideBack ? (
         <span aria-hidden="true" />
       ) : (
-        <button className="button secondary" type="button" onClick={onBack}>
+        <button
+          className="button secondary pill-button"
+          type="button"
+          onClick={onBack}
+        >
           <IconGlyph name="back" size={18} />
           {backLabel}
         </button>
@@ -6614,7 +6648,11 @@ function MobileResultNav({
       {hideNext ? (
         <span aria-hidden="true" />
       ) : (
-        <button className="button primary" type="button" onClick={onNext}>
+        <button
+          className="button primary pill-button"
+          type="button"
+          onClick={onNext}
+        >
           {nextLabel}
           <IconGlyph name="arrow" color="#0A0A0A" size={18} />
         </button>
@@ -6688,38 +6726,74 @@ function MobileProfileResult({ outcome }) {
       <h1 className="mobile-result-title">{outcome.archetype}</h1>
       <p className="mobile-profile-subtitle">New profile unlocked</p>
       <ul className="mobile-profile-points">
-            {(
-              outcome.strengths || [outcome.quickTake, outcome.prompt, outcome.growthMove]
-            ).map((line, idx) => (
-              <li key={idx}>{line}</li>
-            ))}
+        {(
+          outcome.strengths || [
+            outcome.quickTake,
+            outcome.prompt,
+            outcome.growthMove,
+          ]
+        ).map((line) => (
+          <li key={line}>{line}</li>
+        ))}
       </ul>
     </section>
   );
 }
 
-function CompetencyStampCard({ competency, index, active = false, onClick }) {
+function CompetencyCard({
+  competency,
+  index,
+  active = false,
+  onClick,
+  variant = "feature",
+}) {
   const assetPrimary = COMPETENCY_ASSET_COLOR_CACHE[competency.code];
-  const outcomeColor = (competency.outcome && OUTCOMES[competency.outcome]?.color) || null;
-  const accent = assetPrimary || competency.outcomeDetails?.color || outcomeColor || getKioskAccent(index);
+  const outcomeColor =
+    (competency.outcome && OUTCOMES[competency.outcome]?.color) || null;
+  const accent =
+    assetPrimary ||
+    competency.outcomeDetails?.color ||
+    outcomeColor ||
+    getKioskAccent(index);
   const tileAccentSoft = getSoftAccent(accent);
   const detail = COMPETENCY_DETAIL_MAP[competency.code] || {};
+  const isCompact = variant === "compact";
+  const art = (
+    <CompetencyAsset
+      code={competency.code}
+      shape="square"
+      accent={accent}
+      className="xq-competency-card-art"
+    />
+  );
+  const title = (
+    <strong className="xq-competency-card-title">{competency.label}</strong>
+  );
+  const copy = (
+    <span className="xq-competency-card-copy">
+      {detail.sourceShort || competency.description}
+    </span>
+  );
 
   return (
     <button
-      className={`mobile-competency-stamp${active ? " active" : ""}`}
+      className={`xq-competency-card ${variant}${active ? " active" : ""}`}
       type="button"
       onClick={onClick}
       style={{ "--tile-accent": accent, "--tile-accent-soft": tileAccentSoft }}
     >
-      <CompetencyAsset
-        code={competency.code}
-        shape="square"
-        accent={accent}
-        className="mobile-stamp-art"
-      />
-      <strong>{competency.label}</strong>
-      <span>{detail.sourceShort || competency.description}</span>
+      {isCompact ? (
+        <>
+          {title}
+          {art}
+        </>
+      ) : (
+        <>
+          {art}
+          {title}
+          {copy}
+        </>
+      )}
     </button>
   );
 }
@@ -6771,7 +6845,7 @@ function MobileCompetencyCarousel({
               key={competency.code}
               style={{ "--offset": offset }}
             >
-              <CompetencyStampCard
+              <CompetencyCard
                 competency={competency}
                 index={index}
                 active={index === activeIndex}
@@ -6784,6 +6858,7 @@ function MobileCompetencyCarousel({
       <fieldset className="mobile-carousel-controls">
         <legend className="mobile-carousel-legend">Competency cards</legend>
         <button
+          className="icon-button"
           type="button"
           onClick={() => rotate(-1)}
           aria-label="Previous competency"
@@ -6794,6 +6869,7 @@ function MobileCompetencyCarousel({
           {activeIndex + 1}/{competencies.length}
         </span>
         <button
+          className="icon-button"
           type="button"
           onClick={() => rotate(1)}
           aria-label="Next competency"
@@ -6808,7 +6884,7 @@ function MobileCompetencyCarousel({
   );
 }
 
-function CompetencyDetailPanel({ competency, onBack, onNext, nextLabel }) {
+function CompetencyDetailPanel({ competency }) {
   const detail = COMPETENCY_DETAIL_MAP[competency?.code] || {};
   const outcome =
     competency?.outcomeDetails || OUTCOMES[competency?.outcome] || OUTCOMES.FK;
@@ -6838,17 +6914,11 @@ function CompetencyDetailPanel({ competency, onBack, onNext, nextLabel }) {
           ))}
         </ul>
       </div>
-      <MobileResultNav
-        onBack={onBack}
-        onNext={onNext}
-        nextLabel={nextLabel}
-        hideNext={!onNext}
-      />
     </section>
   );
 }
 
-function MobileTokenEarned({ onBack, onNext }) {
+function MobileTokenEarned() {
   return (
     <section className="mobile-result-page mobile-token-page">
       <h1 className="mobile-result-title">Token earned</h1>
@@ -6862,7 +6932,6 @@ function MobileTokenEarned({ onBack, onNext }) {
         </div>
       </div>
       <p className="mobile-profile-subtitle">Your XQ strengths are unlocked.</p>
-      <MobileResultNav onBack={onBack} onNext={onNext} nextLabel="Summary" />
     </section>
   );
 }
@@ -6872,9 +6941,6 @@ function MobileSummary({
   topCompetencies,
   onOpenCompetency,
   onExploreCompetencies,
-  onExploreProfiles,
-  onWhy,
-  onBack,
   onRetake,
 }) {
   return (
@@ -6892,42 +6958,38 @@ function MobileSummary({
       <p className="mobile-detail-copy">{primaryOutcome.description}</p>
       <div className="mobile-summary-stamps">
         {topCompetencies.map((competency, index) => (
-          <CompetencyStampCard
+          <CompetencyCard
             competency={competency}
             index={index}
+            variant="compact"
             key={competency.code}
             onClick={() => onOpenCompetency(competency.code)}
           />
         ))}
       </div>
-      <div className="mobile-explore-buttons">
-        <button type="button" onClick={onExploreCompetencies}>
-          Explore all XQ competencies
-        </button>
-        <button type="button" onClick={onExploreProfiles}>
-          Explore all learner profiles
-        </button>
-        <button type="button" onClick={onWhy}>
-          Why XQ competencies?
-        </button>
-      </div>
+      <button
+        className="mobile-summary-see-more"
+        type="button"
+        onClick={onExploreCompetencies}
+      >
+        See more
+      </button>
       <p className="attribution mobile-summary-attribution">
         Based on the XQ Learner Outcomes framework - xqsuperschool.org
       </p>
       <button
-        className="button primary results-restart-button"
+        className="button primary pill-button results-restart-button"
         type="button"
         onClick={onRetake}
       >
         <IconGlyph name="refresh" color="#0A0A0A" size={18} />
         Retake the Quiz
       </button>
-      <MobileResultNav onBack={onBack} hideNext />
     </section>
   );
 }
 
-function MobileAllCompetencies({ onOpenCompetency, onBack }) {
+function MobileAllCompetencies({ onOpenCompetency }) {
   return (
     <section className="mobile-result-page mobile-explore-page">
       <p className="mobile-result-kicker">Explore</p>
@@ -6949,38 +7011,29 @@ function MobileAllCompetencies({ onOpenCompetency, onBack }) {
             >
               <h2>{outcome.shortName}</h2>
               <div className="mobile-competency-grid">
-                {competencies.map(([code, competency]) => (
-                  <button
-                    className="mobile-mini-stamp"
-                    type="button"
+                {competencies.map(([code, competency], index) => (
+                  <CompetencyCard
+                    competency={{
+                      code,
+                      ...competency,
+                      outcomeDetails: outcome,
+                    }}
+                    index={index}
+                    variant="compact"
                     key={code}
                     onClick={() => onOpenCompetency(code)}
-                  >
-                    <CompetencyAsset
-                      code={code}
-                      shape="square"
-                      accent={outcome.color}
-                      className="mobile-mini-stamp-art"
-                    />
-                    <span>{competency.label}</span>
-                  </button>
+                  />
                 ))}
               </div>
             </section>
           );
         })}
       </div>
-      <MobileResultNav onBack={onBack} hideNext />
     </section>
   );
 }
 
-function MobileAllProfiles({
-  profileIndex,
-  setProfileIndex,
-  onOpenProfile,
-  onBack,
-}) {
+function MobileAllProfiles({ profileIndex, setProfileIndex, onOpenProfile }) {
   const [touchStart, setTouchStart] = useState(null);
 
   const rotate = (direction) => {
@@ -7032,6 +7085,7 @@ function MobileAllProfiles({
       <fieldset className="mobile-carousel-controls">
         <legend className="mobile-carousel-legend">Learner profiles</legend>
         <button
+          className="icon-button"
           type="button"
           onClick={() => rotate(-1)}
           aria-label="Previous profile"
@@ -7042,6 +7096,7 @@ function MobileAllProfiles({
           {profileIndex + 1}/{OUTCOME_ORDER.length}
         </span>
         <button
+          className="icon-button"
           type="button"
           onClick={() => rotate(1)}
           aria-label="Next profile"
@@ -7049,12 +7104,11 @@ function MobileAllProfiles({
           <IconGlyph name="arrow" size={18} />
         </button>
       </fieldset>
-      <MobileResultNav onBack={onBack} hideNext />
     </section>
   );
 }
 
-function ProfileDetailPanel({ outcome, onBack }) {
+function ProfileDetailPanel({ outcome }) {
   return (
     <section
       className="mobile-result-page mobile-profile-detail-page"
@@ -7079,12 +7133,11 @@ function ProfileDetailPanel({ outcome, onBack }) {
           ))}
         </ul>
       </div>
-      <MobileResultNav onBack={onBack} hideNext />
     </section>
   );
 }
 
-function MobileWhyXQ({ onBack }) {
+function MobileWhyXQ() {
   return (
     <section className="mobile-result-page mobile-under-construction-page">
       <div className="construction-token">
@@ -7092,7 +7145,6 @@ function MobileWhyXQ({ onBack }) {
       </div>
       <h1 className="mobile-result-title">Under construction</h1>
       <p className="mobile-detail-copy">Check back soon.</p>
-      <MobileResultNav onBack={onBack} hideNext />
     </section>
   );
 }
@@ -7126,6 +7178,67 @@ function MobileResultsFlow({
       }))
       .find((item) => item.code === detailCompetencyCode);
   const profileDetail = profileDetailId ? OUTCOMES[profileDetailId] : null;
+  const resultNavProps = (() => {
+    switch (resultStep) {
+      case "radar":
+        return {
+          hideBack: true,
+          onNext: () => setResultStep("profile"),
+        };
+      case "profile":
+        return {
+          onBack: () => setResultStep("radar"),
+          onNext: () => setResultStep("competencies"),
+        };
+      case "competencies":
+        return {
+          onBack: () => setResultStep("profile"),
+          onNext: () => setResultStep("token"),
+        };
+      case "competencyDetail": {
+        const canContinue = detailReturnStep === "competencies";
+        return {
+          onBack: () => setResultStep(detailReturnStep),
+          onNext: canContinue ? () => setResultStep("token") : undefined,
+          nextLabel: "Continue",
+          hideNext: !canContinue,
+        };
+      }
+      case "token":
+        return {
+          onBack: () => setResultStep("competencies"),
+          onNext: () => setResultStep("summary"),
+          nextLabel: "Summary",
+        };
+      case "summary":
+        return {
+          onBack: () => setResultStep("token"),
+          hideNext: true,
+        };
+      case "allCompetencies":
+        return {
+          onBack: () => setResultStep("summary"),
+          hideNext: true,
+        };
+      case "allProfiles":
+        return {
+          onBack: () => setResultStep("summary"),
+          hideNext: true,
+        };
+      case "profileDetail":
+        return {
+          onBack: () => setResultStep("allProfiles"),
+          hideNext: true,
+        };
+      case "why":
+        return {
+          onBack: () => setResultStep("summary"),
+          hideNext: true,
+        };
+      default:
+        return null;
+    }
+  })();
 
   return (
     <div className={`mobile-results-flow result-step-${resultStep}`}>
@@ -7134,59 +7247,27 @@ function MobileResultsFlow({
       </div>
 
       {resultStep === "radar" && (
-        <>
-          <ProfileRadarChart
-            results={results}
-            primaryOutcome={primaryOutcome}
-          />
-          <MobileResultNav hideBack onNext={() => setResultStep("profile")} />
-        </>
+        <ProfileRadarChart results={results} primaryOutcome={primaryOutcome} />
       )}
 
       {resultStep === "profile" && (
-        <>
-          <MobileProfileResult outcome={primaryOutcome} />
-          <MobileResultNav
-            onBack={() => setResultStep("radar")}
-            onNext={() => setResultStep("competencies")}
-          />
-        </>
+        <MobileProfileResult outcome={primaryOutcome} />
       )}
 
       {resultStep === "competencies" && (
-        <>
-          <MobileCompetencyCarousel
-            competencies={topCompetencies}
-            activeIndex={activeCompetencyIndex}
-            setActiveIndex={setActiveCompetencyIndex}
-            onOpenDetail={(code) => openCompetencyDetail(code, "competencies")}
-          />
-          <MobileResultNav
-            onBack={() => setResultStep("profile")}
-            onNext={() => setResultStep("token")}
-          />
-        </>
+        <MobileCompetencyCarousel
+          competencies={topCompetencies}
+          activeIndex={activeCompetencyIndex}
+          setActiveIndex={setActiveCompetencyIndex}
+          onOpenDetail={(code) => openCompetencyDetail(code, "competencies")}
+        />
       )}
 
       {resultStep === "competencyDetail" && (
-        <CompetencyDetailPanel
-          competency={topCompetency}
-          onBack={() => setResultStep(detailReturnStep)}
-          onNext={
-            detailReturnStep === "competencies"
-              ? () => setResultStep("token")
-              : undefined
-          }
-          nextLabel="Continue"
-        />
+        <CompetencyDetailPanel competency={topCompetency} />
       )}
 
-      {resultStep === "token" && (
-        <MobileTokenEarned
-          onBack={() => setResultStep("competencies")}
-          onNext={() => setResultStep("summary")}
-        />
-      )}
+      {resultStep === "token" && <MobileTokenEarned />}
 
       {resultStep === "summary" && (
         <MobileSummary
@@ -7194,9 +7275,6 @@ function MobileResultsFlow({
           topCompetencies={topCompetencies}
           onOpenCompetency={(code) => openCompetencyDetail(code, "summary")}
           onExploreCompetencies={() => setResultStep("allCompetencies")}
-          onExploreProfiles={() => setResultStep("allProfiles")}
-          onWhy={() => setResultStep("why")}
-          onBack={() => setResultStep("token")}
           onRetake={resetToWelcome}
         />
       )}
@@ -7206,7 +7284,6 @@ function MobileResultsFlow({
           onOpenCompetency={(code) =>
             openCompetencyDetail(code, "allCompetencies")
           }
-          onBack={() => setResultStep("summary")}
         />
       )}
 
@@ -7215,20 +7292,16 @@ function MobileResultsFlow({
           profileIndex={profileBrowseIndex}
           setProfileIndex={setProfileBrowseIndex}
           onOpenProfile={(outcomeId) => openProfileDetail(outcomeId)}
-          onBack={() => setResultStep("summary")}
         />
       )}
 
       {resultStep === "profileDetail" && profileDetail && (
-        <ProfileDetailPanel
-          outcome={profileDetail}
-          onBack={() => setResultStep("allProfiles")}
-        />
+        <ProfileDetailPanel outcome={profileDetail} />
       )}
 
-      {resultStep === "why" && (
-        <MobileWhyXQ onBack={() => setResultStep("summary")} />
-      )}
+      {resultStep === "why" && <MobileWhyXQ />}
+
+      {resultNavProps && <MobileResultNav {...resultNavProps} />}
     </div>
   );
 }
@@ -7264,7 +7337,7 @@ function renderRadarTick({ payload, x, y, textAnchor }) {
 }
 
 export default function App() {
-  const [svgColorVersion, setSvgColorVersion] = useState(0);
+  const [, setSvgColorVersion] = useState(0);
   const [previewMode, setPreviewMode] = useState("kiosk");
   const [themeMode, setThemeMode] = useState("light");
   const [screen, setScreen] = useState("welcome");
@@ -7308,13 +7381,19 @@ export default function App() {
               if (!res.ok) return;
               const text = await res.text();
               const candidates = extractCandidateHexesFromSvg(text);
-              const primary = candidates[0] || getOriginalSvgAccent(text) || OUTCOMES[id]?.color;
-              const secondary = candidates[1] || getSoftAccent(primary) || OUTCOMES[id]?.pairColor;
+              const primary =
+                candidates[0] ||
+                getOriginalSvgAccent(text) ||
+                OUTCOMES[id]?.color;
+              const secondary =
+                candidates[1] ||
+                getSoftAccent(primary) ||
+                OUTCOMES[id]?.pairColor;
               if (primary && OUTCOMES[id]) {
                 OUTCOMES[id].color = primary;
                 OUTCOMES[id].pairColor = secondary;
               }
-            } catch (err) {
+            } catch (_err) {
               // ignore individual asset failures
             }
           }),
@@ -7322,27 +7401,30 @@ export default function App() {
         // also fetch competency asset primary colors and cache them
         try {
           await Promise.all(
-            Object.entries(COMPETENCY_ASSET_FILES).map(async ([code, filename]) => {
-              try {
-                const path = `${ASSET_BASE_PATH}/square/${filename}`;
-                const res = await fetch(path);
-                if (!res.ok) return;
-                const text = await res.text();
-                const candidates = extractCandidateHexesFromSvg(text);
-                const primary = candidates[0] || getOriginalSvgAccent(text) || null;
-                if (primary) COMPETENCY_ASSET_COLOR_CACHE[code] = primary;
-              } catch (e) {
-                // ignore
-              }
-            }),
+            Object.entries(COMPETENCY_ASSET_FILES).map(
+              async ([code, filename]) => {
+                try {
+                  const path = `${ASSET_BASE_PATH}/square/${filename}`;
+                  const res = await fetch(path);
+                  if (!res.ok) return;
+                  const text = await res.text();
+                  const candidates = extractCandidateHexesFromSvg(text);
+                  const primary =
+                    candidates[0] || getOriginalSvgAccent(text) || null;
+                  if (primary) COMPETENCY_ASSET_COLOR_CACHE[code] = primary;
+                } catch (_e) {
+                  // ignore
+                }
+              },
+            ),
           );
-        } catch (e) {
+        } catch (_e) {
           // ignore
         }
 
         // trigger re-render so components pick up updated OUTCOMES and asset colors
         setSvgColorVersion((v) => v + 1);
-      } catch (err) {
+      } catch (_err) {
         // swallow
       }
     }
@@ -7610,7 +7692,7 @@ export default function App() {
                   currentIndex={currentIndex}
                 />
                 <button
-                  className="button secondary restart-button"
+                  className="button secondary pill-button restart-button"
                   type="button"
                   onClick={resetToWelcome}
                 >
@@ -7627,7 +7709,7 @@ export default function App() {
                   >
                     <div className="question-nav-left">
                       <button
-                        className="button secondary top-back-button"
+                        className="button secondary pill-button top-back-button"
                         type="button"
                         onClick={goBack}
                         disabled={currentIndex === 0 || isAutoAdvancing}
@@ -7642,7 +7724,7 @@ export default function App() {
                       />
                     </div>
                     <button
-                      className="button secondary mobile-only"
+                      className="button secondary pill-button mobile-only"
                       type="button"
                       onClick={resetToWelcome}
                       disabled={isAutoAdvancing}
@@ -7657,7 +7739,7 @@ export default function App() {
                       className="mobile-only"
                     />
                     <span
-                      className={`auto-advance-pill desktop-status-pill${isAutoAdvancing ? " active" : ""}`}
+                      className={`status-pill desktop-status-pill${isAutoAdvancing ? " active" : ""}`}
                     >
                       {advanceStatusText}
                     </span>
@@ -7743,7 +7825,7 @@ export default function App() {
 
                 <div className="quiz-actions">
                   <button
-                    className="button secondary"
+                    className="button secondary pill-button"
                     type="button"
                     onClick={goBack}
                     disabled={currentIndex === 0 || isAutoAdvancing}
@@ -7753,7 +7835,7 @@ export default function App() {
                   </button>
                   <button
                     type="button"
-                    className={`auto-advance-pill bottom-status-button${isAutoAdvancing ? " active" : ""}`}
+                    className={`status-pill bottom-status-button${isAutoAdvancing ? " active" : ""}`}
                     aria-disabled="true"
                     aria-live="polite"
                     tabIndex={-1}
@@ -7804,7 +7886,7 @@ export default function App() {
                 </div>
                 <div className="sidebar-mini-list">
                   <button
-                    className="button secondary restart-button"
+                    className="button secondary pill-button restart-button"
                     type="button"
                     onClick={resetToWelcome}
                   >
@@ -7982,7 +8064,7 @@ export default function App() {
                     </p>
                   </div>
                   <button
-                    className="button primary results-restart-button"
+                    className="button primary pill-button results-restart-button"
                     type="button"
                     onClick={resetToWelcome}
                   >
